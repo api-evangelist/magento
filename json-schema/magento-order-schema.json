@@ -1,0 +1,450 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/magento/schemas/magento-order.json",
+  "title": "Magento Order",
+  "description": "A sales order in Adobe Commerce (Magento). Represents a completed purchase transaction including the customer, line items, billing and shipping addresses, payment method, and all financial totals. Orders are created from shopping cart quotes and progress through a lifecycle of states including new, processing, complete, closed, and canceled.",
+  "type": "object",
+  "required": [
+    "increment_id",
+    "status",
+    "state",
+    "customer_email",
+    "grand_total",
+    "items",
+    "billing_address"
+  ],
+  "properties": {
+    "entity_id": {
+      "type": "integer",
+      "description": "Numeric order entity ID assigned by Commerce. Read-only after creation."
+    },
+    "increment_id": {
+      "type": "string",
+      "description": "Human-readable order number displayed to merchants and customers (e.g. 000000001). Zero-padded numeric string determined by the store's order ID prefix and increment settings.",
+      "pattern": "^[0-9]+$"
+    },
+    "store_id": {
+      "type": "integer",
+      "description": "Numeric store view entity ID indicating which store view the order was placed through."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current order status code. Merchants can define custom statuses in addition to the built-in defaults.",
+      "enum": [
+        "pending",
+        "pending_payment",
+        "processing",
+        "complete",
+        "closed",
+        "canceled",
+        "holded",
+        "payment_review",
+        "fraud"
+      ]
+    },
+    "state": {
+      "type": "string",
+      "description": "Internal state machine state of the order. States are a smaller set than statuses and drive available actions on the order.",
+      "enum": [
+        "new",
+        "pending_payment",
+        "processing",
+        "complete",
+        "closed",
+        "canceled",
+        "holded",
+        "payment_review"
+      ]
+    },
+    "customer_id": {
+      "type": ["integer", "null"],
+      "description": "Numeric customer entity ID. Null for guest orders."
+    },
+    "customer_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the customer or guest who placed the order. Required for both registered and guest orders.",
+      "maxLength": 255
+    },
+    "customer_firstname": {
+      "type": "string",
+      "description": "Customer first name as entered during checkout.",
+      "maxLength": 255
+    },
+    "customer_lastname": {
+      "type": "string",
+      "description": "Customer last name as entered during checkout.",
+      "maxLength": 255
+    },
+    "customer_is_guest": {
+      "type": "boolean",
+      "description": "Whether the order was placed by a guest shopper (not a registered customer account)."
+    },
+    "customer_group_id": {
+      "type": "integer",
+      "description": "Customer group ID at the time of order placement. Affects pricing, tax, and shipping rules applied."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp in UTC when the order was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp in UTC when the order record was last modified."
+    },
+    "grand_total": {
+      "type": "number",
+      "description": "Order grand total including subtotal, tax, shipping, and applied discounts. In the order's display currency.",
+      "minimum": 0
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Sum of line item row totals before tax, shipping, and discounts.",
+      "minimum": 0
+    },
+    "tax_amount": {
+      "type": "number",
+      "description": "Total tax amount applied to the order.",
+      "minimum": 0
+    },
+    "shipping_amount": {
+      "type": "number",
+      "description": "Shipping fee charged on the order before any shipping discounts.",
+      "minimum": 0
+    },
+    "discount_amount": {
+      "type": "number",
+      "description": "Total discount amount applied to the order from cart price rules and coupon codes. Typically a negative value.",
+      "maximum": 0
+    },
+    "base_currency_code": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the store's base currency used in base_grand_total and base_* fields.",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "order_currency_code": {
+      "type": "string",
+      "description": "ISO 4217 currency code in which the order was placed and displayed to the customer.",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "coupon_code": {
+      "type": "string",
+      "description": "Coupon code applied to the order, if any.",
+      "maxLength": 255
+    },
+    "shipping_method": {
+      "type": "string",
+      "description": "Carrier and method code for the selected shipping method (e.g. flatrate_flatrate, ups_ground).",
+      "maxLength": 120
+    },
+    "shipping_description": {
+      "type": "string",
+      "description": "Human-readable shipping method description shown to the customer.",
+      "maxLength": 255
+    },
+    "billing_address": {
+      "$ref": "#/$defs/Address",
+      "description": "Billing address used for payment authorization."
+    },
+    "extension_attributes": {
+      "type": "object",
+      "description": "Extension attributes provided by Commerce modules. Common extension attributes include shipping_assignments for multi-address orders and payment_additional_info for payment gateway data.",
+      "additionalProperties": true
+    },
+    "items": {
+      "type": "array",
+      "description": "Line items in the order. Each item represents a purchased product with its quantity, pricing, and fulfillment status.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/OrderItem"
+      }
+    },
+    "status_histories": {
+      "type": "array",
+      "description": "Chronological history of order status changes and admin comments.",
+      "items": {
+        "$ref": "#/$defs/StatusHistory"
+      }
+    },
+    "payment": {
+      "$ref": "#/$defs/Payment",
+      "description": "Payment method and transaction details for the order."
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "description": "A postal address for billing or shipping. Used within orders, customers, and quote objects.",
+      "required": [
+        "firstname",
+        "lastname",
+        "street",
+        "city",
+        "country_id",
+        "postcode",
+        "telephone"
+      ],
+      "properties": {
+        "address_type": {
+          "type": "string",
+          "description": "Whether this is a billing or shipping address.",
+          "enum": ["billing", "shipping"]
+        },
+        "firstname": {
+          "type": "string",
+          "description": "First name of the address recipient.",
+          "maxLength": 255
+        },
+        "lastname": {
+          "type": "string",
+          "description": "Last name of the address recipient.",
+          "maxLength": 255
+        },
+        "company": {
+          "type": "string",
+          "description": "Company name, if applicable.",
+          "maxLength": 255
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address associated with this address."
+        },
+        "street": {
+          "type": "array",
+          "description": "Street address lines. The first element is the primary street line; additional elements are continuation lines.",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "city": {
+          "type": "string",
+          "description": "City or municipality name.",
+          "maxLength": 255
+        },
+        "region": {
+          "type": "string",
+          "description": "State, province, or region name.",
+          "maxLength": 255
+        },
+        "region_id": {
+          "type": "integer",
+          "description": "Numeric Commerce region ID for the state or province."
+        },
+        "region_code": {
+          "type": "string",
+          "description": "Abbreviated state or province code (e.g. CA, NY, TX).",
+          "maxLength": 32
+        },
+        "country_id": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 two-letter country code.",
+          "minLength": 2,
+          "maxLength": 2,
+          "pattern": "^[A-Z]{2}$"
+        },
+        "postcode": {
+          "type": "string",
+          "description": "Postal code or ZIP code.",
+          "maxLength": 255
+        },
+        "telephone": {
+          "type": "string",
+          "description": "Phone number for the address.",
+          "maxLength": 255
+        }
+      }
+    },
+    "OrderItem": {
+      "type": "object",
+      "description": "A product line item within a sales order.",
+      "required": [
+        "sku",
+        "name",
+        "qty_ordered",
+        "price",
+        "product_type"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "integer",
+          "description": "Numeric order item entity ID."
+        },
+        "order_id": {
+          "type": "integer",
+          "description": "Numeric entity ID of the parent order."
+        },
+        "sku": {
+          "type": "string",
+          "description": "Product SKU at the time of purchase.",
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "description": "Product name at the time of purchase.",
+          "maxLength": 255
+        },
+        "product_id": {
+          "type": "integer",
+          "description": "Numeric product entity ID."
+        },
+        "product_type": {
+          "type": "string",
+          "description": "Product type at the time of purchase.",
+          "enum": ["simple", "configurable", "virtual", "downloadable", "bundle", "grouped"]
+        },
+        "qty_ordered": {
+          "type": "number",
+          "description": "Total quantity ordered for this item.",
+          "minimum": 0
+        },
+        "qty_invoiced": {
+          "type": "number",
+          "description": "Quantity that has been invoiced.",
+          "minimum": 0
+        },
+        "qty_shipped": {
+          "type": "number",
+          "description": "Quantity that has been shipped.",
+          "minimum": 0
+        },
+        "qty_refunded": {
+          "type": "number",
+          "description": "Quantity that has been refunded via credit memo.",
+          "minimum": 0
+        },
+        "qty_canceled": {
+          "type": "number",
+          "description": "Quantity that has been canceled.",
+          "minimum": 0
+        },
+        "price": {
+          "type": "number",
+          "description": "Unit price of the product inclusive of any tier pricing applied.",
+          "minimum": 0
+        },
+        "original_price": {
+          "type": "number",
+          "description": "Original catalog price before any discounts or rules were applied.",
+          "minimum": 0
+        },
+        "row_total": {
+          "type": "number",
+          "description": "Line total: unit price multiplied by quantity ordered.",
+          "minimum": 0
+        },
+        "tax_amount": {
+          "type": "number",
+          "description": "Tax amount applied to this line item.",
+          "minimum": 0
+        },
+        "tax_percent": {
+          "type": "number",
+          "description": "Tax percentage rate applied to this item.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "discount_amount": {
+          "type": "number",
+          "description": "Discount amount applied to this line item.",
+          "minimum": 0
+        },
+        "weight": {
+          "type": "number",
+          "description": "Product weight used for shipping calculation.",
+          "minimum": 0
+        }
+      }
+    },
+    "Payment": {
+      "type": "object",
+      "description": "Payment method details and transaction information for an order.",
+      "required": [
+        "method"
+      ],
+      "properties": {
+        "entity_id": {
+          "type": "integer",
+          "description": "Numeric payment entity ID."
+        },
+        "parent_id": {
+          "type": "integer",
+          "description": "Numeric order entity ID this payment belongs to."
+        },
+        "method": {
+          "type": "string",
+          "description": "Payment method code (e.g. checkmo, braintree, free, payflowpro).",
+          "maxLength": 128
+        },
+        "amount_ordered": {
+          "type": "number",
+          "description": "Payment amount to collect equal to the order grand total.",
+          "minimum": 0
+        },
+        "amount_paid": {
+          "type": "number",
+          "description": "Amount that has been captured from the payment method.",
+          "minimum": 0
+        },
+        "amount_authorized": {
+          "type": "number",
+          "description": "Amount authorized but not yet captured.",
+          "minimum": 0
+        },
+        "last_trans_id": {
+          "type": "string",
+          "description": "Transaction ID from the payment gateway for the most recent transaction."
+        },
+        "cc_last4": {
+          "type": "string",
+          "description": "Last four digits of the credit card number, if applicable.",
+          "pattern": "^[0-9]{4}$"
+        }
+      }
+    },
+    "StatusHistory": {
+      "type": "object",
+      "description": "An entry in the order status history log.",
+      "properties": {
+        "entity_id": {
+          "type": "integer",
+          "description": "Numeric status history entity ID."
+        },
+        "parent_id": {
+          "type": "integer",
+          "description": "Numeric order entity ID this history entry belongs to."
+        },
+        "status": {
+          "type": "string",
+          "description": "Order status code at the time this history entry was created."
+        },
+        "comment": {
+          "type": "string",
+          "description": "Admin or system comment text for this history entry."
+        },
+        "is_customer_notified": {
+          "type": "integer",
+          "description": "Whether the customer was notified by email for this history entry. 1 = yes, 0 = no.",
+          "enum": [0, 1]
+        },
+        "is_visible_on_front": {
+          "type": "integer",
+          "description": "Whether this comment is visible to the customer in their account. 1 = yes, 0 = no.",
+          "enum": [0, 1]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when this history entry was created."
+        }
+      }
+    }
+  }
+}

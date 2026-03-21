@@ -1,0 +1,614 @@
+asyncapi: 2.6.0
+info:
+  title: Adobe Commerce Webhooks
+  description: >-
+    Adobe Commerce Webhooks enable developers to configure synchronous HTTP
+    callbacks that fire when specific events occur within a Commerce instance,
+    allowing external systems to react in real time to store activity. Webhooks
+    can intercept and modify request data before Commerce processes it
+    (synchronous before-hooks), or trigger outbound notifications after an
+    event completes (synchronous after-hooks). Common use cases include
+    integration with order management systems, fraud detection services, ERP
+    platforms, and third-party fulfillment workflows. Webhook definitions are
+    managed through the Commerce Admin UI, the REST API, or the webhooks.xml
+    configuration file. Events are identified by the observer.* or plugin.*
+    prefix naming convention. This specification documents the outbound webhook
+    HTTP request payloads Commerce sends to configured receiver URLs.
+  version: '1.0'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/extensibility/webhooks/
+externalDocs:
+  description: Adobe Commerce Webhooks Documentation
+  url: https://developer.adobe.com/commerce/extensibility/webhooks/
+servers:
+  commerceWebhookReceiver:
+    url: '{receiverUrl}'
+    protocol: https
+    description: >-
+      The external HTTPS URL configured by the merchant to receive webhook
+      POST requests from Adobe Commerce. The receiver URL is specified in
+      the webhook definition and must be publicly accessible from the
+      Commerce instance.
+    variables:
+      receiverUrl:
+        default: https://your-integration.example.com/webhook
+        description: The merchant-configured HTTPS endpoint that receives webhook payloads.
+    security:
+      - hmacSignature: []
+channels:
+  /webhook/observer.sales_order_place_after:
+    description: >-
+      Fired after a customer places an order. Contains the full order object
+      including line items, billing and shipping addresses, and payment method.
+      Used to notify downstream order management systems or ERPs of new orders.
+    publish:
+      operationId: receiveSalesOrderPlaceAfter
+      summary: Order placed event
+      description: >-
+        Triggered when a new sales order is successfully placed. The payload
+        includes the complete order object with all items, totals, addresses,
+        and payment information. This is the primary webhook for integrating
+        Commerce order data with external fulfilment and ERP systems.
+      message:
+        $ref: '#/components/messages/SalesOrderPlaceAfter'
+
+  /webhook/observer.sales_order_save_after:
+    description: >-
+      Fired after any order save operation, including status changes, comment
+      additions, and shipment or invoice creation. Useful for monitoring order
+      lifecycle changes and propagating status updates to external systems.
+    publish:
+      operationId: receiveSalesOrderSaveAfter
+      summary: Order updated event
+      description: >-
+        Triggered after any modification to an existing order record, including
+        status transitions, payment captures, shipment creation, and admin
+        edits. The payload includes the updated order object with its current
+        state and status.
+      message:
+        $ref: '#/components/messages/SalesOrderSaveAfter'
+
+  /webhook/observer.sales_order_invoice_pay:
+    description: >-
+      Fired after an order invoice is marked as paid and payment has been
+      captured. Used to trigger downstream accounting or revenue recognition
+      workflows.
+    publish:
+      operationId: receiveSalesOrderInvoicePay
+      summary: Invoice paid event
+      description: >-
+        Triggered when payment is captured for an order invoice. The payload
+        includes the invoice object with its associated order reference and
+        payment totals.
+      message:
+        $ref: '#/components/messages/SalesOrderInvoicePay'
+
+  /webhook/observer.sales_order_shipment_save_after:
+    description: >-
+      Fired after a shipment record is created or updated for an order. Used
+      to relay tracking information and shipment status to external logistics
+      platforms or customer notification systems.
+    publish:
+      operationId: receiveSalesOrderShipmentSaveAfter
+      summary: Order shipment saved event
+      description: >-
+        Triggered after a shipment is created or updated. The payload includes
+        the shipment object with associated tracking numbers, carrier codes, and
+        the items that were shipped.
+      message:
+        $ref: '#/components/messages/SalesOrderShipmentSaveAfter'
+
+  /webhook/observer.customer_save_after_data_object:
+    description: >-
+      Fired after a customer account is created or updated. Used to synchronize
+      customer profile data with external CRM, marketing automation, or loyalty
+      systems.
+    publish:
+      operationId: receiveCustomerSaveAfterDataObject
+      summary: Customer saved event
+      description: >-
+        Triggered after a customer account record is created or modified. The
+        payload includes the customer data object with current and original
+        field values, enabling detection of which fields changed.
+      message:
+        $ref: '#/components/messages/CustomerSaveAfterDataObject'
+
+  /webhook/observer.customer_delete_after:
+    description: >-
+      Fired after a customer account is deleted. Used to propagate account
+      deletion to external CRM or marketing systems and honor data removal
+      requests.
+    publish:
+      operationId: receiveCustomerDeleteAfter
+      summary: Customer deleted event
+      description: >-
+        Triggered after a customer account is permanently deleted from Commerce.
+        The payload includes the customer entity that was deleted, providing
+        the ID and email needed to remove the record from integrated systems.
+      message:
+        $ref: '#/components/messages/CustomerDeleteAfter'
+
+  /webhook/observer.catalog_product_save_after:
+    description: >-
+      Fired after a product is created or updated in the catalog. Used to
+      synchronize product data with external PIM systems, search indexes, or
+      marketplace integrations.
+    publish:
+      operationId: receiveCatalogProductSaveAfter
+      summary: Product saved event
+      description: >-
+        Triggered after a product record is saved. The payload includes the
+        product object with its current attribute values. Both new product
+        creation and updates to existing products fire this event.
+      message:
+        $ref: '#/components/messages/CatalogProductSaveAfter'
+
+  /webhook/observer.checkout_cart_product_add_after:
+    description: >-
+      Fired after a product is added to a customer's shopping cart. Used for
+      real-time cart analytics, personalization, or fraud detection integrations.
+    publish:
+      operationId: receiveCheckoutCartProductAddAfter
+      summary: Product added to cart event
+      description: >-
+        Triggered when a product is successfully added to a shopping cart.
+        The payload includes the cart item that was added along with the
+        updated quote object.
+      message:
+        $ref: '#/components/messages/CheckoutCartProductAddAfter'
+
+components:
+  securitySchemes:
+    hmacSignature:
+      type: httpApiKey
+      in: header
+      name: X-Adobe-Signature
+      description: >-
+        HMAC-SHA256 signature of the request body using a shared secret configured
+        in the webhook definition. Receivers should verify this signature to
+        authenticate that the request originated from Adobe Commerce.
+
+  messages:
+    SalesOrderPlaceAfter:
+      name: SalesOrderPlaceAfter
+      title: Sales Order Placed
+      summary: Payload sent when a new order is placed in Commerce.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SalesOrderPayload'
+
+    SalesOrderSaveAfter:
+      name: SalesOrderSaveAfter
+      title: Sales Order Saved
+      summary: Payload sent when an order record is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SalesOrderPayload'
+
+    SalesOrderInvoicePay:
+      name: SalesOrderInvoicePay
+      title: Sales Order Invoice Paid
+      summary: Payload sent when payment is captured for an invoice.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InvoicePayload'
+
+    SalesOrderShipmentSaveAfter:
+      name: SalesOrderShipmentSaveAfter
+      title: Sales Order Shipment Saved
+      summary: Payload sent when a shipment is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ShipmentPayload'
+
+    CustomerSaveAfterDataObject:
+      name: CustomerSaveAfterDataObject
+      title: Customer Account Saved
+      summary: Payload sent when a customer account is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CustomerPayload'
+
+    CustomerDeleteAfter:
+      name: CustomerDeleteAfter
+      title: Customer Account Deleted
+      summary: Payload sent when a customer account is deleted.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CustomerPayload'
+
+    CatalogProductSaveAfter:
+      name: CatalogProductSaveAfter
+      title: Catalog Product Saved
+      summary: Payload sent when a product is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ProductPayload'
+
+    CheckoutCartProductAddAfter:
+      name: CheckoutCartProductAddAfter
+      title: Product Added to Cart
+      summary: Payload sent when a product is added to a shopping cart.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CartAddPayload'
+
+  schemas:
+    WebhookEnvelope:
+      type: object
+      description: >-
+        The outer envelope wrapping all Commerce webhook payloads. Contains
+        metadata about the event and the nested event data object.
+      properties:
+        merchant_id:
+          type: string
+          description: Identifier of the Commerce merchant instance that sent the event.
+        environment_id:
+          type: string
+          description: Environment identifier (e.g. production, staging).
+        event:
+          type: string
+          description: The full webhook event name (e.g. observer.sales_order_place_after).
+        event_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this specific event invocation.
+        data:
+          type: object
+          description: The event-specific payload data.
+
+    SalesOrderPayload:
+      type: object
+      description: Webhook payload for sales order events.
+      properties:
+        order:
+          $ref: '#/components/schemas/OrderData'
+
+    OrderData:
+      type: object
+      description: Order data included in order-related webhook payloads.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric order entity ID.
+        increment_id:
+          type: string
+          description: Human-readable order number (e.g. 000000001).
+        status:
+          type: string
+          description: Current order status code (e.g. pending, processing, complete).
+        state:
+          type: string
+          description: Internal order state machine state.
+        customer_id:
+          type: integer
+          description: Numeric customer entity ID. Null for guest orders.
+        customer_email:
+          type: string
+          format: email
+          description: Email address of the customer or guest.
+        customer_firstname:
+          type: string
+          description: Customer first name.
+        customer_lastname:
+          type: string
+          description: Customer last name.
+        customer_is_guest:
+          type: integer
+          description: Whether the order is a guest order. 1 = guest, 0 = registered customer.
+          enum: [0, 1]
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was last modified.
+        grand_total:
+          type: string
+          description: Order grand total as a decimal string.
+        subtotal:
+          type: string
+          description: Order subtotal before tax and shipping as a decimal string.
+        tax_amount:
+          type: string
+          description: Total tax amount as a decimal string.
+        shipping_amount:
+          type: string
+          description: Shipping amount as a decimal string.
+        discount_amount:
+          type: string
+          description: Discount amount as a decimal string.
+        base_currency_code:
+          type: string
+          description: ISO 4217 currency code for the base currency.
+        order_currency_code:
+          type: string
+          description: ISO 4217 currency code for the order display currency.
+        billing_address:
+          $ref: '#/components/schemas/AddressData'
+        shipping_address:
+          $ref: '#/components/schemas/AddressData'
+        items:
+          type: array
+          description: Line items in the order.
+          items:
+            $ref: '#/components/schemas/OrderItemData'
+        payment:
+          $ref: '#/components/schemas/PaymentData'
+
+    OrderItemData:
+      type: object
+      description: A line item in an order webhook payload.
+      properties:
+        item_id:
+          type: integer
+          description: Numeric order item entity ID.
+        sku:
+          type: string
+          description: Product SKU.
+        name:
+          type: string
+          description: Product name at time of purchase.
+        product_id:
+          type: integer
+          description: Numeric product entity ID.
+        product_type:
+          type: string
+          description: Product type (simple, configurable, etc.).
+        qty_ordered:
+          type: string
+          description: Quantity ordered as a decimal string.
+        price:
+          type: string
+          description: Unit price as a decimal string.
+        row_total:
+          type: string
+          description: Row total as a decimal string.
+        tax_amount:
+          type: string
+          description: Tax amount for this line item.
+
+    AddressData:
+      type: object
+      description: Address data included in order and customer webhook payloads.
+      properties:
+        firstname:
+          type: string
+          description: First name of the address recipient.
+        lastname:
+          type: string
+          description: Last name of the address recipient.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        street:
+          description: Street address lines as an array or newline-separated string.
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: State or region name.
+        region_code:
+          type: string
+          description: State or region code.
+        country_id:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          minLength: 2
+          maxLength: 2
+        postcode:
+          type: string
+          description: Postal code.
+        telephone:
+          type: string
+          description: Phone number.
+
+    PaymentData:
+      type: object
+      description: Payment method data included in order webhook payloads.
+      properties:
+        method:
+          type: string
+          description: Payment method code (e.g. checkmo, braintree, free).
+        amount_paid:
+          type: string
+          description: Amount paid as a decimal string.
+        base_amount_paid:
+          type: string
+          description: Base currency amount paid as a decimal string.
+
+    InvoicePayload:
+      type: object
+      description: Webhook payload for invoice payment events.
+      properties:
+        invoice:
+          type: object
+          description: Invoice data object.
+          properties:
+            entity_id:
+              type: integer
+              description: Numeric invoice entity ID.
+            order_id:
+              type: integer
+              description: Numeric entity ID of the parent order.
+            increment_id:
+              type: string
+              description: Human-readable invoice number.
+            grand_total:
+              type: string
+              description: Invoice grand total as a decimal string.
+            state:
+              type: integer
+              description: Invoice state. 2 = paid.
+            created_at:
+              type: string
+              format: date-time
+              description: ISO 8601 timestamp when the invoice was created.
+
+    ShipmentPayload:
+      type: object
+      description: Webhook payload for shipment events.
+      properties:
+        shipment:
+          type: object
+          description: Shipment data object.
+          properties:
+            entity_id:
+              type: integer
+              description: Numeric shipment entity ID.
+            order_id:
+              type: integer
+              description: Numeric entity ID of the parent order.
+            increment_id:
+              type: string
+              description: Human-readable shipment number.
+            created_at:
+              type: string
+              format: date-time
+              description: ISO 8601 timestamp when the shipment was created.
+            tracks:
+              type: array
+              description: Tracking information records for this shipment.
+              items:
+                type: object
+                properties:
+                  carrier_code:
+                    type: string
+                    description: Carrier code (e.g. ups, fedex, usps).
+                  title:
+                    type: string
+                    description: Human-readable carrier name.
+                  track_number:
+                    type: string
+                    description: Carrier tracking number.
+            items:
+              type: array
+              description: Products included in this shipment.
+              items:
+                type: object
+                properties:
+                  sku:
+                    type: string
+                    description: Product SKU.
+                  name:
+                    type: string
+                    description: Product name.
+                  qty:
+                    type: number
+                    description: Quantity shipped.
+
+    CustomerPayload:
+      type: object
+      description: Webhook payload for customer account events.
+      properties:
+        customer:
+          $ref: '#/components/schemas/CustomerData'
+
+    CustomerData:
+      type: object
+      description: Customer data object included in customer event payloads.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric customer entity ID.
+        email:
+          type: string
+          format: email
+          description: Customer email address.
+        firstname:
+          type: string
+          description: Customer first name.
+        lastname:
+          type: string
+          description: Customer last name.
+        group_id:
+          type: integer
+          description: Customer group ID.
+        store_id:
+          type: integer
+          description: Store view ID where the customer account belongs.
+        website_id:
+          type: integer
+          description: Website ID associated with the customer account.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the account was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the account was last modified.
+
+    ProductPayload:
+      type: object
+      description: Webhook payload for catalog product events.
+      properties:
+        product:
+          type: object
+          description: Product data object.
+          properties:
+            entity_id:
+              type: integer
+              description: Numeric product entity ID.
+            sku:
+              type: string
+              description: Product SKU.
+            name:
+              type: string
+              description: Product display name.
+            type_id:
+              type: string
+              description: Product type (simple, configurable, virtual, etc.).
+            status:
+              type: integer
+              description: Product status. 1 = enabled, 2 = disabled.
+              enum: [1, 2]
+            price:
+              type: number
+              description: Product base price.
+            created_at:
+              type: string
+              format: date-time
+              description: ISO 8601 timestamp when the product was created.
+            updated_at:
+              type: string
+              format: date-time
+              description: ISO 8601 timestamp when the product was last updated.
+
+    CartAddPayload:
+      type: object
+      description: Webhook payload for cart product add events.
+      properties:
+        quote_item:
+          type: object
+          description: The cart item that was added.
+          properties:
+            item_id:
+              type: integer
+              description: Numeric cart item entity ID.
+            sku:
+              type: string
+              description: SKU of the added product.
+            name:
+              type: string
+              description: Product display name.
+            qty:
+              type: number
+              description: Quantity added to the cart.
+            price:
+              type: number
+              description: Unit price of the product.
+            product_id:
+              type: integer
+              description: Numeric product entity ID.
+            product_type:
+              type: string
+              description: Product type.
+            quote_id:
+              type: string
+              description: Cart (quote) ID this item was added to.

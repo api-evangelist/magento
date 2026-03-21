@@ -1,0 +1,421 @@
+asyncapi: 2.6.0
+info:
+  title: Adobe Commerce Eventing
+  description: >-
+    Adobe Commerce Eventing provides an asynchronous event-driven integration
+    framework that publishes Commerce business events to Adobe I/O Events,
+    enabling App Builder applications and other Adobe Experience Cloud services
+    to subscribe and react to store activity. Events are transmitted over the
+    Adobe I/O Events pub/sub infrastructure and delivered to registered consumer
+    applications via HTTPS webhook delivery or journal polling. Supported event
+    types cover the full commerce lifecycle including order placement, customer
+    registration, product updates, inventory changes, and payment processing.
+    Events are configured by subscribing to specific Commerce observer or plugin
+    events in the event_subscriptions.xml configuration file or via the Commerce
+    Admin. Each event carries a structured JSON payload with the fields defined
+    in the subscription configuration, keeping data transfer lean and targeted.
+  version: '1.0'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/extensibility/events/
+externalDocs:
+  description: Adobe I/O Events for Adobe Commerce Documentation
+  url: https://developer.adobe.com/commerce/extensibility/events/
+servers:
+  adobeIOEvents:
+    url: 'https://eventsingress.adobe.io'
+    protocol: https
+    description: >-
+      Adobe I/O Events ingress endpoint. Commerce publishes events here;
+      consumer applications receive them via registered I/O Events webhooks
+      or the journal polling API at https://api.adobe.io/events/organizations/{org}/integrations/{cred}/journal.
+    security:
+      - imsOAuth: []
+channels:
+  com.adobe.commerce.observer.sales_order_place_after:
+    description: >-
+      Emitted after a new sales order is successfully placed. Published to
+      Adobe I/O Events and routed to all subscribed App Builder applications.
+      Use this event to trigger order processing workflows, notify fulfilment
+      systems, or update external ERP records.
+    subscribe:
+      operationId: consumeOrderPlaced
+      summary: Order placed event
+      description: >-
+        Consumed by App Builder applications subscribed to the
+        com.adobe.commerce.observer.sales_order_place_after event type.
+        The payload includes order metadata and the configured subset of
+        order fields defined in the event subscription.
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+
+  com.adobe.commerce.observer.sales_order_save_commit_after:
+    description: >-
+      Emitted after any committed save of an order record. Covers status
+      changes, invoice creation, shipment creation, and admin edits. Use
+      this event to maintain real-time order status synchronization in
+      external systems.
+    subscribe:
+      operationId: consumeOrderSaved
+      summary: Order saved event
+      description: >-
+        Consumed by App Builder applications subscribed to order save events.
+        Fires on any commit of an order record change, providing the current
+        state of the order including its updated status and totals.
+      message:
+        $ref: '#/components/messages/OrderSaved'
+
+  com.adobe.commerce.observer.customer_register_success:
+    description: >-
+      Emitted when a new customer successfully registers an account in the
+      storefront. Published to Adobe I/O Events for downstream CRM, marketing
+      automation, or loyalty program integrations.
+    subscribe:
+      operationId: consumeCustomerRegistered
+      summary: Customer registered event
+      description: >-
+        Consumed by App Builder applications handling new customer onboarding.
+        The payload includes the new customer account details as configured
+        in the event subscription fields.
+      message:
+        $ref: '#/components/messages/CustomerRegistered'
+
+  com.adobe.commerce.observer.customer_save_after_data_object:
+    description: >-
+      Emitted after a customer account is created or updated. Covers both
+      admin-initiated profile changes and customer self-service updates.
+      Use this to synchronize customer data with external CRM systems.
+    subscribe:
+      operationId: consumeCustomerSaved
+      summary: Customer saved event
+      description: >-
+        Consumed by App Builder applications that synchronize customer profile
+        data. The payload includes the customer data object with the fields
+        configured in the subscription, enabling detection of which data changed.
+      message:
+        $ref: '#/components/messages/CustomerSaved'
+
+  com.adobe.commerce.observer.catalog_product_save_after:
+    description: >-
+      Emitted after a product record is saved in the catalog. Covers new
+      product creation and updates to existing products. Use this to propagate
+      catalog changes to external PIM, search, or marketplace systems.
+    subscribe:
+      operationId: consumeProductSaved
+      summary: Product saved event
+      description: >-
+        Consumed by App Builder applications that maintain product catalog
+        synchronization with external systems. The payload includes product
+        attribute data as configured in the event subscription fields.
+      message:
+        $ref: '#/components/messages/ProductSaved'
+
+  com.adobe.commerce.observer.catalog_product_delete_after_done:
+    description: >-
+      Emitted after a product is permanently deleted from the catalog. Use this
+      to remove the product from external search indexes, PIM systems, or
+      marketplace listings.
+    subscribe:
+      operationId: consumeProductDeleted
+      summary: Product deleted event
+      description: >-
+        Consumed by App Builder applications that need to react to catalog
+        product removal. The payload includes the deleted product's entity ID
+        and SKU for external record lookup and deletion.
+      message:
+        $ref: '#/components/messages/ProductDeleted'
+
+  com.adobe.commerce.observer.checkout_submit_all_after:
+    description: >-
+      Emitted after the checkout process completes and an order has been
+      submitted. This event fires after the order is fully placed including
+      payment authorization. Use for post-checkout analytics and campaign
+      triggers.
+    subscribe:
+      operationId: consumeCheckoutComplete
+      summary: Checkout completed event
+      description: >-
+        Consumed by App Builder applications handling post-checkout workflows
+        such as abandonment recovery reset, loyalty point awards, or
+        personalization updates.
+      message:
+        $ref: '#/components/messages/CheckoutComplete'
+
+  com.adobe.commerce.observer.sales_order_creditmemo_save_after:
+    description: >-
+      Emitted after a credit memo (refund) is created for an order. Use this
+      event to trigger refund processing in accounting systems, loyalty point
+      deductions, or customer service platforms.
+    subscribe:
+      operationId: consumeCreditMemoSaved
+      summary: Credit memo created event
+      description: >-
+        Consumed by App Builder applications that handle refund and return
+        workflows. The payload includes the credit memo with the refunded
+        items and amounts.
+      message:
+        $ref: '#/components/messages/CreditMemoSaved'
+
+components:
+  securitySchemes:
+    imsOAuth:
+      type: oauth2
+      description: >-
+        Adobe Identity Management System (IMS) OAuth 2.0. Consumer applications
+        authenticate with Adobe I/O using a service account (JWT) or OAuth
+        server-to-server credential to receive events from the journal or
+        via registered webhook delivery.
+      flows:
+        clientCredentials:
+          tokenUrl: https://ims-na1.adobelogin.com/ims/token
+          scopes:
+            aio_api_management: Manage Adobe I/O event subscriptions
+
+  messages:
+    OrderPlaced:
+      name: OrderPlaced
+      title: Order Placed
+      summary: Event published when a new Commerce order is placed.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+      examples:
+        - name: OrderPlacedExample
+          payload:
+            specversion: '1.0'
+            type: com.adobe.commerce.observer.sales_order_place_after
+            source: urn:uuid:commerceInstanceId
+            id: abc123-def456
+            time: '2026-03-21T10:00:00Z'
+            datacontenttype: application/json
+            data:
+              uid: abc123-def456
+              event:
+                order:
+                  entity_id: 1001
+                  increment_id: '000001001'
+                  status: pending
+                  customer_email: customer@example.com
+                  grand_total: '99.95'
+
+    OrderSaved:
+      name: OrderSaved
+      title: Order Saved
+      summary: Event published when a Commerce order is updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    CustomerRegistered:
+      name: CustomerRegistered
+      title: Customer Registered
+      summary: Event published when a new customer account is created.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    CustomerSaved:
+      name: CustomerSaved
+      title: Customer Saved
+      summary: Event published when a customer account is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    ProductSaved:
+      name: ProductSaved
+      title: Product Saved
+      summary: Event published when a catalog product is created or updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    ProductDeleted:
+      name: ProductDeleted
+      title: Product Deleted
+      summary: Event published when a catalog product is deleted.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    CheckoutComplete:
+      name: CheckoutComplete
+      title: Checkout Completed
+      summary: Event published when a customer completes checkout.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+    CreditMemoSaved:
+      name: CreditMemoSaved
+      title: Credit Memo Created
+      summary: Event published when a refund credit memo is created for an order.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CommerceEventEnvelope'
+
+  schemas:
+    CommerceEventEnvelope:
+      type: object
+      description: >-
+        CloudEvents 1.0 compliant envelope wrapping all Adobe Commerce I/O Events
+        payloads. Adobe I/O Events uses the CloudEvents specification for all
+        event metadata.
+      required:
+        - specversion
+        - type
+        - source
+        - id
+        - time
+        - data
+      properties:
+        specversion:
+          type: string
+          description: CloudEvents specification version. Always "1.0".
+          const: '1.0'
+        type:
+          type: string
+          description: >-
+            The fully qualified event type name. For Commerce events, follows
+            the pattern com.adobe.commerce.{observer|plugin}.{event_name}.
+          example: com.adobe.commerce.observer.sales_order_place_after
+        source:
+          type: string
+          description: >-
+            URN identifying the Commerce instance that produced the event.
+            Format: urn:uuid:{commerce_instance_id}.
+          format: uri
+        id:
+          type: string
+          description: Unique identifier for this specific event occurrence.
+          format: uuid
+        time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the event was produced.
+        datacontenttype:
+          type: string
+          description: MIME type of the data field content.
+          const: application/json
+        subject:
+          type: string
+          description: Optional subject providing additional context about the event source entity.
+        data:
+          $ref: '#/components/schemas/CommerceEventData'
+
+    CommerceEventData:
+      type: object
+      description: >-
+        The inner data object of a Commerce I/O Event. Contains event metadata
+        and the nested event payload with the Commerce entity data.
+      properties:
+        uid:
+          type: string
+          description: Unique identifier for this event delivery instance.
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the event.
+        merchant_id:
+          type: string
+          description: Adobe Commerce merchant identifier string.
+        environment_id:
+          type: string
+          description: Commerce environment identifier (production, staging, etc.).
+        event:
+          type: object
+          description: >-
+            The event-specific payload object. The shape of this object depends
+            on which fields were configured in the Commerce event subscription.
+            Common top-level keys are the entity type (e.g. order, customer, product).
+          additionalProperties: true
+
+    OrderEventData:
+      type: object
+      description: Order data fields commonly included in order event payloads.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric order entity ID.
+        increment_id:
+          type: string
+          description: Human-readable order number.
+        status:
+          type: string
+          description: Current order status code.
+        state:
+          type: string
+          description: Internal order state.
+        customer_id:
+          type: integer
+          description: Numeric customer entity ID.
+        customer_email:
+          type: string
+          format: email
+          description: Customer email address.
+        grand_total:
+          type: string
+          description: Order grand total as a decimal string.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 order creation timestamp.
+
+    CustomerEventData:
+      type: object
+      description: Customer data fields commonly included in customer event payloads.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric customer entity ID.
+        email:
+          type: string
+          format: email
+          description: Customer email address.
+        firstname:
+          type: string
+          description: Customer first name.
+        lastname:
+          type: string
+          description: Customer last name.
+        group_id:
+          type: integer
+          description: Customer group ID.
+        store_id:
+          type: integer
+          description: Store view ID.
+        website_id:
+          type: integer
+          description: Website ID.
+        created_at:
+          type: string
+          format: date-time
+          description: Account creation timestamp.
+
+    ProductEventData:
+      type: object
+      description: Product data fields commonly included in product event payloads.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric product entity ID.
+        sku:
+          type: string
+          description: Product SKU.
+        name:
+          type: string
+          description: Product display name.
+        type_id:
+          type: string
+          description: Product type.
+        status:
+          type: integer
+          description: Product status. 1 = enabled, 2 = disabled.
+          enum: [1, 2]
+        price:
+          type: number
+          description: Product base price.
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp.

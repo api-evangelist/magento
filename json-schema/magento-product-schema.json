@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/magento/schemas/magento-product.json",
+  "title": "Magento Product",
+  "description": "A catalog product in Adobe Commerce (Magento). Represents any type of sellable item in the catalog including simple, configurable, virtual, downloadable, bundle, and grouped products. Products have a core set of system attributes (SKU, name, price, status, visibility) plus any number of custom EAV attributes defined in the attribute set. Products are the central entity in catalog management and serve as the basis for order line items.",
+  "type": "object",
+  "required": [
+    "sku",
+    "name",
+    "attribute_set_id",
+    "status",
+    "visibility",
+    "type_id"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Numeric product entity ID assigned by Commerce. Read-only after creation."
+    },
+    "sku": {
+      "type": "string",
+      "description": "Stock Keeping Unit — the unique product identifier across the catalog. Used as the primary key in most product-related API operations.",
+      "maxLength": 64
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the product shown in the storefront catalog and search results.",
+      "maxLength": 255
+    },
+    "attribute_set_id": {
+      "type": "integer",
+      "description": "Numeric ID of the attribute set applied to this product. Determines which custom attributes are available."
+    },
+    "price": {
+      "type": "number",
+      "description": "Base price of the product in the store's base currency. For configurable products, this is the starting price before option selection.",
+      "minimum": 0
+    },
+    "status": {
+      "type": "integer",
+      "description": "Product catalog status controlling whether the product can be sold. 1 = enabled (visible and purchasable), 2 = disabled (hidden from storefront).",
+      "enum": [1, 2]
+    },
+    "visibility": {
+      "type": "integer",
+      "description": "Controls where the product appears in the storefront. 1 = not visible individually, 2 = catalog only, 3 = search only, 4 = catalog and search.",
+      "enum": [1, 2, 3, 4]
+    },
+    "type_id": {
+      "type": "string",
+      "description": "Product type identifier determining the product's behavior, purchasability, and available options.",
+      "enum": ["simple", "configurable", "virtual", "downloadable", "bundle", "grouped"]
+    },
+    "weight": {
+      "type": "number",
+      "description": "Product weight used for shipping rate calculation. Unit is the store's configured weight unit (lbs or kgs). Not applicable to virtual or downloadable products.",
+      "minimum": 0
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp in UTC when the product was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp in UTC when the product was last updated."
+    },
+    "extension_attributes": {
+      "$ref": "#/$defs/ProductExtensionAttributes",
+      "description": "Extension attributes providing module-specific product data such as stock information and category assignments."
+    },
+    "product_links": {
+      "type": "array",
+      "description": "Cross-sell, up-sell, related, and associated product link objects.",
+      "items": {
+        "$ref": "#/$defs/ProductLink"
+      }
+    },
+    "options": {
+      "type": "array",
+      "description": "Custom options for the product (e.g. text fields, drop-downs, date pickers) that customers can configure before adding to cart.",
+      "items": {
+        "$ref": "#/$defs/ProductOption"
+      }
+    },
+    "media_gallery_entries": {
+      "type": "array",
+      "description": "Images, videos, and other media associated with the product.",
+      "items": {
+        "$ref": "#/$defs/MediaGalleryEntry"
+      }
+    },
+    "tier_prices": {
+      "type": "array",
+      "description": "Quantity-based tier pricing rules for the product.",
+      "items": {
+        "$ref": "#/$defs/TierPrice"
+      }
+    },
+    "custom_attributes": {
+      "type": "array",
+      "description": "Custom EAV attribute values for this product. The available attributes depend on the product's attribute set.",
+      "items": {
+        "$ref": "#/$defs/CustomAttribute"
+      }
+    }
+  },
+  "$defs": {
+    "CustomAttribute": {
+      "type": "object",
+      "description": "A key-value pair representing a custom EAV attribute value on a catalog entity.",
+      "required": ["attribute_code", "value"],
+      "properties": {
+        "attribute_code": {
+          "type": "string",
+          "description": "The unique string code identifying the EAV attribute (e.g. description, color, size).",
+          "maxLength": 255
+        },
+        "value": {
+          "description": "The attribute value. Type varies by attribute: strings for text, integers for select options, arrays for multi-select."
+        }
+      }
+    },
+    "ProductExtensionAttributes": {
+      "type": "object",
+      "description": "Extension attributes available on product objects from Commerce modules.",
+      "properties": {
+        "stock_item": {
+          "$ref": "#/$defs/StockItem",
+          "description": "Legacy single-source stock quantity and availability data."
+        },
+        "category_links": {
+          "type": "array",
+          "description": "Category assignments for this product.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "string",
+                "description": "String representation of the category ID."
+              },
+              "position": {
+                "type": "integer",
+                "description": "Sort position of the product within the category."
+              }
+            }
+          }
+        },
+        "website_ids": {
+          "type": "array",
+          "description": "List of website IDs this product is assigned to.",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "StockItem": {
+      "type": "object",
+      "description": "Legacy single-source inventory stock data for a product. For multi-source inventory, use the /V1/inventory/source-items API.",
+      "properties": {
+        "item_id": {
+          "type": "integer",
+          "description": "Numeric stock item entity ID."
+        },
+        "product_id": {
+          "type": "integer",
+          "description": "Numeric product entity ID."
+        },
+        "qty": {
+          "type": "number",
+          "description": "Available quantity in the default stock.",
+          "minimum": 0
+        },
+        "is_in_stock": {
+          "type": "boolean",
+          "description": "Whether the product is in stock and purchasable."
+        },
+        "is_qty_decimal": {
+          "type": "boolean",
+          "description": "Whether quantities for this product can be fractional (e.g. for products sold by weight)."
+        },
+        "manage_stock": {
+          "type": "boolean",
+          "description": "Whether stock quantity is tracked and enforced for this product."
+        },
+        "min_qty": {
+          "type": "number",
+          "description": "Minimum allowed purchase quantity."
+        },
+        "max_sale_qty": {
+          "type": "number",
+          "description": "Maximum allowed purchase quantity per order."
+        },
+        "min_sale_qty": {
+          "type": "number",
+          "description": "Minimum allowed purchase quantity per order."
+        }
+      }
+    },
+    "ProductLink": {
+      "type": "object",
+      "description": "A link between two products defining a relationship type (related, cross-sell, up-sell, or associated).",
+      "required": ["sku", "link_type", "linked_product_sku", "linked_product_type"],
+      "properties": {
+        "sku": {
+          "type": "string",
+          "description": "SKU of the source product that owns this link."
+        },
+        "link_type": {
+          "type": "string",
+          "description": "The type of product relationship.",
+          "enum": ["related", "crosssell", "upsell", "associated"]
+        },
+        "linked_product_sku": {
+          "type": "string",
+          "description": "SKU of the linked (target) product."
+        },
+        "linked_product_type": {
+          "type": "string",
+          "description": "Product type of the linked product.",
+          "enum": ["simple", "configurable", "virtual", "downloadable", "bundle", "grouped"]
+        },
+        "position": {
+          "type": "integer",
+          "description": "Sort position of this linked product within the link type group."
+        }
+      }
+    },
+    "ProductOption": {
+      "type": "object",
+      "description": "A custom option that customers can configure when adding the product to the cart.",
+      "required": ["title", "type", "is_require"],
+      "properties": {
+        "option_id": {
+          "type": "integer",
+          "description": "Numeric option entity ID."
+        },
+        "product_sku": {
+          "type": "string",
+          "description": "SKU of the product this option belongs to."
+        },
+        "title": {
+          "type": "string",
+          "description": "Display label for the option shown to the customer.",
+          "maxLength": 255
+        },
+        "type": {
+          "type": "string",
+          "description": "Input type for the option.",
+          "enum": ["field", "area", "file", "drop_down", "radio", "checkbox", "multiple", "date", "date_time", "time"]
+        },
+        "is_require": {
+          "type": "boolean",
+          "description": "Whether the customer must select or fill in this option before adding to cart."
+        },
+        "price": {
+          "type": "number",
+          "description": "Additional price charged for selecting this option."
+        },
+        "price_type": {
+          "type": "string",
+          "description": "Whether the option price is a fixed amount or a percentage of the product price.",
+          "enum": ["fixed", "percent"]
+        },
+        "sort_order": {
+          "type": "integer",
+          "description": "Display sort order for this option on the product page."
+        },
+        "values": {
+          "type": "array",
+          "description": "Available values for select-type options (drop_down, radio, checkbox, multiple).",
+          "items": {
+            "$ref": "#/$defs/ProductOptionValue"
+          }
+        }
+      }
+    },
+    "ProductOptionValue": {
+      "type": "object",
+      "description": "A selectable value for a product custom option of a select type.",
+      "required": ["title"],
+      "properties": {
+        "option_type_id": {
+          "type": "integer",
+          "description": "Numeric option value entity ID."
+        },
+        "option_id": {
+          "type": "integer",
+          "description": "Numeric ID of the parent option."
+        },
+        "title": {
+          "type": "string",
+          "description": "Display label for this option value.",
+          "maxLength": 255
+        },
+        "price": {
+          "type": "number",
+          "description": "Additional price for selecting this value."
+        },
+        "price_type": {
+          "type": "string",
+          "description": "Whether the price is fixed or a percentage of the base product price.",
+          "enum": ["fixed", "percent"]
+        },
+        "sort_order": {
+          "type": "integer",
+          "description": "Display sort order for this value within the option."
+        }
+      }
+    },
+    "MediaGalleryEntry": {
+      "type": "object",
+      "description": "A media asset (image or video) associated with a product in the media gallery.",
+      "required": ["media_type", "label", "position", "disabled"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Numeric media gallery entry entity ID."
+        },
+        "media_type": {
+          "type": "string",
+          "description": "Type of media asset.",
+          "enum": ["image", "video"]
+        },
+        "label": {
+          "type": "string",
+          "description": "Alt text label for the media asset.",
+          "maxLength": 255
+        },
+        "position": {
+          "type": "integer",
+          "description": "Display sort position of this media asset in the gallery."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether this media entry is hidden from the storefront gallery."
+        },
+        "types": {
+          "type": "array",
+          "description": "Image roles assigned to this entry (e.g. image, small_image, thumbnail, swatch_image).",
+          "items": {
+            "type": "string"
+          }
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative file path to the image within the media/catalog/product directory."
+        }
+      }
+    },
+    "TierPrice": {
+      "type": "object",
+      "description": "A quantity-based tier pricing rule that offers a discount when a customer purchases at or above the specified quantity.",
+      "required": ["customer_group_id", "qty", "value"],
+      "properties": {
+        "customer_group_id": {
+          "type": "integer",
+          "description": "Customer group ID this tier price applies to. 32000 = ALL customer groups."
+        },
+        "qty": {
+          "type": "number",
+          "description": "Minimum quantity the customer must purchase to qualify for this tier price.",
+          "minimum": 1
+        },
+        "value": {
+          "type": "number",
+          "description": "Tier price value. Interpreted as a fixed price or percent discount based on extension_attributes.percentage_value.",
+          "minimum": 0
+        },
+        "website_id": {
+          "type": "integer",
+          "description": "Website ID this tier price applies to. 0 = all websites."
+        }
+      }
+    }
+  }
+}
