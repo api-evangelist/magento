@@ -1,5 +1,6 @@
 aid: magento
-url: https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis:
   - aid: magento:rest-api
@@ -11,7 +12,8 @@ apis:
       - Orders
       - Customers
       - Catalog
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/rest
     humanURL: https://developer.adobe.com/commerce/webapi/rest/
     properties:
@@ -22,16 +24,12 @@ apis:
       - url: openapi/magento-rest-api-openapi.yml
         type: OpenAPI
     description: >-
-      The Adobe Commerce (Magento) REST API provides a comprehensive set of
-      endpoints for interacting with all major aspects of an e-commerce store,
-      including catalog management, orders, customers, inventory, shipping, and
-      payments. It supports three authentication mechanisms: OAuth 1.0a for
-      third-party integrations, token-based authentication for mobile apps and
-      administrators, and guest access for select public endpoints. The API
-      follows REST conventions and returns JSON responses, enabling developers
-      to build integrations, automate store operations, and power headless
-      commerce storefronts. Both Adobe Commerce on-premises and Adobe Commerce
-      on cloud infrastructure use the same REST API framework.
+      The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints
+      for interacting with all major aspects of an e-commerce store, including catalog
+      management, orders, customers, inventory, shipping, and payments. It supports
+      three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based
+      authentication for mobile apps and administrators, and guest access for select
+      public endpoints.
 
   - aid: magento:graphql-api
     name: Magento GraphQL API
@@ -42,7 +40,8 @@ apis:
       - Catalog
       - Cart
       - Headless Commerce
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/graphql
     humanURL: https://developer.adobe.com/commerce/webapi/graphql/
     properties:
@@ -51,16 +50,11 @@ apis:
       - url: https://developer.adobe.com/commerce/webapi/graphql/reference/
         type: Documentation
     description: >-
-      The Adobe Commerce GraphQL API offers a flexible, query-driven interface
-      designed primarily for building headless storefronts and progressive web
-      applications. It exposes a single endpoint and allows clients to request
-      exactly the data they need through queries and mutations covering catalog
-      browsing, product search, cart management, checkout, customer accounts,
-      and order history. The API is optimized for performance with support for
-      the Adobe Commerce Application Server, which keeps the GraphQL process
-      resident in memory to reduce per-request bootstrapping overhead. A live
-      API playground is available for exploring the schema against a sample
-      Adobe Commerce instance.
+      The Adobe Commerce GraphQL API offers a flexible, query-driven interface designed
+      primarily for building headless storefronts and progressive web applications.
+      It exposes a single endpoint and allows clients to request exactly the data
+      they need through queries and mutations covering catalog browsing, product search,
+      cart management, checkout, customer accounts, and order history.
 
   - aid: magento:soap-api
     name: Magento SOAP API
@@ -69,24 +63,24 @@ apis:
       - SOAP
       - Web Services
       - Integration
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/soap
-    humanURL: https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
+    humanURL: 
+      https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
     properties:
-      - url: https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
+      - url: 
+          https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
         type: Documentation
       - url: wsdl/magento-soap.wsdl
         type: WSDL
     description: >-
-      The Adobe Commerce SOAP API exposes the same service contracts as the
-      REST API through a WSDL 1.2 interface compliant with WS-I 2.0 Basic
-      Profile. It allows enterprise systems and legacy integrations to interact
-      with Adobe Commerce store data using standard SOAP tooling. Developers
-      can retrieve the WSDL for any service or combination of services by
-      appending query parameters to the SOAP endpoint URL. While REST and
-      GraphQL are the recommended interfaces for new integrations, the SOAP API
-      remains supported for backwards compatibility with existing enterprise
-      middleware and ERP systems.
+      The Adobe Commerce SOAP API exposes the same service contracts as the REST API
+      through a WSDL 1.2 interface compliant with WS-I 2.0 Basic Profile. It allows
+      enterprise systems and legacy integrations to interact with Adobe Commerce store
+      data using standard SOAP tooling. Developers can retrieve the WSDL for any service
+      or combination of services by appending query parameters to the SOAP endpoint
+      URL.
 
   - aid: magento:webhooks
     name: Adobe Commerce Webhooks
@@ -96,7 +90,8 @@ apis:
       - Events
       - Extensibility
       - Real-Time
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/webhooks/
     properties:
@@ -105,16 +100,11 @@ apis:
       - url: asyncapi/magento-webhooks-asyncapi.yml
         type: AsyncAPI
     description: >-
-      Adobe Commerce Webhooks enable developers to configure synchronous HTTP
-      callbacks that fire when specific events occur within a Commerce instance,
-      allowing external systems to react in real time to store activity. Webhooks
-      can intercept and modify request data before Commerce processes it, or
-      trigger outbound notifications after an event completes. They are commonly
-      used to integrate with external order management systems, fraud detection
-      services, ERP platforms, and third-party fulfilment workflows. Webhook
-      definitions can be managed through the Commerce Admin UI, the REST API, or
-      configuration XML, and are available across Adobe Commerce on-premises,
-      PaaS, and SaaS (Adobe Commerce as a Cloud Service) deployments.
+      Adobe Commerce Webhooks enable developers to configure synchronous HTTP callbacks
+      that fire when specific events occur within a Commerce instance, allowing external
+      systems to react in real time to store activity. Webhooks can intercept and
+      modify request data before Commerce processes it, or trigger outbound notifications
+      after an event completes.
 
   - aid: magento:admin-ui-sdk
     name: Adobe Commerce Admin UI SDK
@@ -124,23 +114,19 @@ apis:
       - Admin Panel
       - App Builder
       - UI Extensions
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/
     properties:
       - url: https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/
         type: Documentation
     description: >-
-      The Adobe Commerce Admin UI SDK enables App Builder developers to extend
-      the Commerce Admin panel with custom menus, pages, and UI components
-      built as out-of-process applications. Rather than modifying the Commerce
-      codebase directly, developers build React-based UIs hosted on Adobe App
-      Builder infrastructure and surface them inside the Admin through the SDK's
-      extension point mechanism. This approach allows merchants to configure and
-      interact with custom applications directly from the familiar Admin
-      interface without requiring core code modifications or redeployments. The
-      SDK supports authentication, iframe-based rendering, and communication
-      between the embedded app and the Commerce Admin host.
+      The Adobe Commerce Admin UI SDK enables App Builder developers to extend the
+      Commerce Admin panel with custom menus, pages, and UI components built as out-of-process
+      applications. Rather than modifying the Commerce codebase directly, developers
+      build React-based UIs hosted on Adobe App Builder infrastructure and surface
+      them inside the Admin through the SDK's extension point mechanism.
 
   - aid: magento:events
     name: Adobe Commerce Eventing
@@ -150,7 +136,8 @@ apis:
       - App Builder
       - Extensibility
       - Adobe I/O
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/events/
     properties:
@@ -159,16 +146,12 @@ apis:
       - url: asyncapi/magento-events-asyncapi.yml
         type: AsyncAPI
     description: >-
-      Adobe Commerce Eventing provides an asynchronous event-driven integration
-      framework that publishes Commerce business events to Adobe I/O Events,
-      enabling App Builder applications and other Adobe Experience Cloud services
-      to subscribe and react to store activity. Supported event types cover the
-      full commerce lifecycle including order placement, customer registration,
-      product updates, inventory changes, and payment processing. The eventing
-      system decouples Commerce from downstream integrations, improving
-      resilience and scalability compared to synchronous webhook or polling
-      approaches. Developers configure which events to observe and define the
-      payload fields to transmit, keeping data transfer lean and targeted.
+      Adobe Commerce Eventing provides an asynchronous event-driven integration framework
+      that publishes Commerce business events to Adobe I/O Events, enabling App Builder
+      applications and other Adobe Experience Cloud services to subscribe and react
+      to store activity. Supported event types cover the full commerce lifecycle including
+      order placement, customer registration, product updates, inventory changes,
+      and payment processing.
 
 common:
   - url: json-ld/magento-context.jsonld
@@ -177,3 +160,5 @@ common:
     type: JSONSchema
   - url: json-schema/magento-product-schema.json
     type: JSONSchema
+description: >-
+  Overview of the Adobe Commerce and Magento Open Source REST API documentation.
