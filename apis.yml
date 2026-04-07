@@ -1,19 +1,17 @@
 aid: magento
-url: 
-  https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis:
   - aid: magento:rest-api
     name: Magento REST API
     tags:
-      - E-Commerce
-      - REST
-      - Products
-      - Orders
-      - Customers
       - Catalog
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Customers
+      - E-Commerce
+      - Orders
+      - Products
+      - REST
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/rest
     humanURL: https://developer.adobe.com/commerce/webapi/rest/
     properties:
@@ -34,14 +32,13 @@ apis:
   - aid: magento:graphql-api
     name: Magento GraphQL API
     tags:
+      - Cart
+      - Catalog
       - E-Commerce
       - GraphQL
-      - Storefront
-      - Catalog
-      - Cart
       - Headless Commerce
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Storefront
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/graphql
     humanURL: https://developer.adobe.com/commerce/webapi/graphql/
     properties:
@@ -60,17 +57,14 @@ apis:
     name: Magento SOAP API
     tags:
       - E-Commerce
+      - Integration
       - SOAP
       - Web Services
-      - Integration
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://your-store.example.com/soap
-    humanURL: 
-      https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
+    humanURL: https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
     properties:
-      - url: 
-          https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
+      - url: https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
         type: Documentation
       - url: wsdl/magento-soap.wsdl
         type: WSDL
@@ -86,12 +80,11 @@ apis:
     name: Adobe Commerce Webhooks
     tags:
       - E-Commerce
-      - Webhooks
       - Events
       - Extensibility
       - Real-Time
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Webhooks
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/webhooks/
     properties:
@@ -109,13 +102,12 @@ apis:
   - aid: magento:admin-ui-sdk
     name: Adobe Commerce Admin UI SDK
     tags:
-      - E-Commerce
-      - Extensibility
       - Admin Panel
       - App Builder
+      - E-Commerce
+      - Extensibility
       - UI Extensions
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/
     properties:
@@ -131,13 +123,12 @@ apis:
   - aid: magento:events
     name: Adobe Commerce Eventing
     tags:
+      - Adobe I/O
+      - App Builder
       - E-Commerce
       - Events
-      - App Builder
       - Extensibility
-      - Adobe I/O
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.adobe.com/commerce/extensibility/events/
     properties:

@@ -40,11 +40,11 @@ tags:
       Endpoints for obtaining integration tokens for admin and customer users.
       Token-based authentication issues a Bearer token that must be included
       in the Authorization header of subsequent requests.
-  - name: Products
+  - name: Carts
     description: >-
-      Catalog product management including creation, retrieval, update, and
-      deletion of simple, configurable, virtual, bundled, and grouped products.
-      Supports product attributes, media, pricing rules, and cross-sell links.
+      Shopping cart and quote management for admin, customer, and guest users,
+      including item management, coupon codes, shipping estimation, and
+      payment information collection.
   - name: Categories
     description: >-
       Category tree management including creation, retrieval, update, and
@@ -53,35 +53,35 @@ tags:
     description: >-
       Customer account management including registration, profile updates,
       address management, authentication, and customer group assignment.
-  - name: Orders
-    description: >-
-      Sales order management including order retrieval, status updates,
-      comment posting, cancellation, and order item management.
-  - name: Invoices
-    description: >-
-      Invoice management for orders including invoice creation, retrieval,
-      and payment capture operations.
-  - name: Shipments
-    description: >-
-      Shipment management for orders including shipment creation, retrieval,
-      tracking number management, and shipment comments.
-  - name: Carts
-    description: >-
-      Shopping cart and quote management for admin, customer, and guest users,
-      including item management, coupon codes, shipping estimation, and
-      payment information collection.
   - name: Inventory
     description: >-
       Multi-source inventory management including sources, stocks, stock-source
       links, and source item quantity management.
-  - name: Tax
+  - name: Invoices
     description: >-
-      Tax configuration management including tax rates, tax rules, and
-      tax classes used for order tax calculation.
+      Invoice management for orders including invoice creation, retrieval,
+      and payment capture operations.
+  - name: Orders
+    description: >-
+      Sales order management including order retrieval, status updates,
+      comment posting, cancellation, and order item management.
+  - name: Products
+    description: >-
+      Catalog product management including creation, retrieval, update, and
+      deletion of simple, configurable, virtual, bundled, and grouped products.
+      Supports product attributes, media, pricing rules, and cross-sell links.
+  - name: Shipments
+    description: >-
+      Shipment management for orders including shipment creation, retrieval,
+      tracking number management, and shipment comments.
   - name: Stores
     description: >-
       Store configuration retrieval including store groups, store views,
       websites, and configuration settings.
+  - name: Tax
+    description: >-
+      Tax configuration management including tax rates, tax rules, and
+      tax classes used for order tax calculation.
 security:
   - bearerAuth: []
 paths:
