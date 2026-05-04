@@ -1,0 +1,78 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Adobe Commerce (Magento)
+providerId: magento
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - E-Commerce
+  - Composable Commerce
+description: Adobe Commerce (Magento) pricing is custom and tier-based, scaled by Average Order Value
+  (AOV) and GMV.
+sources:
+  - https://business.adobe.com/products/magento/magento-commerce.html
+plans:
+  - id: magento-open-source
+    name: Magento Open Source
+    type: freemium
+    description: Free open-source self-hosted edition.
+    entries:
+      - label: Per deployment
+        name: deploy
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Free OSS
+      - name: Self-hosted
+      - name: Community-supported
+      - name: Customizable PHP commerce stack
+  - id: magento-commerce
+    name: Adobe Commerce
+    type: enterprise
+    description: Custom annual contract; tiered by AOV and GMV. Typically $22K-$125K+/year.
+    entries:
+      - label: Annual contract
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: $22K-$125K+
+        userMultiplied: false
+    elements:
+      - name: Hosted on-prem option
+      - name: B2B features
+      - name: PWA Studio
+      - name: Page Builder
+      - name: Adobe Sensei AI
+  - id: magento-commerce-cloud
+    name: Adobe Commerce Cloud
+    type: enterprise
+    description: Custom; managed cloud + commerce. Higher than Commerce-only.
+    entries:
+      - label: Annual contract
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom (higher)
+        userMultiplied: false
+    elements:
+      - name: Fully managed cloud
+      - name: Includes hosting + AWS infra
+      - name: Fastly CDN included
+      - name: New Relic APM included
+      - name: PaaS infrastructure

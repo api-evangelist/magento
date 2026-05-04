@@ -1,0 +1,32 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Adobe Commerce (Magento)
+providerId: magento
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Rate Limiting
+  - E-Commerce
+description: Magento REST/GraphQL APIs configurable; default no hard limits.
+sources:
+  - https://business.adobe.com/products/magento/magento-commerce.html
+  - https://developer.adobe.com/commerce/webapi/rest/
+headers: {}
+responseCodes:
+  throttled: 429
+limits:
+  - name: REST/GraphQL (default)
+    scope: instance
+    metric: configurable
+    limit: user-controlled
+  - name: OAuth /token endpoint
+    scope: instance
+    metric: requests_per_minute
+    limit: configurable
+    notes: Set via Stores > Configuration > OAuth
+  - name: Search Engine API
+    scope: instance
+    metric: requests_per_second
+    limit: depends on backend (Elasticsearch/OpenSearch)

@@ -1,0 +1,55 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Adobe Commerce (Magento)
+providerId: magento
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - E-Commerce Platform
+description: FOCUS-aligned FinOps for Adobe Commerce (Magento).
+sources:
+  - https://business.adobe.com/products/magento/magento-commerce.html
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Adobe Commerce (Magento)
+serviceCategory: E-Commerce Platform
+billingModel:
+  pricingCategory: Custom Tier-Based by AOV/GMV
+  billingFrequency: Monthly
+  billingCurrency: USD
+focusColumns:
+  ServiceName: Adobe Commerce (Magento)
+  ServiceCategory: E-Commerce Platform
+  ProviderName: Adobe Commerce (Magento)
+  PublisherName: Adobe Commerce (Magento)
+  BillingCurrency: USD
+meters:
+  - name: annual_contract
+    unit: year
+    aggregation: max
+  - name: gmv
+    unit: USD
+    aggregation: sum
+  - name: average_order_value
+    unit: USD
+    aggregation: avg
+  - name: cloud_infrastructure
+    unit: GB-month
+    aggregation: max
+principles:
+  - name: Visibility
+    description: Track Adobe Commerce (Magento) consumption monthly.
+  - name: Allocation
+    description: Tag usage to teams/cost centers.
+  - name: Optimization
+    description: Right-size; reclaim unused entitlements.
+  - name: Accountability
+    description: Set spend alerts; quarterly review.
