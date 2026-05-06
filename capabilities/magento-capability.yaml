@@ -1,0 +1,1201 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Magento REST API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major
+    aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It
+    supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile
+    apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON
+    responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts.
+    All en'
+  tags:
+  - Magento
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: magento
+    baseUri: https://your-store.example.com/rest/V1
+    description: Magento REST API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{MAGENTO_TOKEN}}'
+    resources:
+    - name: v1-integration-admin-token
+      path: /V1/integration/admin/token
+      operations:
+      - name: createadmintoken
+        method: POST
+        description: Get admin authentication token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-integration-customer-token
+      path: /V1/integration/customer/token
+      operations:
+      - name: createcustomertoken
+        method: POST
+        description: Get customer authentication token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-products
+      path: /V1/products
+      operations:
+      - name: listproducts
+        method: GET
+        description: List products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createproduct
+        method: POST
+        description: Create a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-products-sku
+      path: /V1/products/{sku}
+      operations:
+      - name: getproduct
+        method: GET
+        description: Get product by SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateproduct
+        method: PUT
+        description: Update a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteproduct
+        method: DELETE
+        description: Delete a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-categories
+      path: /V1/categories
+      operations:
+      - name: listcategories
+        method: GET
+        description: List categories
+        inputParameters:
+        - name: rootCategoryId
+          in: query
+          type: integer
+          description: Root category ID to start the tree from. Defaults to the default root category.
+        - name: depth
+          in: query
+          type: integer
+          description: Maximum depth of the category tree to return.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcategory
+        method: POST
+        description: Create a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-categories-categoryid
+      path: /V1/categories/{categoryId}
+      operations:
+      - name: getcategory
+        method: GET
+        description: Get category by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecategory
+        method: PUT
+        description: Update a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecategory
+        method: DELETE
+        description: Delete a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-customers
+      path: /V1/customers
+      operations:
+      - name: createcustomer
+        method: POST
+        description: Create a customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-customers-search
+      path: /V1/customers/search
+      operations:
+      - name: searchcustomers
+        method: GET
+        description: Search customers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-customers-customerid
+      path: /V1/customers/{customerId}
+      operations:
+      - name: getcustomer
+        method: GET
+        description: Get customer by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecustomer
+        method: PUT
+        description: Update a customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecustomer
+        method: DELETE
+        description: Delete a customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-orders
+      path: /V1/orders
+      operations:
+      - name: listorders
+        method: GET
+        description: List orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorder
+        method: POST
+        description: Create an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-orders-orderid
+      path: /V1/orders/{orderId}
+      operations:
+      - name: getorder
+        method: GET
+        description: Get order by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-orders-orderid-cancel
+      path: /V1/orders/{orderId}/cancel
+      operations:
+      - name: cancelorder
+        method: POST
+        description: Cancel an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-orders-orderid-comments
+      path: /V1/orders/{orderId}/comments
+      operations:
+      - name: addordercomment
+        method: POST
+        description: Add a comment to an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-invoices
+      path: /V1/invoices
+      operations:
+      - name: listinvoices
+        method: GET
+        description: List invoices
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-invoices-invoiceid
+      path: /V1/invoices/{invoiceId}
+      operations:
+      - name: getinvoice
+        method: GET
+        description: Get invoice by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-order-orderid-invoice
+      path: /V1/order/{orderId}/invoice
+      operations:
+      - name: createinvoice
+        method: POST
+        description: Create an invoice for an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-shipment
+      path: /V1/shipment
+      operations:
+      - name: createshipment
+        method: POST
+        description: Create a shipment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-shipment-shipmentid
+      path: /V1/shipment/{shipmentId}
+      operations:
+      - name: getshipment
+        method: GET
+        description: Get shipment by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-carts-mine
+      path: /V1/carts/mine
+      operations:
+      - name: createcustomercart
+        method: POST
+        description: Create a cart for the authenticated customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-carts-mine-items
+      path: /V1/carts/mine/items
+      operations:
+      - name: additemtocart
+        method: POST
+        description: Add item to customer cart
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-guest-carts
+      path: /V1/guest-carts
+      operations:
+      - name: createguestcart
+        method: POST
+        description: Create a guest cart
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-inventory-sources
+      path: /V1/inventory/sources
+      operations:
+      - name: listinventorysources
+        method: GET
+        description: List inventory sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createinventorysource
+        method: POST
+        description: Create an inventory source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-inventory-sources-sourcecode
+      path: /V1/inventory/sources/{sourceCode}
+      operations:
+      - name: getinventorysource
+        method: GET
+        description: Get inventory source by code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateinventorysource
+        method: PUT
+        description: Update an inventory source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-inventory-source-items
+      path: /V1/inventory/source-items
+      operations:
+      - name: listsourceitems
+        method: GET
+        description: List source item quantities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesourceitems
+        method: POST
+        description: Update source item quantities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-taxrates
+      path: /V1/taxRates
+      operations:
+      - name: listtaxrates
+        method: GET
+        description: List tax rates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-store-storeconfigs
+      path: /V1/store/storeConfigs
+      operations:
+      - name: liststoreconfigs
+        method: GET
+        description: List store configurations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: magento-rest
+    description: REST adapter for Magento REST API.
+    resources:
+    - path: /V1/integration/admin/token
+      name: createadmintoken
+      operations:
+      - method: POST
+        name: createadmintoken
+        description: Get admin authentication token
+        call: magento.createadmintoken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/integration/customer/token
+      name: createcustomertoken
+      operations:
+      - method: POST
+        name: createcustomertoken
+        description: Get customer authentication token
+        call: magento.createcustomertoken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/products
+      name: listproducts
+      operations:
+      - method: GET
+        name: listproducts
+        description: List products
+        call: magento.listproducts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/products
+      name: createproduct
+      operations:
+      - method: POST
+        name: createproduct
+        description: Create a product
+        call: magento.createproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/products/{sku}
+      name: getproduct
+      operations:
+      - method: GET
+        name: getproduct
+        description: Get product by SKU
+        call: magento.getproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/products/{sku}
+      name: updateproduct
+      operations:
+      - method: PUT
+        name: updateproduct
+        description: Update a product
+        call: magento.updateproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/products/{sku}
+      name: deleteproduct
+      operations:
+      - method: DELETE
+        name: deleteproduct
+        description: Delete a product
+        call: magento.deleteproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/categories
+      name: listcategories
+      operations:
+      - method: GET
+        name: listcategories
+        description: List categories
+        call: magento.listcategories
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/categories
+      name: createcategory
+      operations:
+      - method: POST
+        name: createcategory
+        description: Create a category
+        call: magento.createcategory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/categories/{categoryId}
+      name: getcategory
+      operations:
+      - method: GET
+        name: getcategory
+        description: Get category by ID
+        call: magento.getcategory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/categories/{categoryId}
+      name: updatecategory
+      operations:
+      - method: PUT
+        name: updatecategory
+        description: Update a category
+        call: magento.updatecategory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/categories/{categoryId}
+      name: deletecategory
+      operations:
+      - method: DELETE
+        name: deletecategory
+        description: Delete a category
+        call: magento.deletecategory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/customers
+      name: createcustomer
+      operations:
+      - method: POST
+        name: createcustomer
+        description: Create a customer
+        call: magento.createcustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/customers/search
+      name: searchcustomers
+      operations:
+      - method: GET
+        name: searchcustomers
+        description: Search customers
+        call: magento.searchcustomers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/customers/{customerId}
+      name: getcustomer
+      operations:
+      - method: GET
+        name: getcustomer
+        description: Get customer by ID
+        call: magento.getcustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/customers/{customerId}
+      name: updatecustomer
+      operations:
+      - method: PUT
+        name: updatecustomer
+        description: Update a customer
+        call: magento.updatecustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/customers/{customerId}
+      name: deletecustomer
+      operations:
+      - method: DELETE
+        name: deletecustomer
+        description: Delete a customer
+        call: magento.deletecustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/orders
+      name: listorders
+      operations:
+      - method: GET
+        name: listorders
+        description: List orders
+        call: magento.listorders
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/orders
+      name: createorder
+      operations:
+      - method: POST
+        name: createorder
+        description: Create an order
+        call: magento.createorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/orders/{orderId}
+      name: getorder
+      operations:
+      - method: GET
+        name: getorder
+        description: Get order by ID
+        call: magento.getorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/orders/{orderId}/cancel
+      name: cancelorder
+      operations:
+      - method: POST
+        name: cancelorder
+        description: Cancel an order
+        call: magento.cancelorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/orders/{orderId}/comments
+      name: addordercomment
+      operations:
+      - method: POST
+        name: addordercomment
+        description: Add a comment to an order
+        call: magento.addordercomment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/invoices
+      name: listinvoices
+      operations:
+      - method: GET
+        name: listinvoices
+        description: List invoices
+        call: magento.listinvoices
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/invoices/{invoiceId}
+      name: getinvoice
+      operations:
+      - method: GET
+        name: getinvoice
+        description: Get invoice by ID
+        call: magento.getinvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/order/{orderId}/invoice
+      name: createinvoice
+      operations:
+      - method: POST
+        name: createinvoice
+        description: Create an invoice for an order
+        call: magento.createinvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/shipment
+      name: createshipment
+      operations:
+      - method: POST
+        name: createshipment
+        description: Create a shipment
+        call: magento.createshipment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/shipment/{shipmentId}
+      name: getshipment
+      operations:
+      - method: GET
+        name: getshipment
+        description: Get shipment by ID
+        call: magento.getshipment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/carts/mine
+      name: createcustomercart
+      operations:
+      - method: POST
+        name: createcustomercart
+        description: Create a cart for the authenticated customer
+        call: magento.createcustomercart
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/carts/mine/items
+      name: additemtocart
+      operations:
+      - method: POST
+        name: additemtocart
+        description: Add item to customer cart
+        call: magento.additemtocart
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/guest-carts
+      name: createguestcart
+      operations:
+      - method: POST
+        name: createguestcart
+        description: Create a guest cart
+        call: magento.createguestcart
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/sources
+      name: listinventorysources
+      operations:
+      - method: GET
+        name: listinventorysources
+        description: List inventory sources
+        call: magento.listinventorysources
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/sources
+      name: createinventorysource
+      operations:
+      - method: POST
+        name: createinventorysource
+        description: Create an inventory source
+        call: magento.createinventorysource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/sources/{sourceCode}
+      name: getinventorysource
+      operations:
+      - method: GET
+        name: getinventorysource
+        description: Get inventory source by code
+        call: magento.getinventorysource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/sources/{sourceCode}
+      name: updateinventorysource
+      operations:
+      - method: PUT
+        name: updateinventorysource
+        description: Update an inventory source
+        call: magento.updateinventorysource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/source-items
+      name: listsourceitems
+      operations:
+      - method: GET
+        name: listsourceitems
+        description: List source item quantities
+        call: magento.listsourceitems
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/inventory/source-items
+      name: updatesourceitems
+      operations:
+      - method: POST
+        name: updatesourceitems
+        description: Update source item quantities
+        call: magento.updatesourceitems
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/taxRates
+      name: listtaxrates
+      operations:
+      - method: GET
+        name: listtaxrates
+        description: List tax rates
+        call: magento.listtaxrates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /V1/store/storeConfigs
+      name: liststoreconfigs
+      operations:
+      - method: GET
+        name: liststoreconfigs
+        description: List store configurations
+        call: magento.liststoreconfigs
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: magento-mcp
+    transport: http
+    description: MCP adapter for Magento REST API for AI agent use.
+    tools:
+    - name: createadmintoken
+      description: Get admin authentication token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createadmintoken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcustomertoken
+      description: Get customer authentication token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createcustomertoken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listproducts
+      description: List products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listproducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createproduct
+      description: Create a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getproduct
+      description: Get product by SKU
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateproduct
+      description: Update a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: magento.updateproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteproduct
+      description: Delete a product
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: magento.deleteproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcategories
+      description: List categories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listcategories
+      with:
+        rootCategoryId: tools.rootCategoryId
+        depth: tools.depth
+      inputParameters:
+      - name: rootCategoryId
+        type: integer
+        description: Root category ID to start the tree from. Defaults to the default root category.
+      - name: depth
+        type: integer
+        description: Maximum depth of the category tree to return.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcategory
+      description: Create a category
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createcategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcategory
+      description: Get category by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getcategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecategory
+      description: Update a category
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: magento.updatecategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecategory
+      description: Delete a category
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: magento.deletecategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcustomer
+      description: Create a customer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createcustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchcustomers
+      description: Search customers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.searchcustomers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcustomer
+      description: Get customer by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getcustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecustomer
+      description: Update a customer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: magento.updatecustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecustomer
+      description: Delete a customer
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: magento.deletecustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listorders
+      description: List orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listorders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createorder
+      description: Create an order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getorder
+      description: Get order by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancelorder
+      description: Cancel an order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.cancelorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: addordercomment
+      description: Add a comment to an order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.addordercomment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listinvoices
+      description: List invoices
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listinvoices
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getinvoice
+      description: Get invoice by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getinvoice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createinvoice
+      description: Create an invoice for an order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createinvoice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createshipment
+      description: Create a shipment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createshipment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getshipment
+      description: Get shipment by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getshipment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcustomercart
+      description: Create a cart for the authenticated customer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createcustomercart
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: additemtocart
+      description: Add item to customer cart
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.additemtocart
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createguestcart
+      description: Create a guest cart
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createguestcart
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listinventorysources
+      description: List inventory sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listinventorysources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createinventorysource
+      description: Create an inventory source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.createinventorysource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getinventorysource
+      description: Get inventory source by code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.getinventorysource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateinventorysource
+      description: Update an inventory source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: magento.updateinventorysource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listsourceitems
+      description: List source item quantities
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listsourceitems
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatesourceitems
+      description: Update source item quantities
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: magento.updatesourceitems
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listtaxrates
+      description: List tax rates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.listtaxrates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: liststoreconfigs
+      description: List store configurations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: magento.liststoreconfigs
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    MAGENTO_TOKEN: MAGENTO_TOKEN
