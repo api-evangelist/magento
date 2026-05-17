@@ -128,7 +128,7 @@ apis:
       inventory changes, and payment processing.
 common:
   - url: json-ld/magento-context.jsonld
-    type: JSON-LD
+    type: JSONLD
   - url: json-schema/magento-order-schema.json
     type: JSONSchema
   - url: json-schema/magento-product-schema.json
