@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Magento REST API — Products
+  description: 'Magento REST API — Products. 5 operations. Lead operation: List products. Self-contained Naftiko capability
+    covering one Magento business surface.'
+  tags:
+  - Magento
+  - Products
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MAGENTO_API_KEY: MAGENTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-products
+    baseUri: https://{store_domain}/rest/{store_code}
+    description: Magento REST API — Products business capability. Self-contained, no shared references.
+    resources:
+    - name: V1-products
+      path: /V1/products
+      operations:
+      - name: listproducts
+        method: GET
+        description: List products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createproduct
+        method: POST
+        description: Create a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: V1-products-sku
+      path: /V1/products/{sku}
+      operations:
+      - name: getproduct
+        method: GET
+        description: Get product by SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateproduct
+        method: PUT
+        description: Update a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteproduct
+        method: DELETE
+        description: Delete a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MAGENTO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-products-rest
+    port: 8080
+    description: REST adapter for Magento REST API — Products. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/products
+      name: v1-products
+      description: REST surface for V1-products.
+      operations:
+      - method: GET
+        name: listproducts
+        description: List products
+        call: rest-products.listproducts
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createproduct
+        description: Create a product
+        call: rest-products.createproduct
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/products/{sku}
+      name: v1-products-sku
+      description: REST surface for V1-products-sku.
+      operations:
+      - method: GET
+        name: getproduct
+        description: Get product by SKU
+        call: rest-products.getproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateproduct
+        description: Update a product
+        call: rest-products.updateproduct
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteproduct
+        description: Delete a product
+        call: rest-products.deleteproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-products-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Magento REST API — Products. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-products
+      description: List products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-products.listproducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-product
+      description: Create a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-products.createproduct
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-product-sku
+      description: Get product by SKU
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-products.getproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-product
+      description: Update a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-products.updateproduct
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-product
+      description: Delete a product
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-products.deleteproduct
+      outputParameters:
+      - type: object
+        mapping: $.

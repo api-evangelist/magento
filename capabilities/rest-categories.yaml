@@ -1,0 +1,212 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Magento REST API — Categories
+  description: 'Magento REST API — Categories. 5 operations. Lead operation: List categories. Self-contained Naftiko capability
+    covering one Magento business surface.'
+  tags:
+  - Magento
+  - Categories
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MAGENTO_API_KEY: MAGENTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-categories
+    baseUri: https://{store_domain}/rest/{store_code}
+    description: Magento REST API — Categories business capability. Self-contained, no shared references.
+    resources:
+    - name: V1-categories
+      path: /V1/categories
+      operations:
+      - name: listcategories
+        method: GET
+        description: List categories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rootCategoryId
+          in: query
+          type: integer
+          description: Root category ID to start the tree from. Defaults to the default root category.
+        - name: depth
+          in: query
+          type: integer
+          description: Maximum depth of the category tree to return.
+      - name: createcategory
+        method: POST
+        description: Create a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: V1-categories-categoryId
+      path: /V1/categories/{categoryId}
+      operations:
+      - name: getcategory
+        method: GET
+        description: Get category by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecategory
+        method: PUT
+        description: Update a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecategory
+        method: DELETE
+        description: Delete a category
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MAGENTO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-categories-rest
+    port: 8080
+    description: REST adapter for Magento REST API — Categories. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/categories
+      name: v1-categories
+      description: REST surface for V1-categories.
+      operations:
+      - method: GET
+        name: listcategories
+        description: List categories
+        call: rest-categories.listcategories
+        with:
+          rootCategoryId: rest.rootCategoryId
+          depth: rest.depth
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcategory
+        description: Create a category
+        call: rest-categories.createcategory
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/categories/{categoryid}
+      name: v1-categories-categoryid
+      description: REST surface for V1-categories-categoryId.
+      operations:
+      - method: GET
+        name: getcategory
+        description: Get category by ID
+        call: rest-categories.getcategory
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecategory
+        description: Update a category
+        call: rest-categories.updatecategory
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecategory
+        description: Delete a category
+        call: rest-categories.deletecategory
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-categories-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Magento REST API — Categories. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-categories
+      description: List categories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-categories.listcategories
+      with:
+        rootCategoryId: tools.rootCategoryId
+        depth: tools.depth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-category
+      description: Create a category
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-categories.createcategory
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-category-id
+      description: Get category by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-categories.getcategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-category
+      description: Update a category
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-categories.updatecategory
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-category
+      description: Delete a category
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-categories.deletecategory
+      outputParameters:
+      - type: object
+        mapping: $.

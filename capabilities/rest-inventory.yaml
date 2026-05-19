@@ -1,0 +1,239 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Magento REST API — Inventory
+  description: 'Magento REST API — Inventory. 6 operations. Lead operation: List source item quantities. Self-contained Naftiko
+    capability covering one Magento business surface.'
+  tags:
+  - Magento
+  - Inventory
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MAGENTO_API_KEY: MAGENTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-inventory
+    baseUri: https://{store_domain}/rest/{store_code}
+    description: Magento REST API — Inventory business capability. Self-contained, no shared references.
+    resources:
+    - name: V1-inventory-source-items
+      path: /V1/inventory/source-items
+      operations:
+      - name: listsourceitems
+        method: GET
+        description: List source item quantities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesourceitems
+        method: POST
+        description: Update source item quantities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: V1-inventory-sources
+      path: /V1/inventory/sources
+      operations:
+      - name: listinventorysources
+        method: GET
+        description: List inventory sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createinventorysource
+        method: POST
+        description: Create an inventory source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: V1-inventory-sources-sourceCode
+      path: /V1/inventory/sources/{sourceCode}
+      operations:
+      - name: getinventorysource
+        method: GET
+        description: Get inventory source by code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateinventorysource
+        method: PUT
+        description: Update an inventory source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MAGENTO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-inventory-rest
+    port: 8080
+    description: REST adapter for Magento REST API — Inventory. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/inventory/source-items
+      name: v1-inventory-source-items
+      description: REST surface for V1-inventory-source-items.
+      operations:
+      - method: GET
+        name: listsourceitems
+        description: List source item quantities
+        call: rest-inventory.listsourceitems
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: updatesourceitems
+        description: Update source item quantities
+        call: rest-inventory.updatesourceitems
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/inventory/sources
+      name: v1-inventory-sources
+      description: REST surface for V1-inventory-sources.
+      operations:
+      - method: GET
+        name: listinventorysources
+        description: List inventory sources
+        call: rest-inventory.listinventorysources
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createinventorysource
+        description: Create an inventory source
+        call: rest-inventory.createinventorysource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/inventory/sources/{sourcecode}
+      name: v1-inventory-sources-sourcecode
+      description: REST surface for V1-inventory-sources-sourceCode.
+      operations:
+      - method: GET
+        name: getinventorysource
+        description: Get inventory source by code
+        call: rest-inventory.getinventorysource
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateinventorysource
+        description: Update an inventory source
+        call: rest-inventory.updateinventorysource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-inventory-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Magento REST API — Inventory. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-source-item-quantities
+      description: List source item quantities
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-inventory.listsourceitems
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-source-item-quantities
+      description: Update source item quantities
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-inventory.updatesourceitems
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-inventory-sources
+      description: List inventory sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-inventory.listinventorysources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-inventory-source
+      description: Create an inventory source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-inventory.createinventorysource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-inventory-source-code
+      description: Get inventory source by code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-inventory.getinventorysource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-inventory-source
+      description: Update an inventory source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-inventory.updateinventorysource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

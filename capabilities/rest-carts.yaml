@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Magento REST API — Carts
+  description: 'Magento REST API — Carts. 3 operations. Lead operation: Create a cart for the authenticated customer. Self-contained
+    Naftiko capability covering one Magento business surface.'
+  tags:
+  - Magento
+  - Carts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MAGENTO_API_KEY: MAGENTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-carts
+    baseUri: https://{store_domain}/rest/{store_code}
+    description: Magento REST API — Carts business capability. Self-contained, no shared references.
+    resources:
+    - name: V1-carts-mine
+      path: /V1/carts/mine
+      operations:
+      - name: createcustomercart
+        method: POST
+        description: Create a cart for the authenticated customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: V1-carts-mine-items
+      path: /V1/carts/mine/items
+      operations:
+      - name: additemtocart
+        method: POST
+        description: Add item to customer cart
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: V1-guest-carts
+      path: /V1/guest-carts
+      operations:
+      - name: createguestcart
+        method: POST
+        description: Create a guest cart
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MAGENTO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-carts-rest
+    port: 8080
+    description: REST adapter for Magento REST API — Carts. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/carts/mine
+      name: v1-carts-mine
+      description: REST surface for V1-carts-mine.
+      operations:
+      - method: POST
+        name: createcustomercart
+        description: Create a cart for the authenticated customer
+        call: rest-carts.createcustomercart
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/carts/mine/items
+      name: v1-carts-mine-items
+      description: REST surface for V1-carts-mine-items.
+      operations:
+      - method: POST
+        name: additemtocart
+        description: Add item to customer cart
+        call: rest-carts.additemtocart
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/guest-carts
+      name: v1-guest-carts
+      description: REST surface for V1-guest-carts.
+      operations:
+      - method: POST
+        name: createguestcart
+        description: Create a guest cart
+        call: rest-carts.createguestcart
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-carts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Magento REST API — Carts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-cart-authenticated-customer
+      description: Create a cart for the authenticated customer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-carts.createcustomercart
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-item-customer-cart
+      description: Add item to customer cart
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-carts.additemtocart
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-guest-cart
+      description: Create a guest cart
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-carts.createguestcart
+      outputParameters:
+      - type: object
+        mapping: $.
