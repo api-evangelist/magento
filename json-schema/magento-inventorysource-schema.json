@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InventorySource",
+  "title": "InventorySource",
+  "type": "object",
+  "description": "An inventory source representing a fulfillment location in multi-source inventory.",
+  "properties": {
+    "source_code": {
+      "type": "string",
+      "description": "Unique string code identifier for the inventory source."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the inventory source."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether this source is active and available for inventory assignment."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the inventory source."
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Geographic latitude of the source location."
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Geographic longitude of the source location."
+    },
+    "country_id": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code of the source address."
+    },
+    "region": {
+      "type": "string",
+      "description": "State or region name of the source address."
+    },
+    "city": {
+      "type": "string",
+      "description": "City of the source address."
+    },
+    "street": {
+      "type": "string",
+      "description": "Street address of the source location."
+    },
+    "postcode": {
+      "type": "string",
+      "description": "Postal code of the source address."
+    }
+  }
+}

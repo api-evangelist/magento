@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InventorySourceRequest",
+  "title": "InventorySourceRequest",
+  "type": "object",
+  "description": "Request body for creating or updating an inventory source.",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "$ref": "#/components/schemas/InventorySource"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CategoryTree",
+  "title": "CategoryTree",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Category"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "children_data": {
+          "type": "array",
+          "description": "Nested child category objects forming the category tree.",
+          "items": {
+            "$ref": "#/components/schemas/CategoryTree"
+          }
+        }
+      }
+    }
+  ]
+}

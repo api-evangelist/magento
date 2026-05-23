@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InventorySourceSearchResults",
+  "title": "InventorySourceSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of inventory sources.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/InventorySource"
+      }
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of matching inventory sources."
+    }
+  }
+}

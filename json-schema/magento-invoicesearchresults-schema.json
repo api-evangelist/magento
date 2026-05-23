@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InvoiceSearchResults",
+  "title": "InvoiceSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of invoices.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Invoice"
+      }
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of matching invoices."
+    }
+  }
+}

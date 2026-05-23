@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Category",
+  "title": "Category",
+  "type": "object",
+  "description": "A product category in the catalog category tree.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Numeric category entity ID."
+    },
+    "parent_id": {
+      "type": "integer",
+      "description": "Numeric ID of the parent category."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the category."
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Whether the category is active and visible in the storefront."
+    },
+    "position": {
+      "type": "integer",
+      "description": "Sort position among sibling categories."
+    },
+    "level": {
+      "type": "integer",
+      "description": "Depth level of the category in the tree (root = 1)."
+    },
+    "children": {
+      "type": "string",
+      "description": "Comma-separated list of child category IDs."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the category was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the category was last updated."
+    },
+    "path": {
+      "type": "string",
+      "description": "Path string of category IDs from root to this category, separated by slashes."
+    },
+    "include_in_menu": {
+      "type": "boolean",
+      "description": "Whether this category appears in the navigation menu."
+    },
+    "custom_attributes": {
+      "type": "array",
+      "description": "Custom EAV attribute values for this category.",
+      "items": {
+        "$ref": "#/components/schemas/CustomAttribute"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AdminTokenRequest",
+  "title": "AdminTokenRequest",
+  "type": "object",
+  "description": "Request body for obtaining an admin Bearer token.",
+  "required": [
+    "username",
+    "password"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Admin user login username."
+    },
+    "password": {
+      "type": "string",
+      "description": "Admin user password.",
+      "format": "password"
+    }
+  }
+}

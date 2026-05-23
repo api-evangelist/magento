@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SourceItemSearchResults",
+  "title": "SourceItemSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of source items.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SourceItem"
+      }
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of matching source item records."
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SourceItemUpdateRequest",
+  "title": "SourceItemUpdateRequest",
+  "type": "object",
+  "description": "Request body for bulk updating source item quantities.",
+  "required": [
+    "sourceItems"
+  ],
+  "properties": {
+    "sourceItems": {
+      "type": "array",
+      "description": "Array of source item quantity records to create or update.",
+      "items": {
+        "$ref": "#/components/schemas/SourceItem"
+      }
+    }
+  }
+}

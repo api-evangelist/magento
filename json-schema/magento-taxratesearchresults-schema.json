@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TaxRateSearchResults",
+  "title": "TaxRateSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of tax rates.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TaxRate"
+      }
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of matching tax rates."
+    }
+  }
+}

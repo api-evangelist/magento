@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CartItemRequest",
+  "title": "CartItemRequest",
+  "type": "object",
+  "description": "Request body for adding an item to a shopping cart.",
+  "required": [
+    "cartItem"
+  ],
+  "properties": {
+    "cartItem": {
+      "$ref": "#/components/schemas/CartItem"
+    }
+  }
+}

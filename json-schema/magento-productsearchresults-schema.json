@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProductSearchResults",
+  "title": "ProductSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of products.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "description": "Array of product objects matching the search criteria.",
+      "items": {
+        "$ref": "#/components/schemas/Product"
+      }
+    },
+    "search_criteria": {
+      "type": "object",
+      "description": "The search criteria applied to generate these results."
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of products matching the search criteria across all pages."
+    }
+  }
+}

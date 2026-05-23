@@ -1,0 +1,591 @@
+{
+  "provider": "Magento",
+  "providerId": "magento",
+  "kind": "json-structure",
+  "description": "Structural overview of the Magento API surface; extracted from openapi/.",
+  "schemaCount": 35,
+  "operationCount": 38,
+  "schemas": [
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "AdminTokenRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    {
+      "name": "CustomerTokenRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    {
+      "name": "CustomAttribute",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "attribute_code",
+        "value"
+      ]
+    },
+    {
+      "name": "Product",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "ProductRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "product"
+      ]
+    },
+    {
+      "name": "ProductSearchResults",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Category",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "CategoryTree",
+      "type": null,
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "CategoryRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "category"
+      ]
+    },
+    {
+      "name": "Address",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    },
+    {
+      "name": "Customer",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "CustomerRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "customer"
+      ]
+    },
+    {
+      "name": "CustomerSearchResults",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "OrderItem",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    },
+    {
+      "name": "Order",
+      "type": "object",
+      "propertyCount": 18,
+      "required": []
+    },
+    {
+      "name": "OrderRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "entity"
+      ]
+    },
+    {
+      "name": "OrderCommentRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "statusHistory"
+      ]
+    },
+    {
+      "name": "OrderSearchResults",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Invoice",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "InvoiceRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "InvoiceSearchResults",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Shipment",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "ShipmentRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "entity"
+      ]
+    },
+    {
+      "name": "CartItem",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "CartItemRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "cartItem"
+      ]
+    },
+    {
+      "name": "InventorySource",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "InventorySourceRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "source"
+      ]
+    },
+    {
+      "name": "InventorySourceSearchResults",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SourceItem",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "SourceItemUpdateRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "sourceItems"
+      ]
+    },
+    {
+      "name": "SourceItemSearchResults",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "TaxRate",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "TaxRateSearchResults",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "StoreConfig",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/V1/integration/admin/token",
+      "operationId": "createAdminToken",
+      "summary": "Get admin authentication token",
+      "tags": [
+        "Authentication"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/integration/customer/token",
+      "operationId": "createCustomerToken",
+      "summary": "Get customer authentication token",
+      "tags": [
+        "Authentication"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/products",
+      "operationId": "listProducts",
+      "summary": "List products",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/products",
+      "operationId": "createProduct",
+      "summary": "Create a product",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/products/{sku}",
+      "operationId": "getProduct",
+      "summary": "Get product by SKU",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/V1/products/{sku}",
+      "operationId": "updateProduct",
+      "summary": "Update a product",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/V1/products/{sku}",
+      "operationId": "deleteProduct",
+      "summary": "Delete a product",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/categories",
+      "operationId": "listCategories",
+      "summary": "List categories",
+      "tags": [
+        "Categories"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/categories",
+      "operationId": "createCategory",
+      "summary": "Create a category",
+      "tags": [
+        "Categories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/categories/{categoryId}",
+      "operationId": "getCategory",
+      "summary": "Get category by ID",
+      "tags": [
+        "Categories"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/V1/categories/{categoryId}",
+      "operationId": "updateCategory",
+      "summary": "Update a category",
+      "tags": [
+        "Categories"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/V1/categories/{categoryId}",
+      "operationId": "deleteCategory",
+      "summary": "Delete a category",
+      "tags": [
+        "Categories"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/customers",
+      "operationId": "createCustomer",
+      "summary": "Create a customer",
+      "tags": [
+        "Customers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/customers/search",
+      "operationId": "searchCustomers",
+      "summary": "Search customers",
+      "tags": [
+        "Customers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/customers/{customerId}",
+      "operationId": "getCustomer",
+      "summary": "Get customer by ID",
+      "tags": [
+        "Customers"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/V1/customers/{customerId}",
+      "operationId": "updateCustomer",
+      "summary": "Update a customer",
+      "tags": [
+        "Customers"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/V1/customers/{customerId}",
+      "operationId": "deleteCustomer",
+      "summary": "Delete a customer",
+      "tags": [
+        "Customers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/orders",
+      "operationId": "listOrders",
+      "summary": "List orders",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/orders",
+      "operationId": "createOrder",
+      "summary": "Create an order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/orders/{orderId}",
+      "operationId": "getOrder",
+      "summary": "Get order by ID",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/orders/{orderId}/cancel",
+      "operationId": "cancelOrder",
+      "summary": "Cancel an order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/orders/{orderId}/comments",
+      "operationId": "addOrderComment",
+      "summary": "Add a comment to an order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/invoices",
+      "operationId": "listInvoices",
+      "summary": "List invoices",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/invoices/{invoiceId}",
+      "operationId": "getInvoice",
+      "summary": "Get invoice by ID",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/order/{orderId}/invoice",
+      "operationId": "createInvoice",
+      "summary": "Create an invoice for an order",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/shipment",
+      "operationId": "createShipment",
+      "summary": "Create a shipment",
+      "tags": [
+        "Shipments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/shipment/{shipmentId}",
+      "operationId": "getShipment",
+      "summary": "Get shipment by ID",
+      "tags": [
+        "Shipments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/carts/mine",
+      "operationId": "createCustomerCart",
+      "summary": "Create a cart for the authenticated customer",
+      "tags": [
+        "Carts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/carts/mine/items",
+      "operationId": "addItemToCart",
+      "summary": "Add item to customer cart",
+      "tags": [
+        "Carts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/guest-carts",
+      "operationId": "createGuestCart",
+      "summary": "Create a guest cart",
+      "tags": [
+        "Carts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/inventory/sources",
+      "operationId": "listInventorySources",
+      "summary": "List inventory sources",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/inventory/sources",
+      "operationId": "createInventorySource",
+      "summary": "Create an inventory source",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/inventory/sources/{sourceCode}",
+      "operationId": "getInventorySource",
+      "summary": "Get inventory source by code",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/V1/inventory/sources/{sourceCode}",
+      "operationId": "updateInventorySource",
+      "summary": "Update an inventory source",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/inventory/source-items",
+      "operationId": "listSourceItems",
+      "summary": "List source item quantities",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/V1/inventory/source-items",
+      "operationId": "updateSourceItems",
+      "summary": "Update source item quantities",
+      "tags": [
+        "Inventory"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/taxRates",
+      "operationId": "listTaxRates",
+      "summary": "List tax rates",
+      "tags": [
+        "Tax"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/V1/store/storeConfigs",
+      "operationId": "listStoreConfigs",
+      "summary": "List store configurations",
+      "tags": [
+        "Stores"
+      ]
+    }
+  ]
+}

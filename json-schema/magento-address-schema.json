@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Address",
+  "title": "Address",
+  "type": "object",
+  "description": "A postal address used for billing or shipping.",
+  "properties": {
+    "firstname": {
+      "type": "string",
+      "description": "First name of the address recipient."
+    },
+    "lastname": {
+      "type": "string",
+      "description": "Last name of the address recipient."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address associated with this address record."
+    },
+    "street": {
+      "type": "array",
+      "description": "Street address lines.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "city": {
+      "type": "string",
+      "description": "City name."
+    },
+    "region": {
+      "type": "string",
+      "description": "State or region name."
+    },
+    "region_code": {
+      "type": "string",
+      "description": "Two-letter state or region code."
+    },
+    "country_id": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "postcode": {
+      "type": "string",
+      "description": "Postal or ZIP code."
+    },
+    "telephone": {
+      "type": "string",
+      "description": "Phone number for this address."
+    }
+  }
+}

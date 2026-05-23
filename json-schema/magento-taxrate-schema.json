@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TaxRate",
+  "title": "TaxRate",
+  "type": "object",
+  "description": "A tax rate configuration defining the percentage applied to taxable items.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Numeric tax rate entity ID."
+    },
+    "tax_country_id": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code this rate applies to."
+    },
+    "tax_region_id": {
+      "type": "integer",
+      "description": "Numeric region ID this rate applies to. 0 for all regions."
+    },
+    "tax_postcode": {
+      "type": "string",
+      "description": "Postal code pattern this rate applies to. Use * as a wildcard."
+    },
+    "code": {
+      "type": "string",
+      "description": "Human-readable tax rate code (e.g. US-CA-*-Rate 1)."
+    },
+    "rate": {
+      "type": "number",
+      "description": "Tax percentage rate (e.g. 8.25 for 8.25%)."
+    }
+  }
+}

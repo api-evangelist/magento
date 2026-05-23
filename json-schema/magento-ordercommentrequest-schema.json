@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrderCommentRequest",
+  "title": "OrderCommentRequest",
+  "type": "object",
+  "description": "Request body for adding a status history comment to an order.",
+  "required": [
+    "statusHistory"
+  ],
+  "properties": {
+    "statusHistory": {
+      "type": "object",
+      "description": "Status history comment details.",
+      "properties": {
+        "comment": {
+          "type": "string",
+          "description": "The comment text to add to the order history."
+        },
+        "is_customer_notified": {
+          "type": "integer",
+          "description": "Whether to send an email notification to the customer. 1 = yes, 0 = no.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_visible_on_front": {
+          "type": "integer",
+          "description": "Whether the comment is visible to the customer in their account. 1 = yes, 0 = no.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "status": {
+          "type": "string",
+          "description": "Optional new order status to set along with the comment."
+        }
+      }
+    }
+  }
+}

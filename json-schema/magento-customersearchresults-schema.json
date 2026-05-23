@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CustomerSearchResults",
+  "title": "CustomerSearchResults",
+  "type": "object",
+  "description": "Paginated search results containing a list of customer accounts.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "description": "Array of customer objects matching the search criteria.",
+      "items": {
+        "$ref": "#/components/schemas/Customer"
+      }
+    },
+    "search_criteria": {
+      "type": "object",
+      "description": "The search criteria applied."
+    },
+    "total_count": {
+      "type": "integer",
+      "description": "Total number of matching customers across all pages."
+    }
+  }
+}

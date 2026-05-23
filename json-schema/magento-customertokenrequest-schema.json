@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CustomerTokenRequest",
+  "title": "CustomerTokenRequest",
+  "type": "object",
+  "description": "Request body for obtaining a customer Bearer token.",
+  "required": [
+    "username",
+    "password"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Customer email address used as the login username.",
+      "format": "email"
+    },
+    "password": {
+      "type": "string",
+      "description": "Customer account password.",
+      "format": "password"
+    }
+  }
+}

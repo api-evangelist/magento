@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CustomAttribute",
+  "title": "CustomAttribute",
+  "type": "object",
+  "description": "A key-value pair representing a custom EAV attribute on a catalog entity.",
+  "required": [
+    "attribute_code",
+    "value"
+  ],
+  "properties": {
+    "attribute_code": {
+      "type": "string",
+      "description": "The unique attribute code identifier."
+    },
+    "value": {
+      "description": "The attribute value. Can be a string, integer, or array depending on the attribute type."
+    }
+  }
+}

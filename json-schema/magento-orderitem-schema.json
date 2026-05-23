@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrderItem",
+  "title": "OrderItem",
+  "type": "object",
+  "description": "A line item within a sales order.",
+  "properties": {
+    "item_id": {
+      "type": "integer",
+      "description": "Numeric order item entity ID."
+    },
+    "order_id": {
+      "type": "integer",
+      "description": "Numeric ID of the parent order."
+    },
+    "sku": {
+      "type": "string",
+      "description": "SKU of the ordered product."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the ordered product at the time of purchase."
+    },
+    "qty_ordered": {
+      "type": "number",
+      "description": "Quantity ordered."
+    },
+    "qty_invoiced": {
+      "type": "number",
+      "description": "Quantity that has been invoiced."
+    },
+    "qty_shipped": {
+      "type": "number",
+      "description": "Quantity that has been shipped."
+    },
+    "price": {
+      "type": "number",
+      "description": "Unit price of the product."
+    },
+    "row_total": {
+      "type": "number",
+      "description": "Total price for this line item (price x qty)."
+    },
+    "product_type": {
+      "type": "string",
+      "description": "Product type of the ordered item."
+    }
+  }
+}

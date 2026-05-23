@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/StoreConfig",
+  "title": "StoreConfig",
+  "type": "object",
+  "description": "Configuration settings for a store view.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Numeric store view entity ID."
+    },
+    "code": {
+      "type": "string",
+      "description": "Unique string code identifier for the store view."
+    },
+    "website_id": {
+      "type": "integer",
+      "description": "ID of the website this store view belongs to."
+    },
+    "locale": {
+      "type": "string",
+      "description": "Locale code for this store (e.g. en_US, fr_FR)."
+    },
+    "base_currency_code": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the base currency (e.g. USD)."
+    },
+    "default_display_currency_code": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the display currency."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Timezone identifier (e.g. America/Chicago)."
+    },
+    "weight_unit": {
+      "type": "string",
+      "description": "Weight unit used for this store (lbs or kgs).",
+      "enum": [
+        "lbs",
+        "kgs"
+      ]
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base URL of the store frontend."
+    },
+    "base_link_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base link URL for the store."
+    },
+    "base_media_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base URL for media assets in this store."
+    },
+    "secure_base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Secure (HTTPS) base URL of the store frontend."
+    }
+  }
+}

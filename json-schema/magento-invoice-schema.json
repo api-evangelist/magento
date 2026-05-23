@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Invoice",
+  "title": "Invoice",
+  "type": "object",
+  "description": "An invoice record associated with a sales order.",
+  "properties": {
+    "entity_id": {
+      "type": "integer",
+      "description": "Numeric invoice entity ID."
+    },
+    "order_id": {
+      "type": "integer",
+      "description": "Numeric entity ID of the parent order."
+    },
+    "increment_id": {
+      "type": "string",
+      "description": "Human-readable invoice number."
+    },
+    "state": {
+      "type": "integer",
+      "description": "Invoice state. 1 = open, 2 = paid, 3 = cancelled.",
+      "enum": [
+        1,
+        2,
+        3
+      ]
+    },
+    "grand_total": {
+      "type": "number",
+      "description": "Invoice grand total."
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Invoice subtotal."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the invoice was created."
+    }
+  }
+}
