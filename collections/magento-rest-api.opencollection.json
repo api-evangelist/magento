@@ -1,0 +1,918 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get admin authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/integration/admin/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a Bearer token for an admin user based on username and password credentials. The returned token must be included as a Bearer token in the Authorization header of all subsequent admin-scoped API requests. Tokens expire after the configured lifetime (default 4 hours)."
+        },
+        {
+          "info": {
+            "name": "Get customer authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/integration/customer/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a Bearer token for a customer user based on email address and password credentials. The returned token must be included as a Bearer token in the Authorization header of subsequent customer-scoped API requests. Tokens expire after the configured lifetime."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/products",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of products matching the provided search criteria. Supports filtering by any product attribute, sorting by multiple fields, and pagination using currentPage and pageSize parameters within the searchCriteria object. Returns both product data and total count for pagination."
+        },
+        {
+          "info": {
+            "name": "Create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/products",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new catalog product. The product type is determined by the type_id field in the request body. Supported types include simple, configurable, virtual, downloadable, bundle, and grouped. Custom attributes can be included in the custom_attributes array using attribute codes defined in the catalog."
+        },
+        {
+          "info": {
+            "name": "Get product by SKU",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/products/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "The product SKU (Stock Keeping Unit) identifier. URL-encode special characters."
+              }
+            ]
+          },
+          "docs": "Retrieves a single product by its SKU identifier. Returns the full product object including all attributes, media gallery entries, tier prices, and extension attributes. SKUs containing forward slashes or other special characters must be URL-encoded."
+        },
+        {
+          "info": {
+            "name": "Update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/products/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "The product SKU (Stock Keeping Unit) identifier. URL-encode special characters."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing product identified by its SKU. Only the fields included in the request body are updated; omitted fields retain their existing values. Custom attributes included in the custom_attributes array will overwrite existing attribute values."
+        },
+        {
+          "info": {
+            "name": "Delete a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{store_domain}/rest/{store_code}/V1/products/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "The product SKU (Stock Keeping Unit) identifier. URL-encode special characters."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a product from the catalog by its SKU. This operation cannot be undone. Associated product attributes, media, and tier prices are also removed. Products assigned to categories will be unassigned prior to deletion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories",
+            "params": [
+              {
+                "name": "rootCategoryId",
+                "value": "",
+                "type": "query",
+                "description": "Root category ID to start the tree from. Defaults to the default root category."
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "Maximum depth of the category tree to return."
+              }
+            ]
+          },
+          "docs": "Returns the full category tree starting from the specified root category. The response is a nested tree structure with each category containing its children. Use the rootCategoryId parameter to start from a specific category node, and the depth parameter to limit tree traversal depth."
+        },
+        {
+          "info": {
+            "name": "Create a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new product category. The parent_id field determines where in the category tree the new category is placed. The position field controls sort order among sibling categories. Custom category attributes can be set via the custom_attributes array."
+        },
+        {
+          "info": {
+            "name": "Get category by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single category by its numeric identifier. Returns the category data including its name, path, parent ID, and custom attributes. Does not include the full subtree; use the list endpoint for tree traversal."
+        },
+        {
+          "info": {
+            "name": "Update a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing category identified by its numeric ID. Fields included in the request body overwrite existing values. Custom attributes in the custom_attributes array replace their corresponding stored values."
+        },
+        {
+          "info": {
+            "name": "Delete a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a category by its numeric ID. Products assigned only to the deleted category will not be deleted but may become uncategorized. Child categories of the deleted category are also deleted recursively."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new customer account. The email address must be unique within the store. A password can be provided directly or auto-generated and sent to the customer via email. The customer is assigned to a default customer group unless a group_id is specified in the request."
+        },
+        {
+          "info": {
+            "name": "Search customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/search",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of customers matching the provided search criteria. Supports filtering by any customer attribute including email, firstname, lastname, group_id, and created_at. Results can be sorted and paginated using searchCriteria parameters."
+        },
+        {
+          "info": {
+            "name": "Get customer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single customer account by its numeric ID. Returns the full customer object including contact details, addresses, and group assignment. Admin authentication is required to retrieve any customer account; customer tokens only allow retrieval of the authenticated customer's own account via the /V1/customers/me endpoint."
+        },
+        {
+          "info": {
+            "name": "Update a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing customer account by its numeric ID. Fields included in the request body overwrite existing values. Partial updates are supported; omitted optional fields retain their current values. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Delete a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a customer account by its numeric ID. All associated data including addresses, order history references, and wishlist items are also removed. This operation cannot be undone. Admin authentication is required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of sales orders matching the provided search criteria. Supports filtering by status, customer_email, created_at, increment_id, and any other order attribute. Results are sortable and paginated. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Create an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sales order. The order must include at minimum the billing and shipping address, order items with SKU and quantity, and payment method details. Orders created via the API bypass the standard checkout flow and quote conversion process."
+        },
+        {
+          "info": {
+            "name": "Get order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single sales order by its numeric entity ID. Returns the full order object including line items, billing and shipping addresses, payment details, status history, and totals breakdown. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Cancel an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId/cancel",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ]
+          },
+          "docs": "Cancels an existing order identified by its numeric entity ID. Only orders in cancellable states (such as pending or processing) can be cancelled. Orders that have already been invoiced or shipped cannot be fully cancelled. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Add a comment to an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId/comments",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a status history comment to an order. Comments can be visible to customers or kept internal for admin use only. An optional email notification can be sent to the customer when the comment is added. The order status can optionally be updated along with the comment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/invoices",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of order invoices matching the provided search criteria. Supports filtering by order_id, state, and other invoice attributes. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Get invoice by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric invoice entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single invoice by its numeric entity ID. Returns the full invoice object including line items, totals, and associated order reference. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Create an invoice for an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/order/:orderId/invoice",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new invoice for an existing order. The invoice can cover all or a subset of the order items by specifying item quantities in the request body. Setting capture to true will immediately attempt payment capture via the order's payment method if supported."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/shipment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new shipment record for an order. The request must include the order_id and the items being shipped with their quantities. Tracking information such as carrier code, title, and tracking number can be included at creation time. An optional shipment comment can also be provided."
+        },
+        {
+          "info": {
+            "name": "Get shipment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/shipment/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric shipment entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single shipment by its numeric entity ID. Returns the full shipment object including shipment items, tracking information, comments, and the associated order reference. Admin authentication is required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Carts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a cart for the authenticated customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/carts/mine"
+          },
+          "docs": "Creates a new empty shopping cart (quote) for the currently authenticated customer. Returns the cart ID (quote ID) that is used in subsequent cart operations. A customer can only have one active cart at a time; if an active cart already exists, its ID is returned."
+        },
+        {
+          "info": {
+            "name": "Add item to customer cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/carts/mine/items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a product to the authenticated customer's active cart. The request must include the quote_id, SKU, and quantity. For configurable products, product_option must be included with the selected option values. Returns the updated cart item object."
+        },
+        {
+          "info": {
+            "name": "Create a guest cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/guest-carts"
+          },
+          "docs": "Creates a new empty shopping cart for a guest (unauthenticated) shopper. Returns a masked cart ID string that is used in subsequent guest cart operations. No authentication is required for this endpoint. The masked ID is a UUID-like string that does not expose internal database IDs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List inventory sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of inventory sources configured in the multi-source inventory system. Sources represent physical or logical locations from which inventory is fulfilled. Supports filtering, sorting, and pagination via searchCriteria parameters."
+        },
+        {
+          "info": {
+            "name": "Create an inventory source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new inventory source in the multi-source inventory system. A source must have a unique source_code, a name, and can optionally include address information and carrier link configurations for shipping integration."
+        },
+        {
+          "info": {
+            "name": "Get inventory source by code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources/:sourceCode",
+            "params": [
+              {
+                "name": "sourceCode",
+                "value": "",
+                "type": "path",
+                "description": "The unique string code identifier for the inventory source."
+              }
+            ]
+          },
+          "docs": "Retrieves a single inventory source by its unique source code string. Returns the full source configuration including address, carrier links, and enabled status. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Update an inventory source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources/:sourceCode",
+            "params": [
+              {
+                "name": "sourceCode",
+                "value": "",
+                "type": "path",
+                "description": "The unique string code identifier for the inventory source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing inventory source identified by its source code. Fields in the request body overwrite existing values. The source_code itself cannot be changed after creation."
+        },
+        {
+          "info": {
+            "name": "List source item quantities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/source-items",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of source item records representing product quantities at each inventory source. Supports filtering by sku and source_code. This endpoint is used to read stock levels across all inventory sources. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Update source item quantities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/source-items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates source item quantity records in bulk. Each item in the sourceItems array specifies a sku, source_code, quantity, and status. This is the primary endpoint for synchronizing stock levels from external warehouse management systems or ERPs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tax",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tax rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/taxRates",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of tax rates configured in the store. Tax rates define the percentage applied to taxable items based on country, region, and postal code matching rules. Admin authentication is required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List store configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/store/storeConfigs"
+          },
+          "docs": "Returns configuration data for all store views accessible to the authenticated user. Each store config entry includes the store code, base URLs, locale, timezone, currency codes, and weight unit settings. No authentication is required for this endpoint on most store configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
