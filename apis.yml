@@ -11,7 +11,7 @@ apis:
   - Orders
   - Products
   - REST
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://your-store.example.com/rest
   humanURL: https://developer.adobe.com/commerce/webapi/rest/
   properties:
@@ -35,7 +35,7 @@ apis:
   - GraphQL
   - Headless Commerce
   - Storefront
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://your-store.example.com/graphql
   humanURL: https://developer.adobe.com/commerce/webapi/graphql/
   properties:
@@ -57,7 +57,7 @@ apis:
   - Integration
   - SOAP
   - Web Services
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://your-store.example.com/soap
   humanURL: https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/
   properties:
@@ -78,7 +78,7 @@ apis:
   - Extensibility
   - Real-Time
   - Webhooks
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://developer.adobe.com/commerce/extensibility/webhooks/
   properties:
@@ -99,7 +99,7 @@ apis:
   - E-Commerce
   - Extensibility
   - UI Extensions
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/
   properties:
@@ -118,7 +118,7 @@ apis:
   - E-Commerce
   - Events
   - Extensibility
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://developer.adobe.com/commerce/extensibility/events/
   properties:
