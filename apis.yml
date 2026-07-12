@@ -132,6 +132,12 @@ apis:
     to subscribe and react to store activity. Supported event types cover the full commerce lifecycle including order
     placement, customer registration, product updates, inventory changes, and payment processing.
 common:
+- type: VulnerabilityDisclosure
+  url: security/magento-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/magento-domain-security.yml
+- type: Authentication
+  url: authentication/magento-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/magento
 - type: LinkedIn
