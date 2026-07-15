@@ -132,6 +132,8 @@ apis:
     to subscribe and react to store activity. Supported event types cover the full commerce lifecycle including order
     placement, customer registration, product updates, inventory changes, and payment processing.
 common:
+- type: AgenticAccess
+  url: agentic-access/magento-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/magento-vulnerability-disclosure.yml
 - type: DomainSecurity
