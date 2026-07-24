@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Inventory API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Inventory
+  description: Multi-source inventory management including sources, stocks, stock-source links, and source item quantity management.
+paths:
+  /V1/inventory/sources:
+    get:
+      operationId: listInventorySources
+      summary: List inventory sources
+      description: Returns a paginated list of inventory sources configured in the multi-source inventory system. Sources represent physical or logical locations from which inventory is fulfilled. Supports filtering, sorting, and pagination via searchCriteria parameters.
+      tags:
+      - Inventory
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of inventory sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventorySourceSearchResults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createInventorySource
+      summary: Create an inventory source
+      description: Creates a new inventory source in the multi-source inventory system. A source must have a unique source_code, a name, and can optionally include address information and carrier link configurations for shipping integration.
+      tags:
+      - Inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventorySourceRequest'
+      responses:
+        '200':
+          description: Inventory source created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/inventory/sources/{sourceCode}:
+    get:
+      operationId: getInventorySource
+      summary: Get inventory source by code
+      description: Retrieves a single inventory source by its unique source code string. Returns the full source configuration including address, carrier links, and enabled status. Admin authentication is required.
+      tags:
+      - Inventory
+      parameters:
+      - $ref: '#/components/parameters/sourceCode'
+      responses:
+        '200':
+          description: Inventory source object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventorySource'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateInventorySource
+      summary: Update an inventory source
+      description: Updates an existing inventory source identified by its source code. Fields in the request body overwrite existing values. The source_code itself cannot be changed after creation.
+      tags:
+      - Inventory
+      parameters:
+      - $ref: '#/components/parameters/sourceCode'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventorySourceRequest'
+      responses:
+        '200':
+          description: Inventory source updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /V1/inventory/source-items:
+    get:
+      operationId: listSourceItems
+      summary: List source item quantities
+      description: Returns a paginated list of source item records representing product quantities at each inventory source. Supports filtering by sku and source_code. This endpoint is used to read stock levels across all inventory sources. Admin authentication is required.
+      tags:
+      - Inventory
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of source items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceItemSearchResults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: updateSourceItems
+      summary: Update source item quantities
+      description: Creates or updates source item quantity records in bulk. Each item in the sourceItems array specifies a sku, source_code, quantity, and status. This is the primary endpoint for synchronizing stock levels from external warehouse management systems or ERPs.
+      tags:
+      - Inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceItemUpdateRequest'
+      responses:
+        '200':
+          description: Source items updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SourceItemSearchResults:
+      type: object
+      description: Paginated search results containing a list of source items.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceItem'
+        total_count:
+          type: integer
+          description: Total number of matching source item records.
+    InventorySource:
+      type: object
+      description: An inventory source representing a fulfillment location in multi-source inventory.
+      properties:
+        source_code:
+          type: string
+          description: Unique string code identifier for the inventory source.
+        name:
+          type: string
+          description: Human-readable name of the inventory source.
+        enabled:
+          type: boolean
+          description: Whether this source is active and available for inventory assignment.
+        description:
+          type: string
+          description: Optional description of the inventory source.
+        latitude:
+          type: number
+          description: Geographic latitude of the source location.
+        longitude:
+          type: number
+          description: Geographic longitude of the source location.
+        country_id:
+          type: string
+          description: ISO 3166-1 alpha-2 country code of the source address.
+        region:
+          type: string
+          description: State or region name of the source address.
+        city:
+          type: string
+          description: City of the source address.
+        street:
+          type: string
+          description: Street address of the source location.
+        postcode:
+          type: string
+          description: Postal code of the source address.
+    SourceItem:
+      type: object
+      description: A source item representing the quantity of a product at a specific inventory source.
+      properties:
+        sku:
+          type: string
+          description: SKU of the product.
+        source_code:
+          type: string
+          description: Code of the inventory source holding this quantity.
+        quantity:
+          type: number
+          description: Available quantity of the product at this source.
+        status:
+          type: integer
+          description: In-stock status. 1 = in stock, 0 = out of stock.
+          enum:
+          - 0
+          - 1
+    SourceItemUpdateRequest:
+      type: object
+      description: Request body for bulk updating source item quantities.
+      required:
+      - sourceItems
+      properties:
+        sourceItems:
+          type: array
+          description: Array of source item quantity records to create or update.
+          items:
+            $ref: '#/components/schemas/SourceItem'
+    InventorySourceSearchResults:
+      type: object
+      description: Paginated search results containing a list of inventory sources.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventorySource'
+        total_count:
+          type: integer
+          description: Total number of matching inventory sources.
+    InventorySourceRequest:
+      type: object
+      description: Request body for creating or updating an inventory source.
+      required:
+      - source
+      properties:
+        source:
+          $ref: '#/components/schemas/InventorySource'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  parameters:
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    sourceCode:
+      name: sourceCode
+      in: path
+      description: The unique string code identifier for the inventory source.
+      required: true
+      schema:
+        type: string
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

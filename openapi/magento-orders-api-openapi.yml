@@ -1,0 +1,408 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Orders API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Orders
+  description: Sales order management including order retrieval, status updates, comment posting, cancellation, and order item management.
+paths:
+  /V1/orders:
+    get:
+      operationId: listOrders
+      summary: List orders
+      description: Returns a paginated list of sales orders matching the provided search criteria. Supports filtering by status, customer_email, created_at, increment_id, and any other order attribute. Results are sortable and paginated. Admin authentication is required.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSearchResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createOrder
+      summary: Create an order
+      description: Creates a new sales order. The order must include at minimum the billing and shipping address, order items with SKU and quantity, and payment method details. Orders created via the API bypass the standard checkout flow and quote conversion process.
+      tags:
+      - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '200':
+          description: Order ID of the created order
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: Numeric order entity ID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Get order by ID
+      description: Retrieves a single sales order by its numeric entity ID. Returns the full order object including line items, billing and shipping addresses, payment details, status history, and totals breakdown. Admin authentication is required.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      responses:
+        '200':
+          description: Order object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /V1/orders/{orderId}/cancel:
+    post:
+      operationId: cancelOrder
+      summary: Cancel an order
+      description: Cancels an existing order identified by its numeric entity ID. Only orders in cancellable states (such as pending or processing) can be cancelled. Orders that have already been invoiced or shipped cannot be fully cancelled. Admin authentication is required.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      responses:
+        '200':
+          description: Order cancelled successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /V1/orders/{orderId}/comments:
+    post:
+      operationId: addOrderComment
+      summary: Add a comment to an order
+      description: Adds a status history comment to an order. Comments can be visible to customers or kept internal for admin use only. An optional email notification can be sent to the customer when the comment is added. The order status can optionally be updated along with the comment.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCommentRequest'
+      responses:
+        '200':
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    orderId:
+      name: orderId
+      in: path
+      description: The numeric order entity ID.
+      required: true
+      schema:
+        type: integer
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+  schemas:
+    OrderSearchResults:
+      type: object
+      description: Paginated search results containing a list of orders.
+      properties:
+        items:
+          type: array
+          description: Array of order objects matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Order'
+        search_criteria:
+          type: object
+          description: The search criteria applied.
+        total_count:
+          type: integer
+          description: Total number of matching orders across all pages.
+    Address:
+      type: object
+      description: A postal address used for billing or shipping.
+      properties:
+        firstname:
+          type: string
+          description: First name of the address recipient.
+        lastname:
+          type: string
+          description: Last name of the address recipient.
+        email:
+          type: string
+          format: email
+          description: Email address associated with this address record.
+        street:
+          type: array
+          description: Street address lines.
+          items:
+            type: string
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: State or region name.
+        region_code:
+          type: string
+          description: Two-letter state or region code.
+        country_id:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          minLength: 2
+          maxLength: 2
+        postcode:
+          type: string
+          description: Postal or ZIP code.
+        telephone:
+          type: string
+          description: Phone number for this address.
+    OrderItem:
+      type: object
+      description: A line item within a sales order.
+      properties:
+        item_id:
+          type: integer
+          description: Numeric order item entity ID.
+        order_id:
+          type: integer
+          description: Numeric ID of the parent order.
+        sku:
+          type: string
+          description: SKU of the ordered product.
+        name:
+          type: string
+          description: Name of the ordered product at the time of purchase.
+        qty_ordered:
+          type: number
+          description: Quantity ordered.
+        qty_invoiced:
+          type: number
+          description: Quantity that has been invoiced.
+        qty_shipped:
+          type: number
+          description: Quantity that has been shipped.
+        price:
+          type: number
+          description: Unit price of the product.
+        row_total:
+          type: number
+          description: Total price for this line item (price x qty).
+        product_type:
+          type: string
+          description: Product type of the ordered item.
+    OrderRequest:
+      type: object
+      description: Request body for creating a sales order directly via the API.
+      required:
+      - entity
+      properties:
+        entity:
+          $ref: '#/components/schemas/Order'
+    OrderCommentRequest:
+      type: object
+      description: Request body for adding a status history comment to an order.
+      required:
+      - statusHistory
+      properties:
+        statusHistory:
+          type: object
+          description: Status history comment details.
+          properties:
+            comment:
+              type: string
+              description: The comment text to add to the order history.
+            is_customer_notified:
+              type: integer
+              description: Whether to send an email notification to the customer. 1 = yes, 0 = no.
+              enum:
+              - 0
+              - 1
+            is_visible_on_front:
+              type: integer
+              description: Whether the comment is visible to the customer in their account. 1 = yes, 0 = no.
+              enum:
+              - 0
+              - 1
+            status:
+              type: string
+              description: Optional new order status to set along with the comment.
+    Order:
+      type: object
+      description: A sales order in Adobe Commerce.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric order entity ID.
+        increment_id:
+          type: string
+          description: Human-readable order number (e.g. 000000001).
+        status:
+          type: string
+          description: Current order status code (e.g. pending, processing, complete, closed, canceled).
+        state:
+          type: string
+          description: Internal order state (e.g. new, processing, complete, closed, canceled, holded).
+        customer_id:
+          type: integer
+          description: Numeric customer entity ID. Null for guest orders.
+        customer_email:
+          type: string
+          format: email
+          description: Email address of the customer or guest who placed the order.
+        customer_firstname:
+          type: string
+          description: Customer first name.
+        customer_lastname:
+          type: string
+          description: Customer last name.
+        customer_is_guest:
+          type: boolean
+          description: Whether the order was placed by a guest (unauthenticated) shopper.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was last updated.
+        grand_total:
+          type: number
+          description: Order grand total including tax and shipping.
+        subtotal:
+          type: number
+          description: Order subtotal before tax and shipping.
+        tax_amount:
+          type: number
+          description: Total tax amount applied to the order.
+        shipping_amount:
+          type: number
+          description: Shipping amount charged on the order.
+        discount_amount:
+          type: number
+          description: Total discount amount applied to the order.
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          description: Line items in the order.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

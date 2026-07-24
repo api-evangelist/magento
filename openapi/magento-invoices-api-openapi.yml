@@ -1,0 +1,254 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Invoices API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Invoices
+  description: Invoice management for orders including invoice creation, retrieval, and payment capture operations.
+paths:
+  /V1/invoices:
+    get:
+      operationId: listInvoices
+      summary: List invoices
+      description: Returns a paginated list of order invoices matching the provided search criteria. Supports filtering by order_id, state, and other invoice attributes. Admin authentication is required.
+      tags:
+      - Invoices
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of invoices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceSearchResults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      summary: Get invoice by ID
+      description: Retrieves a single invoice by its numeric entity ID. Returns the full invoice object including line items, totals, and associated order reference. Admin authentication is required.
+      tags:
+      - Invoices
+      parameters:
+      - $ref: '#/components/parameters/invoiceId'
+      responses:
+        '200':
+          description: Invoice object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /V1/order/{orderId}/invoice:
+    post:
+      operationId: createInvoice
+      summary: Create an invoice for an order
+      description: Creates a new invoice for an existing order. The invoice can cover all or a subset of the order items by specifying item quantities in the request body. Setting capture to true will immediately attempt payment capture via the order's payment method if supported.
+      tags:
+      - Invoices
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceRequest'
+      responses:
+        '200':
+          description: Invoice entity ID of the created invoice
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    orderId:
+      name: orderId
+      in: path
+      description: The numeric order entity ID.
+      required: true
+      schema:
+        type: integer
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+    invoiceId:
+      name: invoiceId
+      in: path
+      description: The numeric invoice entity ID.
+      required: true
+      schema:
+        type: integer
+  schemas:
+    InvoiceSearchResults:
+      type: object
+      description: Paginated search results containing a list of invoices.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+        total_count:
+          type: integer
+          description: Total number of matching invoices.
+    Invoice:
+      type: object
+      description: An invoice record associated with a sales order.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric invoice entity ID.
+        order_id:
+          type: integer
+          description: Numeric entity ID of the parent order.
+        increment_id:
+          type: string
+          description: Human-readable invoice number.
+        state:
+          type: integer
+          description: Invoice state. 1 = open, 2 = paid, 3 = cancelled.
+          enum:
+          - 1
+          - 2
+          - 3
+        grand_total:
+          type: number
+          description: Invoice grand total.
+        subtotal:
+          type: number
+          description: Invoice subtotal.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the invoice was created.
+    InvoiceRequest:
+      type: object
+      description: Request body for creating an invoice for an order.
+      properties:
+        capture:
+          type: boolean
+          description: Whether to immediately capture payment when creating the invoice.
+        items:
+          type: array
+          description: Order items and quantities to include in the invoice. Omit to invoice all items.
+          items:
+            type: object
+            properties:
+              order_item_id:
+                type: integer
+                description: Numeric order item entity ID.
+              qty:
+                type: number
+                description: Quantity to invoice for this item.
+        comment:
+          type: object
+          description: Optional comment to attach to the invoice.
+          properties:
+            comment:
+              type: string
+              description: Comment text.
+            is_customer_notified:
+              type: integer
+              description: Whether to email the comment to the customer.
+              enum:
+              - 0
+              - 1
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

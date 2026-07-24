@@ -1,0 +1,149 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Carts API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Carts
+  description: Shopping cart and quote management for admin, customer, and guest users, including item management, coupon codes, shipping estimation, and payment information collection.
+paths:
+  /V1/carts/mine:
+    post:
+      operationId: createCustomerCart
+      summary: Create a cart for the authenticated customer
+      description: Creates a new empty shopping cart (quote) for the currently authenticated customer. Returns the cart ID (quote ID) that is used in subsequent cart operations. A customer can only have one active cart at a time; if an active cart already exists, its ID is returned.
+      tags:
+      - Carts
+      responses:
+        '200':
+          description: Cart ID (quote ID) for the customer cart
+          content:
+            application/json:
+              schema:
+                type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/carts/mine/items:
+    post:
+      operationId: addItemToCart
+      summary: Add item to customer cart
+      description: Adds a product to the authenticated customer's active cart. The request must include the quote_id, SKU, and quantity. For configurable products, product_option must be included with the selected option values. Returns the updated cart item object.
+      tags:
+      - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItemRequest'
+      responses:
+        '200':
+          description: Cart item added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/guest-carts:
+    post:
+      operationId: createGuestCart
+      summary: Create a guest cart
+      description: Creates a new empty shopping cart for a guest (unauthenticated) shopper. Returns a masked cart ID string that is used in subsequent guest cart operations. No authentication is required for this endpoint. The masked ID is a UUID-like string that does not expose internal database IDs.
+      tags:
+      - Carts
+      security: []
+      responses:
+        '200':
+          description: Masked cart ID for guest cart operations
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Masked cart ID (UUID format)
+components:
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CartItemRequest:
+      type: object
+      description: Request body for adding an item to a shopping cart.
+      required:
+      - cartItem
+      properties:
+        cartItem:
+          $ref: '#/components/schemas/CartItem'
+    CartItem:
+      type: object
+      description: A product line item in a shopping cart (quote).
+      properties:
+        item_id:
+          type: integer
+          description: Numeric cart item entity ID.
+        sku:
+          type: string
+          description: SKU of the product in the cart.
+        qty:
+          type: number
+          description: Quantity of the product in the cart.
+        name:
+          type: string
+          description: Display name of the product.
+        price:
+          type: number
+          description: Unit price of the product.
+        product_type:
+          type: string
+          description: Product type of the cart item.
+        quote_id:
+          type: string
+          description: The cart (quote) ID this item belongs to.
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

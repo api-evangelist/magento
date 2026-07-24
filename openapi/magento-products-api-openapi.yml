@@ -1,0 +1,319 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Products API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Products
+  description: Catalog product management including creation, retrieval, update, and deletion of simple, configurable, virtual, bundled, and grouped products. Supports product attributes, media, pricing rules, and cross-sell links.
+paths:
+  /V1/products:
+    get:
+      operationId: listProducts
+      summary: List products
+      description: Returns a paginated list of products matching the provided search criteria. Supports filtering by any product attribute, sorting by multiple fields, and pagination using currentPage and pageSize parameters within the searchCriteria object. Returns both product data and total count for pagination.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductSearchResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProduct
+      summary: Create a product
+      description: Creates a new catalog product. The product type is determined by the type_id field in the request body. Supported types include simple, configurable, virtual, downloadable, bundle, and grouped. Custom attributes can be included in the custom_attributes array using attribute codes defined in the catalog.
+      tags:
+      - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/products/{sku}:
+    get:
+      operationId: getProduct
+      summary: Get product by SKU
+      description: Retrieves a single product by its SKU identifier. Returns the full product object including all attributes, media gallery entries, tier prices, and extension attributes. SKUs containing forward slashes or other special characters must be URL-encoded.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/sku'
+      responses:
+        '200':
+          description: Product object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateProduct
+      summary: Update a product
+      description: Updates an existing product identified by its SKU. Only the fields included in the request body are updated; omitted fields retain their existing values. Custom attributes included in the custom_attributes array will overwrite existing attribute values.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/sku'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Updated product object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteProduct
+      summary: Delete a product
+      description: Permanently deletes a product from the catalog by its SKU. This operation cannot be undone. Associated product attributes, media, and tier prices are also removed. Products assigned to categories will be unassigned prior to deletion.
+      tags:
+      - Products
+      parameters:
+      - $ref: '#/components/parameters/sku'
+      responses:
+        '200':
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    sku:
+      name: sku
+      in: path
+      description: The product SKU (Stock Keeping Unit) identifier. URL-encode special characters.
+      required: true
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+  schemas:
+    Product:
+      type: object
+      description: A catalog product in Adobe Commerce.
+      properties:
+        id:
+          type: integer
+          description: Numeric product entity ID assigned by Commerce.
+        sku:
+          type: string
+          description: Stock Keeping Unit — the unique product identifier.
+        name:
+          type: string
+          description: Display name of the product.
+        attribute_set_id:
+          type: integer
+          description: ID of the attribute set applied to this product.
+        price:
+          type: number
+          format: float
+          description: Base price of the product.
+        status:
+          type: integer
+          description: Product status. 1 = enabled, 2 = disabled.
+          enum:
+          - 1
+          - 2
+        visibility:
+          type: integer
+          description: Catalog visibility. 1 = not visible, 2 = catalog only, 3 = search only, 4 = catalog and search.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        type_id:
+          type: string
+          description: Product type identifier.
+          enum:
+          - simple
+          - configurable
+          - virtual
+          - downloadable
+          - bundle
+          - grouped
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the product was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the product was last updated.
+        weight:
+          type: number
+          format: float
+          description: Product weight used for shipping calculations.
+        extension_attributes:
+          type: object
+          description: Extension attributes providing additional module-specific product data.
+        custom_attributes:
+          type: array
+          description: Array of custom EAV attribute values for this product.
+          items:
+            $ref: '#/components/schemas/CustomAttribute'
+    ProductRequest:
+      type: object
+      description: Request body for creating or updating a catalog product.
+      required:
+      - product
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        saveOptions:
+          type: boolean
+          description: Whether to save custom options alongside the product.
+    CustomAttribute:
+      type: object
+      description: A key-value pair representing a custom EAV attribute on a catalog entity.
+      required:
+      - attribute_code
+      - value
+      properties:
+        attribute_code:
+          type: string
+          description: The unique attribute code identifier.
+        value:
+          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
+    ProductSearchResults:
+      type: object
+      description: Paginated search results containing a list of products.
+      properties:
+        items:
+          type: array
+          description: Array of product objects matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Product'
+        search_criteria:
+          type: object
+          description: The search criteria applied to generate these results.
+        total_count:
+          type: integer
+          description: Total number of products matching the search criteria across all pages.
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

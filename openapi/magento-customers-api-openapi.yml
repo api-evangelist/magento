@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication Customers API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: Customer account management including registration, profile updates, address management, authentication, and customer group assignment.
+paths:
+  /V1/customers:
+    post:
+      operationId: createCustomer
+      summary: Create a customer
+      description: Creates a new customer account. The email address must be unique within the store. A password can be provided directly or auto-generated and sent to the customer via email. The customer is assigned to a default customer group unless a group_id is specified in the request.
+      tags:
+      - Customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/customers/search:
+    get:
+      operationId: searchCustomers
+      summary: Search customers
+      description: Returns a paginated list of customers matching the provided search criteria. Supports filtering by any customer attribute including email, firstname, lastname, group_id, and created_at. Results can be sorted and paginated using searchCriteria parameters.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/searchCriteriaFilterGroups'
+      - $ref: '#/components/parameters/searchCriteriaSortOrders'
+      - $ref: '#/components/parameters/searchCriteriaPageSize'
+      - $ref: '#/components/parameters/searchCriteriaCurrentPage'
+      responses:
+        '200':
+          description: Paginated list of customers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerSearchResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/customers/{customerId}:
+    get:
+      operationId: getCustomer
+      summary: Get customer by ID
+      description: Retrieves a single customer account by its numeric ID. Returns the full customer object including contact details, addresses, and group assignment. Admin authentication is required to retrieve any customer account; customer tokens only allow retrieval of the authenticated customer's own account via the /V1/customers/me endpoint.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Customer object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCustomer
+      summary: Update a customer
+      description: Updates an existing customer account by its numeric ID. Fields included in the request body overwrite existing values. Partial updates are supported; omitted optional fields retain their current values. Admin authentication is required.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Updated customer object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCustomer
+      summary: Delete a customer
+      description: Permanently deletes a customer account by its numeric ID. All associated data including addresses, order history references, and wishlist items are also removed. This operation cannot be undone. Admin authentication is required.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Customer deleted successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    customerId:
+      name: customerId
+      in: path
+      description: The numeric customer entity ID.
+      required: true
+      schema:
+        type: integer
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+  schemas:
+    CustomerSearchResults:
+      type: object
+      description: Paginated search results containing a list of customer accounts.
+      properties:
+        items:
+          type: array
+          description: Array of customer objects matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Customer'
+        search_criteria:
+          type: object
+          description: The search criteria applied.
+        total_count:
+          type: integer
+          description: Total number of matching customers across all pages.
+    CustomerRequest:
+      type: object
+      description: Request body for creating or updating a customer account.
+      required:
+      - customer
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+        password:
+          type: string
+          description: Plain-text password to set on the customer account. If omitted, a password reset email is sent.
+          format: password
+    CustomAttribute:
+      type: object
+      description: A key-value pair representing a custom EAV attribute on a catalog entity.
+      required:
+      - attribute_code
+      - value
+      properties:
+        attribute_code:
+          type: string
+          description: The unique attribute code identifier.
+        value:
+          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
+    Address:
+      type: object
+      description: A postal address used for billing or shipping.
+      properties:
+        firstname:
+          type: string
+          description: First name of the address recipient.
+        lastname:
+          type: string
+          description: Last name of the address recipient.
+        email:
+          type: string
+          format: email
+          description: Email address associated with this address record.
+        street:
+          type: array
+          description: Street address lines.
+          items:
+            type: string
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: State or region name.
+        region_code:
+          type: string
+          description: Two-letter state or region code.
+        country_id:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          minLength: 2
+          maxLength: 2
+        postcode:
+          type: string
+          description: Postal or ZIP code.
+        telephone:
+          type: string
+          description: Phone number for this address.
+    Customer:
+      type: object
+      description: A registered customer account in Adobe Commerce.
+      properties:
+        id:
+          type: integer
+          description: Numeric customer entity ID.
+        group_id:
+          type: integer
+          description: ID of the customer group this customer belongs to.
+        email:
+          type: string
+          format: email
+          description: Customer email address, used as the login identifier.
+        firstname:
+          type: string
+          description: Customer first name.
+        lastname:
+          type: string
+          description: Customer last name.
+        store_id:
+          type: integer
+          description: ID of the store view where this customer account was created.
+        website_id:
+          type: integer
+          description: ID of the website scope for this customer account.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the customer account was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the customer account was last updated.
+        addresses:
+          type: array
+          description: Customer address book entries.
+          items:
+            $ref: '#/components/schemas/Address'
+        custom_attributes:
+          type: array
+          description: Custom EAV attribute values for this customer.
+          items:
+            $ref: '#/components/schemas/CustomAttribute'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/

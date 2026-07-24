@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Magento REST Authentication API
+  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  version: '2.4'
+  contact:
+    name: Adobe Commerce Developer Support
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  termsOfService: https://www.adobe.com/legal/terms.html
+servers:
+- url: https://{store_domain}/rest/{store_code}
+  description: Production Server
+  variables:
+    store_domain:
+      default: your-store.example.com
+      description: The hostname of your Adobe Commerce store
+    store_code:
+      default: V1
+      description: Store code followed by API version. Use "all" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: Endpoints for obtaining integration tokens for admin and customer users. Token-based authentication issues a Bearer token that must be included in the Authorization header of subsequent requests.
+paths:
+  /V1/integration/admin/token:
+    post:
+      operationId: createAdminToken
+      summary: Get admin authentication token
+      description: Issues a Bearer token for an admin user based on username and password credentials. The returned token must be included as a Bearer token in the Authorization header of all subsequent admin-scoped API requests. Tokens expire after the configured lifetime (default 4 hours).
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminTokenRequest'
+      responses:
+        '200':
+          description: Authentication token issued successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Bearer token string for use in Authorization header
+                example: abc123def456ghi789
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /V1/integration/customer/token:
+    post:
+      operationId: createCustomerToken
+      summary: Get customer authentication token
+      description: Issues a Bearer token for a customer user based on email address and password credentials. The returned token must be included as a Bearer token in the Authorization header of subsequent customer-scoped API requests. Tokens expire after the configured lifetime.
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerTokenRequest'
+      responses:
+        '200':
+          description: Authentication token issued successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Bearer token string for use in Authorization header
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    AdminTokenRequest:
+      type: object
+      description: Request body for obtaining an admin Bearer token.
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Admin user login username.
+        password:
+          type: string
+          description: Admin user password.
+          format: password
+    CustomerTokenRequest:
+      type: object
+      description: Request body for obtaining a customer Bearer token.
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Customer email address used as the login username.
+          format: email
+        password:
+          type: string
+          description: Customer account password.
+          format: password
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /V1/integration/admin/token or /V1/integration/customer/token endpoint. Include in the Authorization header as "Bearer {token}".
+externalDocs:
+  description: Adobe Commerce REST API Documentation
+  url: https://developer.adobe.com/commerce/webapi/rest/
