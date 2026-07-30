@@ -1,31 +1,21 @@
 aid: magento
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/magento.png
 url: https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml
 modified: '2026-05-19'
 apis:
-- aid: magento:rest-api
-  name: Magento REST API
-  tags:
-  - Catalog
-  - Customers
-  - E-Commerce
-  - Orders
-  - Products
-  - REST
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://your-store.example.com/rest
-  humanURL: https://developer.adobe.com/commerce/webapi/rest/
-  properties:
-  - url: https://developer.adobe.com/commerce/webapi/rest/
-    type: Documentation
-  - url: https://developer.adobe.com/commerce/webapi/rest/reference/
-    type: Documentation
-  - url: openapi/magento-rest-api-openapi.yml
-    type: OpenAPI
-  description: >-
-    The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major
-    aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and
-    payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based
-    authentication for mobile apps and administrators, and guest access for select public endpoints.
 - aid: magento:graphql-api
   name: Magento GraphQL API
   tags:
@@ -46,10 +36,10 @@ apis:
   - url: graphql/magento-graphql.md
     type: GraphQL
   description: >-
-    The Adobe Commerce GraphQL API offers a flexible, query-driven interface designed primarily for building headless
-    storefronts and progressive web applications. It exposes a single endpoint and allows clients to request exactly
-    the data they need through queries and mutations covering catalog browsing, product search, cart management,
-    checkout, customer accounts, and order history.
+    The Adobe Commerce GraphQL API offers a flexible, query-driven interface designed primarily for building
+    headless storefronts and progressive web applications. It exposes a single endpoint and allows clients
+    to request exactly the data they need through queries and mutations covering catalog browsing, product
+    search, cart management, checkout, customer accounts, and order history.
 - aid: magento:soap-api
   name: Magento SOAP API
   tags:
@@ -66,10 +56,11 @@ apis:
   - url: wsdl/magento-soap.wsdl
     type: WSDL
   description: >-
-    The Adobe Commerce SOAP API exposes the same service contracts as the REST API through a WSDL 1.2 interface
-    compliant with WS-I 2.0 Basic Profile. It allows enterprise systems and legacy integrations to interact with Adobe
-    Commerce store data using standard SOAP tooling. Developers can retrieve the WSDL for any service or combination
-    of services by appending query parameters to the SOAP endpoint URL.
+    The Adobe Commerce SOAP API exposes the same service contracts as the REST API through a WSDL 1.2
+    interface compliant with WS-I 2.0 Basic Profile. It allows enterprise systems and legacy integrations
+    to interact with Adobe Commerce store data using standard SOAP tooling. Developers can retrieve the
+    WSDL for any service or combination of services by appending query parameters to the SOAP endpoint
+    URL.
 - aid: magento:webhooks
   name: Adobe Commerce Webhooks
   tags:
@@ -87,10 +78,10 @@ apis:
   - url: asyncapi/magento-webhooks-asyncapi.yml
     type: AsyncAPI
   description: >-
-    Adobe Commerce Webhooks enable developers to configure synchronous HTTP callbacks that fire when specific events
-    occur within a Commerce instance, allowing external systems to react in real time to store activity. Webhooks can
-    intercept and modify request data before Commerce processes it, or trigger outbound notifications after an event
-    completes.
+    Adobe Commerce Webhooks enable developers to configure synchronous HTTP callbacks that fire when specific
+    events occur within a Commerce instance, allowing external systems to react in real time to store
+    activity. Webhooks can intercept and modify request data before Commerce processes it, or trigger
+    outbound notifications after an event completes.
 - aid: magento:admin-ui-sdk
   name: Adobe Commerce Admin UI SDK
   tags:
@@ -106,10 +97,10 @@ apis:
   - url: https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/
     type: Documentation
   description: >-
-    The Adobe Commerce Admin UI SDK enables App Builder developers to extend the Commerce Admin panel with custom
-    menus, pages, and UI components built as out-of-process applications. Rather than modifying the Commerce codebase
-    directly, developers build React-based UIs hosted on Adobe App Builder infrastructure and surface them inside the
-    Admin through the SDK's extension point mechanism.
+    The Adobe Commerce Admin UI SDK enables App Builder developers to extend the Commerce Admin panel
+    with custom menus, pages, and UI components built as out-of-process applications. Rather than modifying
+    the Commerce codebase directly, developers build React-based UIs hosted on Adobe App Builder infrastructure
+    and surface them inside the Admin through the SDK's extension point mechanism.
 - aid: magento:events
   name: Adobe Commerce Eventing
   tags:
@@ -127,10 +118,185 @@ apis:
   - url: asyncapi/magento-events-asyncapi.yml
     type: AsyncAPI
   description: >-
-    Adobe Commerce Eventing provides an asynchronous event-driven integration framework that publishes Commerce
-    business events to Adobe I/O Events, enabling App Builder applications and other Adobe Experience Cloud services
-    to subscribe and react to store activity. Supported event types cover the full commerce lifecycle including order
-    placement, customer registration, product updates, inventory changes, and payment processing.
+    Adobe Commerce Eventing provides an asynchronous event-driven integration framework that publishes
+    Commerce business events to Adobe I/O Events, enabling App Builder applications and other Adobe Experience
+    Cloud services to subscribe and react to store activity. Supported event types cover the full commerce
+    lifecycle including order placement, customer registration, product updates, inventory changes, and
+    payment processing.
+- aid: magento:magento-authentication-api
+  name: magento Authentication API
+  description: >-
+    Endpoints for obtaining integration tokens for admin and customer users. Token-based authentication
+    issues a Bearer token that must be included in the Authorization header of subsequent requests.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-carts-api
+  name: magento Carts API
+  description: >-
+    Shopping cart and quote management for admin, customer, and guest users, including item management,
+    coupon codes, shipping estimation, and payment information collection.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Carts
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-carts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-categories-api
+  name: magento Categories API
+  description: >-
+    Category tree management including creation, retrieval, update, and deletion of catalog categories
+    and their product assignments.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-customers-api
+  name: magento Customers API
+  description: >-
+    Customer account management including registration, profile updates, address management, authentication,
+    and customer group assignment.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-inventory-api
+  name: magento Inventory API
+  description: >-
+    Multi-source inventory management including sources, stocks, stock-source links, and source item quantity
+    management.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-inventory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-invoices-api
+  name: magento Invoices API
+  description: >-
+    Invoice management for orders including invoice creation, retrieval, and payment capture operations.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-orders-api
+  name: magento Orders API
+  description: >-
+    Sales order management including order retrieval, status updates, comment posting, cancellation, and
+    order item management.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-products-api
+  name: magento Products API
+  description: >-
+    Catalog product management including creation, retrieval, update, and deletion of simple, configurable,
+    virtual, bundled, and grouped products. Supports product attributes, media, pricing rules, and cross-sell
+    links.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-shipments-api
+  name: magento Shipments API
+  description: >-
+    Shipment management for orders including shipment creation, retrieval, tracking number management,
+    and shipment comments.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Shipments
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-shipments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-stores-api
+  name: magento Stores API
+  description: >-
+    Store configuration retrieval including store groups, store views, websites, and configuration settings.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-stores-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
+- aid: magento:magento-tax-api
+  name: magento Tax API
+  description: >-
+    Tax configuration management including tax rates, tax rules, and tax classes used for order tax calculation.
+  humanURL: https://developer.adobe.com/commerce/webapi/rest/
+  baseURL: https://your-store.example.com/rest
+  tags:
+  - Tax
+  properties:
+  - type: OpenAPI
+    url: openapi/magento-tax-api-openapi.yml
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/
+  - type: Documentation
+    url: https://developer.adobe.com/commerce/webapi/rest/reference/
 common:
 - type: AgenticAccess
   url: agentic-access/magento-agentic-access.yml
