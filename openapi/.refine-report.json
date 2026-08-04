@@ -1,0 +1,34 @@
+{
+  "provider": "magento",
+  "sources": [
+    "magento-authentication-api-openapi.yml",
+    "magento-carts-api-openapi.yml",
+    "magento-categories-api-openapi.yml",
+    "magento-customers-api-openapi.yml",
+    "magento-inventory-api-openapi.yml",
+    "magento-invoices-api-openapi.yml",
+    "magento-orders-api-openapi.yml",
+    "magento-products-api-openapi.yml",
+    "magento-shipments-api-openapi.yml",
+    "magento-stores-api-openapi.yml",
+    "magento-tax-api-openapi.yml"
+  ],
+  "outputs": [
+    "magento-authentication-api-openapi.yml",
+    "magento-carts-api-openapi.yml",
+    "magento-categories-api-openapi.yml",
+    "magento-customers-api-openapi.yml",
+    "magento-inventory-api-openapi.yml",
+    "magento-invoices-api-openapi.yml",
+    "magento-orders-api-openapi.yml",
+    "magento-products-api-openapi.yml",
+    "magento-shipments-api-openapi.yml",
+    "magento-stores-api-openapi.yml",
+    "magento-tax-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
