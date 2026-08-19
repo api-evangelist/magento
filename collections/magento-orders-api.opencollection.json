@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Orders API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of sales orders matching the provided search criteria. Supports filtering by status, customer_email, created_at, increment_id, and any other order attribute. Results are sortable and paginated. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Create an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sales order. The order must include at minimum the billing and shipping address, order items with SKU and quantity, and payment method details. Orders created via the API bypass the standard checkout flow and quote conversion process."
+        },
+        {
+          "info": {
+            "name": "Get order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single sales order by its numeric entity ID. Returns the full order object including line items, billing and shipping addresses, payment details, status history, and totals breakdown. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Cancel an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId/cancel",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ]
+          },
+          "docs": "Cancels an existing order identified by its numeric entity ID. Only orders in cancellable states (such as pending or processing) can be cancelled. Orders that have already been invoiced or shipped cannot be fully cancelled. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Add a comment to an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/orders/:orderId/comments",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a status history comment to an order. Comments can be visible to customers or kept internal for admin use only. An optional email notification can be sent to the customer when the comment is added. The order status can optionally be updated along with the comment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

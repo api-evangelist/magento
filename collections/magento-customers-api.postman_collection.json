@@ -1,0 +1,1482 @@
+{
+  "item": [
+    {
+      "id": "077de822-2755-4ed6-95d7-f4a31bab304f",
+      "name": "Customers",
+      "description": {
+        "content": "Customer account management including registration, profile updates, address management, authentication, and customer group assignment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf667ab2-4073-430f-916b-10114cb44208",
+          "name": "Create a customer",
+          "request": {
+            "name": "Create a customer",
+            "description": {
+              "content": "Creates a new customer account. The email address must be unique within the store. A password can be provided directly or auto-generated and sent to the customer via email. The customer is assigned to a default customer group unless a group_id is specified in the request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"group_id\": \"<integer>\",\n    \"email\": \"<email>\",\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"store_id\": \"<integer>\",\n    \"website_id\": \"<integer>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"addresses\": [\n      {\n        \"firstname\": \"<string>\",\n        \"lastname\": \"<string>\",\n        \"email\": \"<email>\",\n        \"street\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_code\": \"<string>\",\n        \"country_id\": \"<string>\",\n        \"postcode\": \"<string>\",\n        \"telephone\": \"<string>\"\n      },\n      {\n        \"firstname\": \"<string>\",\n        \"lastname\": \"<string>\",\n        \"email\": \"<email>\",\n        \"street\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_code\": \"<string>\",\n        \"country_id\": \"<string>\",\n        \"postcode\": \"<string>\",\n        \"telephone\": \"<string>\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e55b907b-81fd-46dc-9ef7-ec6e5591b5ab",
+              "name": "Customer created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4578,\n  \"group_id\": 9625,\n  \"email\": \"fk6JYUC@AtOWSvlPjRfaBXfdPnkbXtQDGm.zap\",\n  \"firstname\": \"string\",\n  \"lastname\": \"string\",\n  \"store_id\": 2581,\n  \"website_id\": 3765,\n  \"created_at\": \"1972-01-26T16:25:20.368Z\",\n  \"updated_at\": \"1968-09-21T10:45:40.616Z\",\n  \"addresses\": [\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"8KV@AduCtPCywAIKi.lu\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"fK9z9QGYL@yJHvjwTxtTlfbDSWwDAI.mcty\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    }\n  ],\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd00ec79-0ab1-48a5-9f83-38b391b9b038",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d50a956-605d-4929-ae24-f173590128c6",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6465e4b-ee47-4317-bcb5-ba62163b9ee2",
+          "name": "Search customers",
+          "request": {
+            "name": "Search customers",
+            "description": {
+              "content": "Returns a paginated list of customers matching the provided search criteria. Supports filtering by any customer attribute including email, firstname, lastname, group_id, and created_at. Results can be sorted and paginated using searchCriteria parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                  "value": "<string>",
+                  "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[sortOrders][0][field]",
+                  "value": "<string>",
+                  "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[pageSize]",
+                  "value": "<integer>",
+                  "description": "Number of records to return per page. Default varies by resource."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[currentPage]",
+                  "value": "<integer>",
+                  "description": "Page number to return. First page is 1."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a29f6d85-d0cf-4252-9361-c2e43d1421db",
+              "name": "Paginated list of customers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": 7988,\n      \"group_id\": 6100,\n      \"email\": \"XFNL3BqVxPkpS@MslNWkVhcfetRdNoGdhhbhA.tsug\",\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"store_id\": 7486,\n      \"website_id\": 1072,\n      \"created_at\": \"2005-11-22T12:57:07.150Z\",\n      \"updated_at\": \"1999-09-08T10:51:51.657Z\",\n      \"addresses\": [\n        {\n          \"firstname\": \"string\",\n          \"lastname\": \"string\",\n          \"email\": \"6pJDsbuQ@mQnpGEwnkZadZqBlv.oz\",\n          \"street\": [\n            \"string\",\n            \"string\"\n          ],\n          \"city\": \"string\",\n          \"region\": \"string\",\n          \"region_code\": \"string\",\n          \"country_id\": \"st\",\n          \"postcode\": \"string\",\n          \"telephone\": \"string\"\n        },\n        {\n          \"firstname\": \"string\",\n          \"lastname\": \"string\",\n          \"email\": \"Ql9wp0K@mtTdHe.xpws\",\n          \"street\": [\n            \"string\",\n            \"string\"\n          ],\n          \"city\": \"string\",\n          \"region\": \"string\",\n          \"region_code\": \"string\",\n          \"country_id\": \"st\",\n          \"postcode\": \"string\",\n          \"telephone\": \"string\"\n        }\n      ],\n      \"custom_attributes\": [\n        {\n          \"attribute_code\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"attribute_code\": \"string\",\n          \"value\": {}\n        }\n      ]\n    },\n    {\n      \"id\": 4796,\n      \"group_id\": 8713,\n      \"email\": \"LcwsUpbBzPvk-9@UtngXkaxikTFelflTUQsZsv.dfk\",\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"store_id\": 5303,\n      \"website_id\": 4761,\n      \"created_at\": \"1999-01-15T08:40:22.587Z\",\n      \"updated_at\": \"1988-08-08T23:16:20.905Z\",\n      \"addresses\": [\n        {\n          \"firstname\": \"string\",\n          \"lastname\": \"string\",\n          \"email\": \"qXZnBBWHGV1D5Qk@cCpZuIgwaaLDIFYfg.mn\",\n          \"street\": [\n            \"string\",\n            \"string\"\n          ],\n          \"city\": \"string\",\n          \"region\": \"string\",\n          \"region_code\": \"string\",\n          \"country_id\": \"st\",\n          \"postcode\": \"string\",\n          \"telephone\": \"string\"\n        },\n        {\n          \"firstname\": \"string\",\n          \"lastname\": \"string\",\n          \"email\": \"3pzlKEnJS@FqFZalUXvPbmbFPgCjh.dnrx\",\n          \"street\": [\n            \"string\",\n            \"string\"\n          ],\n          \"city\": \"string\",\n          \"region\": \"string\",\n          \"region_code\": \"string\",\n          \"country_id\": \"st\",\n          \"postcode\": \"string\",\n          \"telephone\": \"string\"\n        }\n      ],\n      \"custom_attributes\": [\n        {\n          \"attribute_code\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"attribute_code\": \"string\",\n          \"value\": {}\n        }\n      ]\n    }\n  ],\n  \"search_criteria\": {},\n  \"total_count\": 5526\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9d6e214-88e0-4067-93b3-7733c512b402",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52b4bba8-130f-4ba1-9918-183cf471d0b8",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6450b82-f81b-4056-a650-8db3e0d03c6f",
+          "name": "Get customer by ID",
+          "request": {
+            "name": "Get customer by ID",
+            "description": {
+              "content": "Retrieves a single customer account by its numeric ID. Returns the full customer object including contact details, addresses, and group assignment. Admin authentication is required to retrieve any customer account; customer tokens only allow retrieval of the authenticated customer's own account via the /V1/customers/me endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers",
+                ":customerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "customerId",
+                  "description": "(Required) The numeric customer entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2955717a-8d5c-4cab-93d4-bf48028df25b",
+              "name": "Customer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4578,\n  \"group_id\": 9625,\n  \"email\": \"fk6JYUC@AtOWSvlPjRfaBXfdPnkbXtQDGm.zap\",\n  \"firstname\": \"string\",\n  \"lastname\": \"string\",\n  \"store_id\": 2581,\n  \"website_id\": 3765,\n  \"created_at\": \"1972-01-26T16:25:20.368Z\",\n  \"updated_at\": \"1968-09-21T10:45:40.616Z\",\n  \"addresses\": [\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"8KV@AduCtPCywAIKi.lu\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"fK9z9QGYL@yJHvjwTxtTlfbDSWwDAI.mcty\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    }\n  ],\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cd82f53-63a4-4f41-9552-3324a2c67f71",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a7b5e9f-f37e-416a-b2d4-d0040e6a7231",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce90323d-b17e-40b6-9f9b-8f070c58562b",
+          "name": "Update a customer",
+          "request": {
+            "name": "Update a customer",
+            "description": {
+              "content": "Updates an existing customer account by its numeric ID. Fields included in the request body overwrite existing values. Partial updates are supported; omitted optional fields retain their current values. Admin authentication is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers",
+                ":customerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "customerId",
+                  "description": "(Required) The numeric customer entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"group_id\": \"<integer>\",\n    \"email\": \"<email>\",\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"store_id\": \"<integer>\",\n    \"website_id\": \"<integer>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"addresses\": [\n      {\n        \"firstname\": \"<string>\",\n        \"lastname\": \"<string>\",\n        \"email\": \"<email>\",\n        \"street\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_code\": \"<string>\",\n        \"country_id\": \"<string>\",\n        \"postcode\": \"<string>\",\n        \"telephone\": \"<string>\"\n      },\n      {\n        \"firstname\": \"<string>\",\n        \"lastname\": \"<string>\",\n        \"email\": \"<email>\",\n        \"street\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_code\": \"<string>\",\n        \"country_id\": \"<string>\",\n        \"postcode\": \"<string>\",\n        \"telephone\": \"<string>\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "190b817f-d8af-454a-bc73-3e8340c44510",
+              "name": "Updated customer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4578,\n  \"group_id\": 9625,\n  \"email\": \"fk6JYUC@AtOWSvlPjRfaBXfdPnkbXtQDGm.zap\",\n  \"firstname\": \"string\",\n  \"lastname\": \"string\",\n  \"store_id\": 2581,\n  \"website_id\": 3765,\n  \"created_at\": \"1972-01-26T16:25:20.368Z\",\n  \"updated_at\": \"1968-09-21T10:45:40.616Z\",\n  \"addresses\": [\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"8KV@AduCtPCywAIKi.lu\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"fK9z9QGYL@yJHvjwTxtTlfbDSWwDAI.mcty\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    }\n  ],\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7002ef7b-4ab0-42ea-9b05-338b017c15f4",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75e6f0ad-9506-4382-aeca-acc309e13d60",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ae939d9-6107-434c-808a-b04a6d7cff74",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"id\": 2520,\n    \"group_id\": 2155,\n    \"email\": \"J449p5w@AtGcGTEsDNSZdOxJDLUDUoBpXQGJc.xgmf\",\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"store_id\": 7686,\n    \"website_id\": 9513,\n    \"created_at\": \"1987-01-01T14:45:32.012Z\",\n    \"updated_at\": \"1962-02-11T01:08:45.771Z\",\n    \"addresses\": [\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"YGttuk5@JJfUNcuUKIOvzz.htiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"AMOFwrADrYXM@ATTdLmfNuscrfmQNPIWajM.dbw\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      }\n    ],\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  },\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83342ff8-f16f-4b92-b873-0b68974e3e4c",
+          "name": "Delete a customer",
+          "request": {
+            "name": "Delete a customer",
+            "description": {
+              "content": "Permanently deletes a customer account by its numeric ID. All associated data including addresses, order history references, and wishlist items are also removed. This operation cannot be undone. Admin authentication is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers",
+                ":customerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "customerId",
+                  "description": "(Required) The numeric customer entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ca4142a-3b48-4546-8d92-9136f4f2fd95",
+              "name": "Customer deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "false",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e41073ee-3fbc-4338-809a-af060075eea4",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef9b37ba-e652-45fb-b037-063421557ec7",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customerId",
+                      "description": "(Required) The numeric customer entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your Adobe Commerce store",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-store.example.com",
+      "key": "store_domain"
+    },
+    {
+      "description": {
+        "content": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "V1",
+      "key": "store_code"
+    },
+    {
+      "type": "string",
+      "value": "https://{{store_domain}}/rest/{{store_code}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8b201156-559f-4e00-a10f-493f8e6f78d2",
+    "name": "Magento REST Authentication Customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.\n\nContact Support:\n Name: Adobe Commerce Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

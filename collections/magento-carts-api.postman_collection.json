@@ -1,0 +1,596 @@
+{
+  "item": [
+    {
+      "id": "73308d3e-480b-4e3c-9df7-ab0abde6be8e",
+      "name": "Carts",
+      "description": {
+        "content": "Shopping cart and quote management for admin, customer, and guest users, including item management, coupon codes, shipping estimation, and payment information collection.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2a2b7eae-f108-4f5d-975b-a0cffbb48513",
+          "name": "Create a cart for the authenticated customer",
+          "request": {
+            "name": "Create a cart for the authenticated customer",
+            "description": {
+              "content": "Creates a new empty shopping cart (quote) for the currently authenticated customer. Returns the cart ID (quote ID) that is used in subsequent cart operations. A customer can only have one active cart at a time; if an active cart already exists, its ID is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "carts",
+                "mine"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce65fa62-25e2-4471-8ff4-6c57260267ad",
+              "name": "Cart ID (quote ID) for the customer cart",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "carts",
+                    "mine"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "7632",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcfd63a3-63c7-4974-84ea-1ab9644a69ca",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "carts",
+                    "mine"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c418fa04-36e3-4fa4-bc44-cde05ed1ed18",
+          "name": "Add item to customer cart",
+          "request": {
+            "name": "Add item to customer cart",
+            "description": {
+              "content": "Adds a product to the authenticated customer's active cart. The request must include the quote_id, SKU, and quantity. For configurable products, product_option must be included with the selected option values. Returns the updated cart item object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "carts",
+                "mine",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cartItem\": {\n    \"item_id\": \"<integer>\",\n    \"sku\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"name\": \"<string>\",\n    \"price\": \"<number>\",\n    \"product_type\": \"<string>\",\n    \"quote_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f7b15fd-3f26-4d25-93de-e7cbc0aa1518",
+              "name": "Cart item added successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "carts",
+                    "mine",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cartItem\": {\n    \"item_id\": 1614,\n    \"sku\": \"string\",\n    \"qty\": 6047.344388362281,\n    \"name\": \"string\",\n    \"price\": 7174.5510566121175,\n    \"product_type\": \"string\",\n    \"quote_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item_id\": 8189,\n  \"sku\": \"string\",\n  \"qty\": 6186.106110816712,\n  \"name\": \"string\",\n  \"price\": 6846.407534320151,\n  \"product_type\": \"string\",\n  \"quote_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "964b3bb9-6748-49f6-a405-ad6fc96c5c47",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "carts",
+                    "mine",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cartItem\": {\n    \"item_id\": 1614,\n    \"sku\": \"string\",\n    \"qty\": 6047.344388362281,\n    \"name\": \"string\",\n    \"price\": 7174.5510566121175,\n    \"product_type\": \"string\",\n    \"quote_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42109c13-1f11-41f7-a3ed-91ab1171565b",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "carts",
+                    "mine",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cartItem\": {\n    \"item_id\": 1614,\n    \"sku\": \"string\",\n    \"qty\": 6047.344388362281,\n    \"name\": \"string\",\n    \"price\": 7174.5510566121175,\n    \"product_type\": \"string\",\n    \"quote_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5dd67bc-579e-46a0-a1d5-141c73238c5c",
+          "name": "Create a guest cart",
+          "request": {
+            "name": "Create a guest cart",
+            "description": {
+              "content": "Creates a new empty shopping cart for a guest (unauthenticated) shopper. Returns a masked cart ID string that is used in subsequent guest cart operations. No authentication is required for this endpoint. The masked ID is a UUID-like string that does not expose internal database IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "guest-carts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ceb2f86-41d7-44b7-b6c8-223adbe94ec6",
+              "name": "Masked cart ID for guest cart operations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "guest-carts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your Adobe Commerce store",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-store.example.com",
+      "key": "store_domain"
+    },
+    {
+      "description": {
+        "content": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "V1",
+      "key": "store_code"
+    },
+    {
+      "type": "string",
+      "value": "https://{{store_domain}}/rest/{{store_code}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "30ddfda0-f6aa-49ce-a661-d2e1432005a8",
+    "name": "Magento REST Authentication Carts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.\n\nContact Support:\n Name: Adobe Commerce Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Invoices API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/invoices",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of order invoices matching the provided search criteria. Supports filtering by order_id, state, and other invoice attributes. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Get invoice by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric invoice entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single invoice by its numeric entity ID. Returns the full invoice object including line items, totals, and associated order reference. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Create an invoice for an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/order/:orderId/invoice",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric order entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new invoice for an existing order. The invoice can cover all or a subset of the order items by specifying item quantities in the request body. Setting capture to true will immediately attempt payment capture via the order's payment method if supported."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

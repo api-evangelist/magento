@@ -1,0 +1,1442 @@
+{
+  "item": [
+    {
+      "id": "f5a860ba-c816-4f17-b326-569c7659fa0c",
+      "name": "Categories",
+      "description": {
+        "content": "Category tree management including creation, retrieval, update, and deletion of catalog categories and their product assignments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "71af7605-07fb-4cd3-b464-2203c11c8f1e",
+          "name": "List categories",
+          "request": {
+            "name": "List categories",
+            "description": {
+              "content": "Returns the full category tree starting from the specified root category. The response is a nested tree structure with each category containing its children. Use the rootCategoryId parameter to start from a specific category node, and the depth parameter to limit tree traversal depth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "rootCategoryId",
+                  "value": "<integer>",
+                  "description": "Root category ID to start the tree from. Defaults to the default root category."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "<integer>",
+                  "description": "Maximum depth of the category tree to return."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10eec662-53ae-43b7-ac2b-8ccd2f6ab6a5",
+              "name": "Category tree",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "rootCategoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2158,\n  \"parent_id\": 3793,\n  \"name\": \"string\",\n  \"is_active\": false,\n  \"position\": 5985,\n  \"level\": 7559,\n  \"children\": \"string\",\n  \"created_at\": \"1986-12-24T03:12:31.646Z\",\n  \"updated_at\": \"2025-07-29T17:30:09.884Z\",\n  \"path\": \"string\",\n  \"include_in_menu\": true,\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ],\n  \"children_data\": [\n    {\n      \"id\": 3586,\n      \"parent_id\": 6134,\n      \"name\": \"string\",\n      \"is_active\": true,\n      \"position\": 6840,\n      \"level\": 5453,\n      \"children\": \"string\",\n      \"created_at\": \"2025-08-25T05:40:23.973Z\",\n      \"updated_at\": \"1955-06-11T07:03:07.981Z\",\n      \"path\": \"string\",\n      \"include_in_menu\": true,\n      \"custom_attributes\": [\n        {\n          \"attribute_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"attribute_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"children_data\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryTree detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryTree detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": 9534,\n      \"parent_id\": 4422,\n      \"name\": \"string\",\n      \"is_active\": true,\n      \"position\": 1555,\n      \"level\": 3048,\n      \"children\": \"string\",\n      \"created_at\": \"1974-07-02T20:01:17.924Z\",\n      \"updated_at\": \"1950-03-12T12:47:15.546Z\",\n      \"path\": \"string\",\n      \"include_in_menu\": true,\n      \"custom_attributes\": [\n        {\n          \"attribute_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"attribute_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"children_data\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryTree detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryTree detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56d03352-a358-4639-941f-d4bed6e4fbaa",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "rootCategoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27692fb3-e926-4566-8fed-8c7604c51bfe",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "rootCategoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5b92f5f-f827-4147-ac49-4722123da787",
+          "name": "Create a category",
+          "request": {
+            "name": "Create a category",
+            "description": {
+              "content": "Creates a new product category. The parent_id field determines where in the category tree the new category is placed. The position field controls sort order among sibling categories. Custom category attributes can be set via the custom_attributes array.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": {\n    \"id\": \"<integer>\",\n    \"parent_id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"is_active\": \"<boolean>\",\n    \"position\": \"<integer>\",\n    \"level\": \"<integer>\",\n    \"children\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"path\": \"<string>\",\n    \"include_in_menu\": \"<boolean>\",\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "549c43f1-ef91-423b-818d-fea26ecd599a",
+              "name": "Category created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8963,\n  \"parent_id\": 2535,\n  \"name\": \"string\",\n  \"is_active\": false,\n  \"position\": 2029,\n  \"level\": 8235,\n  \"children\": \"string\",\n  \"created_at\": \"1978-03-20T09:34:19.848Z\",\n  \"updated_at\": \"1995-09-16T06:24:32.486Z\",\n  \"path\": \"string\",\n  \"include_in_menu\": true,\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a53db39-0402-4411-a679-404568346f3e",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7856a27c-f5af-4bd1-8bb0-c7921a8217ae",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "485407eb-cb64-4eac-ae8d-69946f4ba23d",
+          "name": "Get category by ID",
+          "request": {
+            "name": "Get category by ID",
+            "description": {
+              "content": "Retrieves a single category by its numeric identifier. Returns the category data including its name, path, parent ID, and custom attributes. Does not include the full subtree; use the list endpoint for tree traversal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "categories",
+                ":categoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "categoryId",
+                  "description": "(Required) The numeric category entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1659cc67-7782-4233-8a1f-5a4687ec6869",
+              "name": "Category object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8963,\n  \"parent_id\": 2535,\n  \"name\": \"string\",\n  \"is_active\": false,\n  \"position\": 2029,\n  \"level\": 8235,\n  \"children\": \"string\",\n  \"created_at\": \"1978-03-20T09:34:19.848Z\",\n  \"updated_at\": \"1995-09-16T06:24:32.486Z\",\n  \"path\": \"string\",\n  \"include_in_menu\": true,\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44d1be64-e7a8-4e67-b9d3-483f6e882b31",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "811682dd-f0f6-49c2-8f50-85d0928f20e5",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "318e5dc6-d8aa-4b2e-85b2-20a1b6ea3c14",
+          "name": "Update a category",
+          "request": {
+            "name": "Update a category",
+            "description": {
+              "content": "Updates an existing category identified by its numeric ID. Fields included in the request body overwrite existing values. Custom attributes in the custom_attributes array replace their corresponding stored values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "categories",
+                ":categoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "categoryId",
+                  "description": "(Required) The numeric category entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": {\n    \"id\": \"<integer>\",\n    \"parent_id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"is_active\": \"<boolean>\",\n    \"position\": \"<integer>\",\n    \"level\": \"<integer>\",\n    \"children\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"path\": \"<string>\",\n    \"include_in_menu\": \"<boolean>\",\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"<string>\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b95b29cc-eedd-4535-a42d-a839c69bce20",
+              "name": "Updated category object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8963,\n  \"parent_id\": 2535,\n  \"name\": \"string\",\n  \"is_active\": false,\n  \"position\": 2029,\n  \"level\": 8235,\n  \"children\": \"string\",\n  \"created_at\": \"1978-03-20T09:34:19.848Z\",\n  \"updated_at\": \"1995-09-16T06:24:32.486Z\",\n  \"path\": \"string\",\n  \"include_in_menu\": true,\n  \"custom_attributes\": [\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"attribute_code\": \"string\",\n      \"value\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fef5700-52ed-457d-9140-3ac41633cf50",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f520fc24-7b39-4d30-8c17-85deb17ecd0c",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f4c6243-f042-4c22-83e7-e95278dd5e0e",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": {\n    \"id\": 7521,\n    \"parent_id\": 1723,\n    \"name\": \"string\",\n    \"is_active\": true,\n    \"position\": 131,\n    \"level\": 9111,\n    \"children\": \"string\",\n    \"created_at\": \"1966-05-21T17:34:39.849Z\",\n    \"updated_at\": \"1949-12-22T16:36:10.064Z\",\n    \"path\": \"string\",\n    \"include_in_menu\": false,\n    \"custom_attributes\": [\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"attribute_code\": \"string\",\n        \"value\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4430989-fe9c-410e-8242-a3223c6bc6ef",
+          "name": "Delete a category",
+          "request": {
+            "name": "Delete a category",
+            "description": {
+              "content": "Permanently deletes a category by its numeric ID. Products assigned only to the deleted category will not be deleted but may become uncategorized. Child categories of the deleted category are also deleted recursively.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "categories",
+                ":categoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "categoryId",
+                  "description": "(Required) The numeric category entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7c205a2-83c4-4679-a42d-aa742b5dd050",
+              "name": "Category deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "true",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34e177eb-32e8-4fb8-8d47-3e19e8987071",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8e095c1-96d4-461d-9fef-fc63b1abe5e2",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "categories",
+                    ":categoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "categoryId",
+                      "description": "(Required) The numeric category entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your Adobe Commerce store",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-store.example.com",
+      "key": "store_domain"
+    },
+    {
+      "description": {
+        "content": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "V1",
+      "key": "store_code"
+    },
+    {
+      "type": "string",
+      "value": "https://{{store_domain}}/rest/{{store_code}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1f468512-71fb-452a-8221-1e2f922608c0",
+    "name": "Magento REST Authentication Categories API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.\n\nContact Support:\n Name: Adobe Commerce Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

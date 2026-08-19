@@ -1,0 +1,225 @@
+{
+  "item": [
+    {
+      "id": "928b116b-0379-4901-84b3-e99ba9368dbd",
+      "name": "Stores",
+      "description": {
+        "content": "Store configuration retrieval including store groups, store views, websites, and configuration settings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38863dcb-4230-430e-8773-89d200164b74",
+          "name": "List store configurations",
+          "request": {
+            "name": "List store configurations",
+            "description": {
+              "content": "Returns configuration data for all store views accessible to the authenticated user. Each store config entry includes the store code, base URLs, locale, timezone, currency codes, and weight unit settings. No authentication is required for this endpoint on most store configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "store",
+                "storeConfigs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a2b138d1-87b2-4531-bfaa-465c4f9cd938",
+              "name": "List of store configurations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "store",
+                    "storeConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 4792,\n    \"code\": \"string\",\n    \"website_id\": 3931,\n    \"locale\": \"string\",\n    \"base_currency_code\": \"string\",\n    \"default_display_currency_code\": \"string\",\n    \"timezone\": \"string\",\n    \"weight_unit\": \"kgs\",\n    \"base_url\": \"https://IEwvjGGnedgnrJI.aodySX6APESmx5GZ.oGp8UAfZ35ZLS9msuo-j.EGvnW-N6UgvZitGsNW4Y\",\n    \"base_link_url\": \"https://QcvPRUrmoYr.fmnMzfzf6LLVtk9adNSCV\",\n    \"base_media_url\": \"http://mGBQwYJo.meb7zqSMT-F\",\n    \"secure_base_url\": \"http://TQAeUJZHHjvbDEFqBWeQ.tmpjAAZKKsO8zlwWvQ6clWTXW8KbdlB6j0rbPIm2FtzoLAgdn5MI6R2LYyi7VbGQjVaa3vQ7o3UxA\"\n  },\n  {\n    \"id\": 3094,\n    \"code\": \"string\",\n    \"website_id\": 2924,\n    \"locale\": \"string\",\n    \"base_currency_code\": \"string\",\n    \"default_display_currency_code\": \"string\",\n    \"timezone\": \"string\",\n    \"weight_unit\": \"kgs\",\n    \"base_url\": \"http://RCgFWIYccZizAq.gnkohyq15CDBiA6DsspmMv3T2p73XVcyk,jjVATV0VzgKtcxdTp\",\n    \"base_link_url\": \"http://MYUidkiQFCkw.nosieZK5tyGTt15PA.0EzMFRd75kZEF.XvzZY-Y+F.BuiWmJKgt\",\n    \"base_media_url\": \"http://StiXrRarFsDxCovSTMHLrrkvgQPam.hhe1m4qNyCXoDrJYalw9Y7o9hqhawysFpf5DskFGE,a58tmkUQ,VSlIux8vZhVG.I\",\n    \"secure_base_url\": \"https://jfoOsfOPtvKrgnUBBpVCIpzWQQeP.ocPgrw+Z.ie-lvLX8sYcU5KoPDqn0ILYu.67mxm.OVyG.g,+awxJGQOcy50xFnjKkLfBhNndeVcj\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "589bc602-12e9-45ac-a842-a375c44d223a",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "store",
+                    "storeConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your Adobe Commerce store",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-store.example.com",
+      "key": "store_domain"
+    },
+    {
+      "description": {
+        "content": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "V1",
+      "key": "store_code"
+    },
+    {
+      "type": "string",
+      "value": "https://{{store_domain}}/rest/{{store_code}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7b1221db-0234-4151-b1ab-849860af6851",
+    "name": "Magento REST Authentication Stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.\n\nContact Support:\n Name: Adobe Commerce Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

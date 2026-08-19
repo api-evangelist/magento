@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get admin authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/integration/admin/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a Bearer token for an admin user based on username and password credentials. The returned token must be included as a Bearer token in the Authorization header of all subsequent admin-scoped API requests. Tokens expire after the configured lifetime (default 4 hours)."
+        },
+        {
+          "info": {
+            "name": "Get customer authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/integration/customer/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a Bearer token for a customer user based on email address and password credentials. The returned token must be included as a Bearer token in the Authorization header of subsequent customer-scoped API requests. Tokens expire after the configured lifetime."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

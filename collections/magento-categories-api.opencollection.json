@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Categories API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories",
+            "params": [
+              {
+                "name": "rootCategoryId",
+                "value": "",
+                "type": "query",
+                "description": "Root category ID to start the tree from. Defaults to the default root category."
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "Maximum depth of the category tree to return."
+              }
+            ]
+          },
+          "docs": "Returns the full category tree starting from the specified root category. The response is a nested tree structure with each category containing its children. Use the rootCategoryId parameter to start from a specific category node, and the depth parameter to limit tree traversal depth."
+        },
+        {
+          "info": {
+            "name": "Create a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new product category. The parent_id field determines where in the category tree the new category is placed. The position field controls sort order among sibling categories. Custom category attributes can be set via the custom_attributes array."
+        },
+        {
+          "info": {
+            "name": "Get category by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single category by its numeric identifier. Returns the category data including its name, path, parent ID, and custom attributes. Does not include the full subtree; use the list endpoint for tree traversal."
+        },
+        {
+          "info": {
+            "name": "Update a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing category identified by its numeric ID. Fields included in the request body overwrite existing values. Custom attributes in the custom_attributes array replace their corresponding stored values."
+        },
+        {
+          "info": {
+            "name": "Delete a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{store_domain}/rest/{store_code}/V1/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric category entity ID."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a category by its numeric ID. Products assigned only to the deleted category will not be deleted but may become uncategorized. Child categories of the deleted category are also deleted recursively."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

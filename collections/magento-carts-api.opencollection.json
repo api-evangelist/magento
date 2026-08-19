@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Carts API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Carts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a cart for the authenticated customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/carts/mine"
+          },
+          "docs": "Creates a new empty shopping cart (quote) for the currently authenticated customer. Returns the cart ID (quote ID) that is used in subsequent cart operations. A customer can only have one active cart at a time; if an active cart already exists, its ID is returned."
+        },
+        {
+          "info": {
+            "name": "Add item to customer cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/carts/mine/items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a product to the authenticated customer's active cart. The request must include the quote_id, SKU, and quantity. For configurable products, product_option must be included with the selected option values. Returns the updated cart item object."
+        },
+        {
+          "info": {
+            "name": "Create a guest cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/guest-carts"
+          },
+          "docs": "Creates a new empty shopping cart for a guest (unauthenticated) shopper. Returns a masked cart ID string that is used in subsequent guest cart operations. No authentication is required for this endpoint. The masked ID is a UUID-like string that does not expose internal database IDs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

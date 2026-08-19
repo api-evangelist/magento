@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Customers API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new customer account. The email address must be unique within the store. A password can be provided directly or auto-generated and sent to the customer via email. The customer is assigned to a default customer group unless a group_id is specified in the request."
+        },
+        {
+          "info": {
+            "name": "Search customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/search",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of customers matching the provided search criteria. Supports filtering by any customer attribute including email, firstname, lastname, group_id, and created_at. Results can be sorted and paginated using searchCriteria parameters."
+        },
+        {
+          "info": {
+            "name": "Get customer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single customer account by its numeric ID. Returns the full customer object including contact details, addresses, and group assignment. Admin authentication is required to retrieve any customer account; customer tokens only allow retrieval of the authenticated customer's own account via the /V1/customers/me endpoint."
+        },
+        {
+          "info": {
+            "name": "Update a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing customer account by its numeric ID. Fields included in the request body overwrite existing values. Partial updates are supported; omitted optional fields retain their current values. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Delete a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{store_domain}/rest/{store_code}/V1/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric customer entity ID."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a customer account by its numeric ID. All associated data including addresses, order history references, and wishlist items are also removed. This operation cannot be undone. Admin authentication is required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

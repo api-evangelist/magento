@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Inventory API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List inventory sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of inventory sources configured in the multi-source inventory system. Sources represent physical or logical locations from which inventory is fulfilled. Supports filtering, sorting, and pagination via searchCriteria parameters."
+        },
+        {
+          "info": {
+            "name": "Create an inventory source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new inventory source in the multi-source inventory system. A source must have a unique source_code, a name, and can optionally include address information and carrier link configurations for shipping integration."
+        },
+        {
+          "info": {
+            "name": "Get inventory source by code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources/:sourceCode",
+            "params": [
+              {
+                "name": "sourceCode",
+                "value": "",
+                "type": "path",
+                "description": "The unique string code identifier for the inventory source."
+              }
+            ]
+          },
+          "docs": "Retrieves a single inventory source by its unique source code string. Returns the full source configuration including address, carrier links, and enabled status. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Update an inventory source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/sources/:sourceCode",
+            "params": [
+              {
+                "name": "sourceCode",
+                "value": "",
+                "type": "path",
+                "description": "The unique string code identifier for the inventory source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing inventory source identified by its source code. Fields in the request body overwrite existing values. The source_code itself cannot be changed after creation."
+        },
+        {
+          "info": {
+            "name": "List source item quantities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/source-items",
+            "params": [
+              {
+                "name": "searchCriteria[filter_groups][0][filters][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+              },
+              {
+                "name": "searchCriteria[sortOrders][0][field]",
+                "value": "",
+                "type": "query",
+                "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+              },
+              {
+                "name": "searchCriteria[pageSize]",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page. Default varies by resource."
+              },
+              {
+                "name": "searchCriteria[currentPage]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return. First page is 1."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of source item records representing product quantities at each inventory source. Supports filtering by sku and source_code. This endpoint is used to read stock levels across all inventory sources. Admin authentication is required."
+        },
+        {
+          "info": {
+            "name": "Update source item quantities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/inventory/source-items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates source item quantity records in bulk. Each item in the sourceItems array specifies a sku, source_code, quantity, and status. This is the primary endpoint for synchronizing stock levels from external warehouse management systems or ERPs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

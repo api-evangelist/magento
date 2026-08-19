@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Stores API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List store configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/store/storeConfigs"
+          },
+          "docs": "Returns configuration data for all store views accessible to the authenticated user. Each store config entry includes the store code, base URLs, locale, timezone, currency codes, and weight unit settings. No authentication is required for this endpoint on most store configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

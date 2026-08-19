@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Magento REST Authentication Shipments API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{store_domain}/rest/{store_code}/V1/shipment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new shipment record for an order. The request must include the order_id and the items being shipped with their quantities. Tracking information such as carrier code, title, and tracking number can be included at creation time. An optional shipment comment can also be provided."
+        },
+        {
+          "info": {
+            "name": "Get shipment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{store_domain}/rest/{store_code}/V1/shipment/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric shipment entity ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a single shipment by its numeric entity ID. Returns the full shipment object including shipment items, tracking information, comments, and the associated order reference. Admin authentication is required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

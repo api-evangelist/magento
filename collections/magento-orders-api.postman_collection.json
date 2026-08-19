@@ -1,0 +1,1553 @@
+{
+  "item": [
+    {
+      "id": "41bdc746-089b-4652-9f17-c4f2bd7f5863",
+      "name": "Orders",
+      "description": {
+        "content": "Sales order management including order retrieval, status updates, comment posting, cancellation, and order item management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "413c575b-0ba6-4fd7-ac4c-54c5c5c1762f",
+          "name": "List orders",
+          "request": {
+            "name": "List orders",
+            "description": {
+              "content": "Returns a paginated list of sales orders matching the provided search criteria. Supports filtering by status, customer_email, created_at, increment_id, and any other order attribute. Results are sortable and paginated. Admin authentication is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                  "value": "<string>",
+                  "description": "Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[sortOrders][0][field]",
+                  "value": "<string>",
+                  "description": "Field name to sort results by. Direction is set in the corresponding direction parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[pageSize]",
+                  "value": "<integer>",
+                  "description": "Number of records to return per page. Default varies by resource."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria[currentPage]",
+                  "value": "<integer>",
+                  "description": "Page number to return. First page is 1."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff957a88-e090-42ce-9726-be15f32ef3fa",
+              "name": "Paginated list of orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"entity_id\": 6907,\n      \"increment_id\": \"string\",\n      \"status\": \"string\",\n      \"state\": \"string\",\n      \"customer_id\": 472,\n      \"customer_email\": \"SFekks0AbX1@t.xa\",\n      \"customer_firstname\": \"string\",\n      \"customer_lastname\": \"string\",\n      \"customer_is_guest\": false,\n      \"created_at\": \"2006-03-21T03:41:20.510Z\",\n      \"updated_at\": \"1987-03-16T07:01:06.510Z\",\n      \"grand_total\": 1569.205880093729,\n      \"subtotal\": 563.5325120362567,\n      \"tax_amount\": 8084.244989017475,\n      \"shipping_amount\": 3186.2899926327614,\n      \"discount_amount\": 7041.160193139059,\n      \"billing_address\": {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"BtNHxkYug8D@rDtfuHmtVBaI.hiy\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      \"items\": [\n        {\n          \"item_id\": 2763,\n          \"order_id\": 850,\n          \"sku\": \"string\",\n          \"name\": \"string\",\n          \"qty_ordered\": 1677.490459288271,\n          \"qty_invoiced\": 5246.729972345513,\n          \"qty_shipped\": 1506.2273546559468,\n          \"price\": 3702.439692316978,\n          \"row_total\": 3624.8392443170187,\n          \"product_type\": \"string\"\n        },\n        {\n          \"item_id\": 52,\n          \"order_id\": 3,\n          \"sku\": \"string\",\n          \"name\": \"string\",\n          \"qty_ordered\": 5504.634305410305,\n          \"qty_invoiced\": 5863.022150217336,\n          \"qty_shipped\": 5161.611885921577,\n          \"price\": 372.52292684729184,\n          \"row_total\": 2576.185175050627,\n          \"product_type\": \"string\"\n        }\n      ]\n    },\n    {\n      \"entity_id\": 5063,\n      \"increment_id\": \"string\",\n      \"status\": \"string\",\n      \"state\": \"string\",\n      \"customer_id\": 1686,\n      \"customer_email\": \"LTIEGGCb@TPAVMUYMOkXeTftGAx.sik\",\n      \"customer_firstname\": \"string\",\n      \"customer_lastname\": \"string\",\n      \"customer_is_guest\": true,\n      \"created_at\": \"1969-08-23T06:42:41.313Z\",\n      \"updated_at\": \"1950-11-28T10:25:20.243Z\",\n      \"grand_total\": 1691.550236716699,\n      \"subtotal\": 5483.979648071357,\n      \"tax_amount\": 8212.474594092135,\n      \"shipping_amount\": 1490.2358318138731,\n      \"discount_amount\": 9266.04776435044,\n      \"billing_address\": {\n        \"firstname\": \"string\",\n        \"lastname\": \"string\",\n        \"email\": \"gLvMSNY@WGqzhQKZTT.umum\",\n        \"street\": [\n          \"string\",\n          \"string\"\n        ],\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"region_code\": \"string\",\n        \"country_id\": \"st\",\n        \"postcode\": \"string\",\n        \"telephone\": \"string\"\n      },\n      \"items\": [\n        {\n          \"item_id\": 9314,\n          \"order_id\": 468,\n          \"sku\": \"string\",\n          \"name\": \"string\",\n          \"qty_ordered\": 3992.3615136185254,\n          \"qty_invoiced\": 3928.9252475536528,\n          \"qty_shipped\": 6429.988128064472,\n          \"price\": 2484.2950399771958,\n          \"row_total\": 8749.996856316724,\n          \"product_type\": \"string\"\n        },\n        {\n          \"item_id\": 6718,\n          \"order_id\": 1935,\n          \"sku\": \"string\",\n          \"name\": \"string\",\n          \"qty_ordered\": 8838.194101956506,\n          \"qty_invoiced\": 4303.394637532136,\n          \"qty_shipped\": 2324.13124836771,\n          \"price\": 8121.987108499403,\n          \"row_total\": 26.17586214331058,\n          \"product_type\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"search_criteria\": {},\n  \"total_count\": 9193\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eba61bc-153e-413b-ad6b-3989f6332608",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29b8165e-11b4-4823-81fb-5782988779c5",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria[filter_groups][0][filters][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[sortOrders][0][field]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria[pageSize]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria[currentPage]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46edeb24-1a0f-4ef4-a255-37d871da026e",
+          "name": "Create an order",
+          "request": {
+            "name": "Create an order",
+            "description": {
+              "content": "Creates a new sales order. The order must include at minimum the billing and shipping address, order items with SKU and quantity, and payment method details. Orders created via the API bypass the standard checkout flow and quote conversion process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity\": {\n    \"entity_id\": \"<integer>\",\n    \"increment_id\": \"<string>\",\n    \"status\": \"<string>\",\n    \"state\": \"<string>\",\n    \"customer_id\": \"<integer>\",\n    \"customer_email\": \"<email>\",\n    \"customer_firstname\": \"<string>\",\n    \"customer_lastname\": \"<string>\",\n    \"customer_is_guest\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"grand_total\": \"<number>\",\n    \"subtotal\": \"<number>\",\n    \"tax_amount\": \"<number>\",\n    \"shipping_amount\": \"<number>\",\n    \"discount_amount\": \"<number>\",\n    \"billing_address\": {\n      \"firstname\": \"<string>\",\n      \"lastname\": \"<string>\",\n      \"email\": \"<email>\",\n      \"street\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"region_code\": \"<string>\",\n      \"country_id\": \"<string>\",\n      \"postcode\": \"<string>\",\n      \"telephone\": \"<string>\"\n    },\n    \"items\": [\n      {\n        \"item_id\": \"<integer>\",\n        \"order_id\": \"<integer>\",\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"qty_ordered\": \"<number>\",\n        \"qty_invoiced\": \"<number>\",\n        \"qty_shipped\": \"<number>\",\n        \"price\": \"<number>\",\n        \"row_total\": \"<number>\",\n        \"product_type\": \"<string>\"\n      },\n      {\n        \"item_id\": \"<integer>\",\n        \"order_id\": \"<integer>\",\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"qty_ordered\": \"<number>\",\n        \"qty_invoiced\": \"<number>\",\n        \"qty_shipped\": \"<number>\",\n        \"price\": \"<number>\",\n        \"row_total\": \"<number>\",\n        \"product_type\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5cd03679-5c37-4d1c-a6b7-b2d0f65bb7d1",
+              "name": "Order ID of the created order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity\": {\n    \"entity_id\": 8789,\n    \"increment_id\": \"string\",\n    \"status\": \"string\",\n    \"state\": \"string\",\n    \"customer_id\": 1110,\n    \"customer_email\": \"PSzR0VhH8@XqgumzXxvuR.pt\",\n    \"customer_firstname\": \"string\",\n    \"customer_lastname\": \"string\",\n    \"customer_is_guest\": true,\n    \"created_at\": \"1973-10-29T10:46:51.518Z\",\n    \"updated_at\": \"1954-07-23T16:10:27.973Z\",\n    \"grand_total\": 1412.5638603493562,\n    \"subtotal\": 2122.221888736593,\n    \"tax_amount\": 9588.472679025206,\n    \"shipping_amount\": 8192.852420742505,\n    \"discount_amount\": 6616.368199905934,\n    \"billing_address\": {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"Dzc2u@YNUnSIJobkDylfofKBFN.lw\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    \"items\": [\n      {\n        \"item_id\": 3459,\n        \"order_id\": 2018,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8570.339098798333,\n        \"qty_invoiced\": 2258.9381944834586,\n        \"qty_shipped\": 95.44831057770486,\n        \"price\": 8478.600871579773,\n        \"row_total\": 7600.755341548166,\n        \"product_type\": \"string\"\n      },\n      {\n        \"item_id\": 3130,\n        \"order_id\": 7412,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8186.867138397509,\n        \"qty_invoiced\": 1728.3235777704208,\n        \"qty_shipped\": 1391.2111338439381,\n        \"price\": 9599.48395072626,\n        \"row_total\": 816.212624921685,\n        \"product_type\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "5020",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ceea8416-070e-43ea-b5c9-2ff3d791b3e4",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity\": {\n    \"entity_id\": 8789,\n    \"increment_id\": \"string\",\n    \"status\": \"string\",\n    \"state\": \"string\",\n    \"customer_id\": 1110,\n    \"customer_email\": \"PSzR0VhH8@XqgumzXxvuR.pt\",\n    \"customer_firstname\": \"string\",\n    \"customer_lastname\": \"string\",\n    \"customer_is_guest\": true,\n    \"created_at\": \"1973-10-29T10:46:51.518Z\",\n    \"updated_at\": \"1954-07-23T16:10:27.973Z\",\n    \"grand_total\": 1412.5638603493562,\n    \"subtotal\": 2122.221888736593,\n    \"tax_amount\": 9588.472679025206,\n    \"shipping_amount\": 8192.852420742505,\n    \"discount_amount\": 6616.368199905934,\n    \"billing_address\": {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"Dzc2u@YNUnSIJobkDylfofKBFN.lw\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    \"items\": [\n      {\n        \"item_id\": 3459,\n        \"order_id\": 2018,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8570.339098798333,\n        \"qty_invoiced\": 2258.9381944834586,\n        \"qty_shipped\": 95.44831057770486,\n        \"price\": 8478.600871579773,\n        \"row_total\": 7600.755341548166,\n        \"product_type\": \"string\"\n      },\n      {\n        \"item_id\": 3130,\n        \"order_id\": 7412,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8186.867138397509,\n        \"qty_invoiced\": 1728.3235777704208,\n        \"qty_shipped\": 1391.2111338439381,\n        \"price\": 9599.48395072626,\n        \"row_total\": 816.212624921685,\n        \"product_type\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed184d43-4a33-4b6a-a840-f95334e6c1a5",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity\": {\n    \"entity_id\": 8789,\n    \"increment_id\": \"string\",\n    \"status\": \"string\",\n    \"state\": \"string\",\n    \"customer_id\": 1110,\n    \"customer_email\": \"PSzR0VhH8@XqgumzXxvuR.pt\",\n    \"customer_firstname\": \"string\",\n    \"customer_lastname\": \"string\",\n    \"customer_is_guest\": true,\n    \"created_at\": \"1973-10-29T10:46:51.518Z\",\n    \"updated_at\": \"1954-07-23T16:10:27.973Z\",\n    \"grand_total\": 1412.5638603493562,\n    \"subtotal\": 2122.221888736593,\n    \"tax_amount\": 9588.472679025206,\n    \"shipping_amount\": 8192.852420742505,\n    \"discount_amount\": 6616.368199905934,\n    \"billing_address\": {\n      \"firstname\": \"string\",\n      \"lastname\": \"string\",\n      \"email\": \"Dzc2u@YNUnSIJobkDylfofKBFN.lw\",\n      \"street\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"region_code\": \"string\",\n      \"country_id\": \"st\",\n      \"postcode\": \"string\",\n      \"telephone\": \"string\"\n    },\n    \"items\": [\n      {\n        \"item_id\": 3459,\n        \"order_id\": 2018,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8570.339098798333,\n        \"qty_invoiced\": 2258.9381944834586,\n        \"qty_shipped\": 95.44831057770486,\n        \"price\": 8478.600871579773,\n        \"row_total\": 7600.755341548166,\n        \"product_type\": \"string\"\n      },\n      {\n        \"item_id\": 3130,\n        \"order_id\": 7412,\n        \"sku\": \"string\",\n        \"name\": \"string\",\n        \"qty_ordered\": 8186.867138397509,\n        \"qty_invoiced\": 1728.3235777704208,\n        \"qty_shipped\": 1391.2111338439381,\n        \"price\": 9599.48395072626,\n        \"row_total\": 816.212624921685,\n        \"product_type\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ff6f6ca-ab54-4b62-bc73-9d78ce520314",
+          "name": "Get order by ID",
+          "request": {
+            "name": "Get order by ID",
+            "description": {
+              "content": "Retrieves a single sales order by its numeric entity ID. Returns the full order object including line items, billing and shipping addresses, payment details, status history, and totals breakdown. Admin authentication is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderId",
+                  "description": "(Required) The numeric order entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "460b380d-a01f-4f1b-94fc-f517be5ddc8b",
+              "name": "Order object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity_id\": 815,\n  \"increment_id\": \"string\",\n  \"status\": \"string\",\n  \"state\": \"string\",\n  \"customer_id\": 7773,\n  \"customer_email\": \"uYKS1@HjmhdsiwN.fgvp\",\n  \"customer_firstname\": \"string\",\n  \"customer_lastname\": \"string\",\n  \"customer_is_guest\": false,\n  \"created_at\": \"2006-08-04T20:51:48.510Z\",\n  \"updated_at\": \"1969-08-24T21:58:17.936Z\",\n  \"grand_total\": 5137.8780759612155,\n  \"subtotal\": 5259.386813642034,\n  \"tax_amount\": 3654.3231870081304,\n  \"shipping_amount\": 2481.213946585881,\n  \"discount_amount\": 4051.85967669341,\n  \"billing_address\": {\n    \"firstname\": \"string\",\n    \"lastname\": \"string\",\n    \"email\": \"gpV7lyzOR4-Bk@GAlScQaDYHSLqnzPyBLwQYNFLZaVrxwt.iqul\",\n    \"street\": [\n      \"string\",\n      \"string\"\n    ],\n    \"city\": \"string\",\n    \"region\": \"string\",\n    \"region_code\": \"string\",\n    \"country_id\": \"st\",\n    \"postcode\": \"string\",\n    \"telephone\": \"string\"\n  },\n  \"items\": [\n    {\n      \"item_id\": 4842,\n      \"order_id\": 2935,\n      \"sku\": \"string\",\n      \"name\": \"string\",\n      \"qty_ordered\": 8807.550716966107,\n      \"qty_invoiced\": 3007.8047158340582,\n      \"qty_shipped\": 9020.348107220369,\n      \"price\": 9906.386171521704,\n      \"row_total\": 9745.4567408311,\n      \"product_type\": \"string\"\n    },\n    {\n      \"item_id\": 3551,\n      \"order_id\": 4111,\n      \"sku\": \"string\",\n      \"name\": \"string\",\n      \"qty_ordered\": 7606.0504357970385,\n      \"qty_invoiced\": 3841.9787205326184,\n      \"qty_shipped\": 9659.597853431362,\n      \"price\": 3752.8441532593115,\n      \"row_total\": 1431.6819575569684,\n      \"product_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eed0694-2f51-41bd-98a2-f3c49a64f23d",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8d14af1-97ce-4f43-96ad-b6ea231f5849",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d811a81-1453-48ef-81b9-d48438671608",
+          "name": "Cancel an order",
+          "request": {
+            "name": "Cancel an order",
+            "description": {
+              "content": "Cancels an existing order identified by its numeric entity ID. Only orders in cancellable states (such as pending or processing) can be cancelled. Orders that have already been invoiced or shipped cannot be fully cancelled. Admin authentication is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders",
+                ":orderId",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderId",
+                  "description": "(Required) The numeric order entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53b817bd-cf7d-4175-86cd-8e62c30316da",
+              "name": "Order cancelled successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "false",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "357a87fc-c67a-49e5-bd4b-5a7a24d39156",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c45ba2f2-40ed-422b-80c1-e07afb4c6f28",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e5a3666-275d-4e24-b19d-fb1dea0845e3",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3c196eb-d63f-496f-a486-bf28c48f4363",
+          "name": "Add a comment to an order",
+          "request": {
+            "name": "Add a comment to an order",
+            "description": {
+              "content": "Adds a status history comment to an order. Comments can be visible to customers or kept internal for admin use only. An optional email notification can be sent to the customer when the comment is added. The order status can optionally be updated along with the comment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders",
+                ":orderId",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderId",
+                  "description": "(Required) The numeric order entity ID."
+                },
+                {
+                  "description": "The hostname of your Adobe Commerce store",
+                  "type": "any",
+                  "value": "{{store_domain}}",
+                  "key": "store_domain"
+                },
+                {
+                  "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                  "type": "any",
+                  "value": "{{store_code}}",
+                  "key": "store_code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statusHistory\": {\n    \"comment\": \"<string>\",\n    \"is_customer_notified\": \"<integer>\",\n    \"is_visible_on_front\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db881b62-6f5d-4730-9f8e-12a0e205cf2b",
+              "name": "Comment added successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statusHistory\": {\n    \"comment\": \"<string>\",\n    \"is_customer_notified\": \"<integer>\",\n    \"is_visible_on_front\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "true",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5021ddc8-b0bc-4a50-b1f9-b99cbcd05e6e",
+              "name": "Bad request — invalid input parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statusHistory\": {\n    \"comment\": \"<string>\",\n    \"is_customer_notified\": \"<integer>\",\n    \"is_visible_on_front\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3fdf330-0666-404e-a729-77317a1fa462",
+              "name": "Unauthorized — missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statusHistory\": {\n    \"comment\": \"<string>\",\n    \"is_customer_notified\": \"<integer>\",\n    \"is_visible_on_front\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "801ff007-0c04-4400-be04-6762951c8eed",
+              "name": "Not found — the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":orderId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderId",
+                      "description": "(Required) The numeric order entity ID."
+                    },
+                    {
+                      "description": "The hostname of your Adobe Commerce store",
+                      "type": "any",
+                      "value": "{{store_domain}}",
+                      "key": "store_domain"
+                    },
+                    {
+                      "description": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+                      "type": "any",
+                      "value": "{{store_code}}",
+                      "key": "store_code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statusHistory\": {\n    \"comment\": \"<string>\",\n    \"is_customer_notified\": \"<integer>\",\n    \"is_visible_on_front\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your Adobe Commerce store",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-store.example.com",
+      "key": "store_domain"
+    },
+    {
+      "description": {
+        "content": "Store code followed by API version. Use \"all\" as store code for admin-scope operations, or the specific store view code for store-scoped operations. The V1 version path segment follows.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "V1",
+      "key": "store_code"
+    },
+    {
+      "type": "string",
+      "value": "https://{{store_domain}}/rest/{{store_code}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c232e648-8cec-4ec7-87bc-86ecfb97135f",
+    "name": "Magento REST Authentication Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.\n\nContact Support:\n Name: Adobe Commerce Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
