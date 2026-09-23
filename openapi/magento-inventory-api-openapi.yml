@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Magento REST Authentication Inventory API
-  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  title: Magento REST Inventory API
+  description: The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments.
   version: '2.4'
   contact:
     name: Adobe Commerce Developer Support
@@ -159,7 +159,76 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    sourceCode:
+      name: sourceCode
+      in: path
+      description: The unique string code identifier for the inventory source.
+      required: true
+      schema:
+        type: string
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    InventorySourceSearchResults:
+      type: object
+      description: Paginated search results containing a list of inventory sources.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventorySource'
+        total_count:
+          type: integer
+          description: Total number of matching inventory sources.
     SourceItemSearchResults:
       type: object
       description: Paginated search results containing a list of source items.
@@ -208,6 +277,29 @@ components:
         postcode:
           type: string
           description: Postal code of the source address.
+    SourceItemUpdateRequest:
+      type: object
+      description: Request body for bulk updating source item quantities.
+      required:
+      - sourceItems
+      properties:
+        sourceItems:
+          type: array
+          description: Array of source item quantity records to create or update.
+          items:
+            $ref: '#/components/schemas/SourceItem'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
     SourceItem:
       type: object
       description: A source item representing the quantity of a product at a specific inventory source.
@@ -227,28 +319,6 @@ components:
           enum:
           - 0
           - 1
-    SourceItemUpdateRequest:
-      type: object
-      description: Request body for bulk updating source item quantities.
-      required:
-      - sourceItems
-      properties:
-        sourceItems:
-          type: array
-          description: Array of source item quantity records to create or update.
-          items:
-            $ref: '#/components/schemas/SourceItem'
-    InventorySourceSearchResults:
-      type: object
-      description: Paginated search results containing a list of inventory sources.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventorySource'
-        total_count:
-          type: integer
-          description: Total number of matching inventory sources.
     InventorySourceRequest:
       type: object
       description: Request body for creating or updating an inventory source.
@@ -257,76 +327,6 @@ components:
       properties:
         source:
           $ref: '#/components/schemas/InventorySource'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
-  parameters:
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-    searchCriteriaFilterGroups:
-      name: searchCriteria[filter_groups][0][filters][0][field]
-      in: query
-      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
-      required: false
-      schema:
-        type: string
-    sourceCode:
-      name: sourceCode
-      in: path
-      description: The unique string code identifier for the inventory source.
-      required: true
-      schema:
-        type: string
-    searchCriteriaSortOrders:
-      name: searchCriteria[sortOrders][0][field]
-      in: query
-      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
-      required: false
-      schema:
-        type: string
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
-  responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

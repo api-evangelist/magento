@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Magento REST Authentication Categories API
-  description: 'The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints. The API follows REST conventions and returns JSON responses, enabling developers to build integrations, automate store operations, and power headless commerce storefronts. All endpoints are versioned under the /V1 prefix and support searchCriteria query parameters for filtering, sorting, and paginating collection responses.'
+  title: Magento REST Categories API
+  description: The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments.
   version: '2.4'
   contact:
     name: Adobe Commerce Developer Support
@@ -145,6 +145,48 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    CategoryTree:
+      allOf:
+      - $ref: '#/components/schemas/Category'
+      - type: object
+        properties:
+          children_data:
+            type: array
+            description: Nested child category objects forming the category tree.
+            items:
+              $ref: '#/components/schemas/CategoryTree'
+    CustomAttribute:
+      type: object
+      description: A key-value pair representing a custom EAV attribute on a catalog entity.
+      required:
+      - attribute_code
+      - value
+      properties:
+        attribute_code:
+          type: string
+          description: The unique attribute code identifier.
+        value:
+          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
+    CategoryRequest:
+      type: object
+      description: Request body for creating or updating a category.
+      required:
+      - category
+      properties:
+        category:
+          $ref: '#/components/schemas/Category'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
     Category:
       type: object
       description: A product category in the catalog category tree.
@@ -189,55 +231,7 @@ components:
           description: Custom EAV attribute values for this category.
           items:
             $ref: '#/components/schemas/CustomAttribute'
-    CustomAttribute:
-      type: object
-      description: A key-value pair representing a custom EAV attribute on a catalog entity.
-      required:
-      - attribute_code
-      - value
-      properties:
-        attribute_code:
-          type: string
-          description: The unique attribute code identifier.
-        value:
-          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
-    CategoryTree:
-      allOf:
-      - $ref: '#/components/schemas/Category'
-      - type: object
-        properties:
-          children_data:
-            type: array
-            description: Nested child category objects forming the category tree.
-            items:
-              $ref: '#/components/schemas/CategoryTree'
-    CategoryRequest:
-      type: object
-      description: Request body for creating or updating a category.
-      required:
-      - category
-      properties:
-        category:
-          $ref: '#/components/schemas/Category'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
   responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request — invalid input parameters or request body
       content:
@@ -246,6 +240,12 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
       content:
         application/json:
           schema:

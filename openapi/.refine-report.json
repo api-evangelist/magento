@@ -1,17 +1,7 @@
 {
   "provider": "magento",
   "sources": [
-    "magento-authentication-api-openapi.yml",
-    "magento-carts-api-openapi.yml",
-    "magento-categories-api-openapi.yml",
-    "magento-customers-api-openapi.yml",
-    "magento-inventory-api-openapi.yml",
-    "magento-invoices-api-openapi.yml",
-    "magento-orders-api-openapi.yml",
-    "magento-products-api-openapi.yml",
-    "magento-shipments-api-openapi.yml",
-    "magento-stores-api-openapi.yml",
-    "magento-tax-api-openapi.yml"
+    "_original/magento-rest-api-openapi.yml"
   ],
   "outputs": [
     "magento-authentication-api-openapi.yml",
@@ -29,6 +19,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "magento-rest-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "magento-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-carts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-inventory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-shipments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "magento-tax-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
