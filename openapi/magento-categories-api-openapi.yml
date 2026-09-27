@@ -145,48 +145,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    CategoryTree:
-      allOf:
-      - $ref: '#/components/schemas/Category'
-      - type: object
-        properties:
-          children_data:
-            type: array
-            description: Nested child category objects forming the category tree.
-            items:
-              $ref: '#/components/schemas/CategoryTree'
-    CustomAttribute:
-      type: object
-      description: A key-value pair representing a custom EAV attribute on a catalog entity.
-      required:
-      - attribute_code
-      - value
-      properties:
-        attribute_code:
-          type: string
-          description: The unique attribute code identifier.
-        value:
-          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
-    CategoryRequest:
-      type: object
-      description: Request body for creating or updating a category.
-      required:
-      - category
-      properties:
-        category:
-          $ref: '#/components/schemas/Category'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
     Category:
       type: object
       description: A product category in the catalog category tree.
@@ -231,15 +189,57 @@ components:
           description: Custom EAV attribute values for this category.
           items:
             $ref: '#/components/schemas/CustomAttribute'
+    CategoryTree:
+      allOf:
+      - $ref: '#/components/schemas/Category'
+      - type: object
+        properties:
+          children_data:
+            type: array
+            description: Nested child category objects forming the category tree.
+            items:
+              $ref: '#/components/schemas/CategoryTree'
+    CustomAttribute:
+      type: object
+      description: A key-value pair representing a custom EAV attribute on a catalog entity.
+      required:
+      - attribute_code
+      - value
+      properties:
+        attribute_code:
+          type: string
+          description: The unique attribute code identifier.
+        value:
+          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
+    CategoryRequest:
+      type: object
+      description: Request body for creating or updating a category.
+      required:
+      - category
+      properties:
+        category:
+          $ref: '#/components/schemas/Category'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
   responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
+    NotFound:
+      description: Not found — the requested resource does not exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
       content:
         application/json:
           schema:

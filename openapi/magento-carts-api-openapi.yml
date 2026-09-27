@@ -80,6 +80,19 @@ paths:
                 type: string
                 description: Masked cart ID (UUID format)
 components:
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     CartItem:
       type: object
@@ -126,19 +139,6 @@ components:
           description: Additional error context parameters.
           items:
             type: object
-  responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

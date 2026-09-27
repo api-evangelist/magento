@@ -93,37 +93,53 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    orderId:
+      name: orderId
+      in: path
+      description: The numeric order entity ID.
+      required: true
+      schema:
+        type: integer
+    invoiceId:
+      name: invoiceId
+      in: path
+      description: The numeric invoice entity ID.
+      required: true
+      schema:
+        type: integer
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
   schemas:
-    Invoice:
-      type: object
-      description: An invoice record associated with a sales order.
-      properties:
-        entity_id:
-          type: integer
-          description: Numeric invoice entity ID.
-        order_id:
-          type: integer
-          description: Numeric entity ID of the parent order.
-        increment_id:
-          type: string
-          description: Human-readable invoice number.
-        state:
-          type: integer
-          description: Invoice state. 1 = open, 2 = paid, 3 = cancelled.
-          enum:
-          - 1
-          - 2
-          - 3
-        grand_total:
-          type: number
-          description: Invoice grand total.
-        subtotal:
-          type: number
-          description: Invoice subtotal.
-        created_at:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the invoice was created.
     InvoiceRequest:
       type: object
       description: Request body for creating an invoice for an order.
@@ -156,6 +172,17 @@ components:
               enum:
               - 0
               - 1
+    InvoiceSearchResults:
+      type: object
+      description: Paginated search results containing a list of invoices.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+        total_count:
+          type: integer
+          description: Total number of matching invoices.
     Error:
       type: object
       description: Standard error response returned for 4xx and 5xx responses.
@@ -168,26 +195,45 @@ components:
           description: Additional error context parameters.
           items:
             type: object
-    InvoiceSearchResults:
+    Invoice:
       type: object
-      description: Paginated search results containing a list of invoices.
+      description: An invoice record associated with a sales order.
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Invoice'
-        total_count:
+        entity_id:
           type: integer
-          description: Total number of matching invoices.
+          description: Numeric invoice entity ID.
+        order_id:
+          type: integer
+          description: Numeric entity ID of the parent order.
+        increment_id:
+          type: string
+          description: Human-readable invoice number.
+        state:
+          type: integer
+          description: Invoice state. 1 = open, 2 = paid, 3 = cancelled.
+          enum:
+          - 1
+          - 2
+          - 3
+        grand_total:
+          type: number
+          description: Invoice grand total.
+        subtotal:
+          type: number
+          description: Invoice subtotal.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the invoice was created.
   responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
+    NotFound:
+      description: Not found — the requested resource does not exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
       content:
         application/json:
           schema:
@@ -198,52 +244,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
-    searchCriteriaSortOrders:
-      name: searchCriteria[sortOrders][0][field]
-      in: query
-      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
-      required: false
-      schema:
-        type: string
-    invoiceId:
-      name: invoiceId
-      in: path
-      description: The numeric invoice entity ID.
-      required: true
-      schema:
-        type: integer
-    searchCriteriaFilterGroups:
-      name: searchCriteria[filter_groups][0][filters][0][field]
-      in: query
-      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
-      required: false
-      schema:
-        type: string
-    orderId:
-      name: orderId
-      in: path
-      description: The numeric order entity ID.
-      required: true
-      schema:
-        type: integer
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
   securitySchemes:
     bearerAuth:
       type: http

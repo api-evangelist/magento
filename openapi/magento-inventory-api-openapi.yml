@@ -160,15 +160,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
     searchCriteriaSortOrders:
       name: searchCriteria[sortOrders][0][field]
       in: query
@@ -183,13 +174,6 @@ components:
       required: true
       schema:
         type: string
-    searchCriteriaFilterGroups:
-      name: searchCriteria[filter_groups][0][filters][0][field]
-      in: query
-      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
-      required: false
-      schema:
-        type: string
     searchCriteriaCurrentPage:
       name: searchCriteria[currentPage]
       in: query
@@ -198,15 +182,31 @@ components:
       schema:
         type: integer
         minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
   responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
+    NotFound:
+      description: Not found — the requested resource does not exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
       content:
         application/json:
           schema:
@@ -218,6 +218,14 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    InventorySourceRequest:
+      type: object
+      description: Request body for creating or updating an inventory source.
+      required:
+      - source
+      properties:
+        source:
+          $ref: '#/components/schemas/InventorySource'
     InventorySourceSearchResults:
       type: object
       description: Paginated search results containing a list of inventory sources.
@@ -229,17 +237,6 @@ components:
         total_count:
           type: integer
           description: Total number of matching inventory sources.
-    SourceItemSearchResults:
-      type: object
-      description: Paginated search results containing a list of source items.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SourceItem'
-        total_count:
-          type: integer
-          description: Total number of matching source item records.
     InventorySource:
       type: object
       description: An inventory source representing a fulfillment location in multi-source inventory.
@@ -277,6 +274,17 @@ components:
         postcode:
           type: string
           description: Postal code of the source address.
+    SourceItemSearchResults:
+      type: object
+      description: Paginated search results containing a list of source items.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceItem'
+        total_count:
+          type: integer
+          description: Total number of matching source item records.
     SourceItemUpdateRequest:
       type: object
       description: Request body for bulk updating source item quantities.
@@ -319,14 +327,6 @@ components:
           enum:
           - 0
           - 1
-    InventorySourceRequest:
-      type: object
-      description: Request body for creating or updating an inventory source.
-      required:
-      - source
-      properties:
-        source:
-          $ref: '#/components/schemas/InventorySource'
   securitySchemes:
     bearerAuth:
       type: http

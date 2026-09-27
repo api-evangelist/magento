@@ -357,6 +357,8 @@ common:
   sources:
   - https://business.adobe.com/products/magento/magento-commerce.html
   updated: '2026-05-04'
+- type: Website
+  url: https://business.adobe.com/products/magento/magento-commerce.html
 description: Overview of the Adobe Commerce and Magento Open Source REST API documentation.
 tags:
 - E-Commerce

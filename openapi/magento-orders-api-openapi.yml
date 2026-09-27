@@ -142,6 +142,28 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
     searchCriteriaPageSize:
       name: searchCriteria[pageSize]
       in: query
@@ -151,20 +173,6 @@ components:
         type: integer
         minimum: 1
         maximum: 300
-    searchCriteriaSortOrders:
-      name: searchCriteria[sortOrders][0][field]
-      in: query
-      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
-      required: false
-      schema:
-        type: string
-    searchCriteriaFilterGroups:
-      name: searchCriteria[filter_groups][0][filters][0][field]
-      in: query
-      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
-      required: false
-      schema:
-        type: string
     orderId:
       name: orderId
       in: path
@@ -172,49 +180,7 @@ components:
       required: true
       schema:
         type: integer
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-  responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    OrderSearchResults:
-      type: object
-      description: Paginated search results containing a list of orders.
-      properties:
-        items:
-          type: array
-          description: Array of order objects matching the search criteria.
-          items:
-            $ref: '#/components/schemas/Order'
-        search_criteria:
-          type: object
-          description: The search criteria applied.
-        total_count:
-          type: integer
-          description: Total number of matching orders across all pages.
     OrderRequest:
       type: object
       description: Request body for creating a sales order directly via the API.
@@ -223,68 +189,6 @@ components:
       properties:
         entity:
           $ref: '#/components/schemas/Order'
-    Order:
-      type: object
-      description: A sales order in Adobe Commerce.
-      properties:
-        entity_id:
-          type: integer
-          description: Numeric order entity ID.
-        increment_id:
-          type: string
-          description: Human-readable order number (e.g. 000000001).
-        status:
-          type: string
-          description: Current order status code (e.g. pending, processing, complete, closed, canceled).
-        state:
-          type: string
-          description: Internal order state (e.g. new, processing, complete, closed, canceled, holded).
-        customer_id:
-          type: integer
-          description: Numeric customer entity ID. Null for guest orders.
-        customer_email:
-          type: string
-          format: email
-          description: Email address of the customer or guest who placed the order.
-        customer_firstname:
-          type: string
-          description: Customer first name.
-        customer_lastname:
-          type: string
-          description: Customer last name.
-        customer_is_guest:
-          type: boolean
-          description: Whether the order was placed by a guest (unauthenticated) shopper.
-        created_at:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the order was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the order was last updated.
-        grand_total:
-          type: number
-          description: Order grand total including tax and shipping.
-        subtotal:
-          type: number
-          description: Order subtotal before tax and shipping.
-        tax_amount:
-          type: number
-          description: Total tax amount applied to the order.
-        shipping_amount:
-          type: number
-          description: Shipping amount charged on the order.
-        discount_amount:
-          type: number
-          description: Total discount amount applied to the order.
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        items:
-          type: array
-          description: Line items in the order.
-          items:
-            $ref: '#/components/schemas/OrderItem'
     Address:
       type: object
       description: A postal address used for billing or shipping.
@@ -352,6 +256,83 @@ components:
             status:
               type: string
               description: Optional new order status to set along with the comment.
+    OrderSearchResults:
+      type: object
+      description: Paginated search results containing a list of orders.
+      properties:
+        items:
+          type: array
+          description: Array of order objects matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Order'
+        search_criteria:
+          type: object
+          description: The search criteria applied.
+        total_count:
+          type: integer
+          description: Total number of matching orders across all pages.
+    Order:
+      type: object
+      description: A sales order in Adobe Commerce.
+      properties:
+        entity_id:
+          type: integer
+          description: Numeric order entity ID.
+        increment_id:
+          type: string
+          description: Human-readable order number (e.g. 000000001).
+        status:
+          type: string
+          description: Current order status code (e.g. pending, processing, complete, closed, canceled).
+        state:
+          type: string
+          description: Internal order state (e.g. new, processing, complete, closed, canceled, holded).
+        customer_id:
+          type: integer
+          description: Numeric customer entity ID. Null for guest orders.
+        customer_email:
+          type: string
+          format: email
+          description: Email address of the customer or guest who placed the order.
+        customer_firstname:
+          type: string
+          description: Customer first name.
+        customer_lastname:
+          type: string
+          description: Customer last name.
+        customer_is_guest:
+          type: boolean
+          description: Whether the order was placed by a guest (unauthenticated) shopper.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the order was last updated.
+        grand_total:
+          type: number
+          description: Order grand total including tax and shipping.
+        subtotal:
+          type: number
+          description: Order subtotal before tax and shipping.
+        tax_amount:
+          type: number
+          description: Total tax amount applied to the order.
+        shipping_amount:
+          type: number
+          description: Shipping amount charged on the order.
+        discount_amount:
+          type: number
+          description: Total discount amount applied to the order.
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          description: Line items in the order.
+          items:
+            $ref: '#/components/schemas/OrderItem'
     OrderItem:
       type: object
       description: A line item within a sales order.
@@ -398,6 +379,25 @@ components:
           description: Additional error context parameters.
           items:
             type: object
+  responses:
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
