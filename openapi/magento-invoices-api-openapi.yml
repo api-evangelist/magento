@@ -93,14 +93,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    searchCriteriaSortOrders:
-      name: searchCriteria[sortOrders][0][field]
-      in: query
-      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
-      required: false
-      schema:
-        type: string
     searchCriteriaCurrentPage:
       name: searchCriteria[currentPage]
       in: query
@@ -109,6 +121,13 @@ components:
       schema:
         type: integer
         minimum: 1
+    invoiceId:
+      name: invoiceId
+      in: path
+      description: The numeric invoice entity ID.
+      required: true
+      schema:
+        type: integer
     searchCriteriaFilterGroups:
       name: searchCriteria[filter_groups][0][filters][0][field]
       in: query
@@ -123,13 +142,6 @@ components:
       required: true
       schema:
         type: integer
-    invoiceId:
-      name: invoiceId
-      in: path
-      description: The numeric invoice entity ID.
-      required: true
-      schema:
-        type: integer
     searchCriteriaPageSize:
       name: searchCriteria[pageSize]
       in: query
@@ -139,6 +151,13 @@ components:
         type: integer
         minimum: 1
         maximum: 300
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
   schemas:
     InvoiceRequest:
       type: object
@@ -172,29 +191,6 @@ components:
               enum:
               - 0
               - 1
-    InvoiceSearchResults:
-      type: object
-      description: Paginated search results containing a list of invoices.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Invoice'
-        total_count:
-          type: integer
-          description: Total number of matching invoices.
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
     Invoice:
       type: object
       description: An invoice record associated with a sales order.
@@ -225,25 +221,29 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp when the invoice was created.
-  responses:
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    InvoiceSearchResults:
+      type: object
+      description: Paginated search results containing a list of invoices.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+        total_count:
+          type: integer
+          description: Total number of matching invoices.
   securitySchemes:
     bearerAuth:
       type: http

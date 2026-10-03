@@ -81,14 +81,14 @@ paths:
                 description: Masked cart ID (UUID format)
 components:
   responses:
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
       content:
         application/json:
           schema:
