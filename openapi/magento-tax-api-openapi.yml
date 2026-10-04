@@ -45,22 +45,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
     searchCriteriaFilterGroups:
       name: searchCriteria[filter_groups][0][filters][0][field]
       in: query
@@ -84,6 +69,14 @@ components:
       required: false
       schema:
         type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
   schemas:
     TaxRateSearchResults:
       type: object
@@ -96,6 +89,18 @@ components:
         total_count:
           type: integer
           description: Total number of matching tax rates.
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
     TaxRate:
       type: object
       description: A tax rate configuration defining the percentage applied to taxable items.
@@ -118,18 +123,13 @@ components:
         rate:
           type: number
           description: Tax percentage rate (e.g. 8.25 for 8.25%).
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

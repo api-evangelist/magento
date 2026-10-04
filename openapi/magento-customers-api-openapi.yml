@@ -137,34 +137,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
     searchCriteriaFilterGroups:
       name: searchCriteria[filter_groups][0][filters][0][field]
       in: query
@@ -172,13 +145,6 @@ components:
       required: false
       schema:
         type: string
-    customerId:
-      name: customerId
-      in: path
-      description: The numeric customer entity ID.
-      required: true
-      schema:
-        type: integer
     searchCriteriaPageSize:
       name: searchCriteria[pageSize]
       in: query
@@ -195,7 +161,85 @@ components:
       required: false
       schema:
         type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    customerId:
+      name: customerId
+      in: path
+      description: The numeric customer entity ID.
+      required: true
+      schema:
+        type: integer
   schemas:
+    Address:
+      type: object
+      description: A postal address used for billing or shipping.
+      properties:
+        firstname:
+          type: string
+          description: First name of the address recipient.
+        lastname:
+          type: string
+          description: Last name of the address recipient.
+        email:
+          type: string
+          format: email
+          description: Email address associated with this address record.
+        street:
+          type: array
+          description: Street address lines.
+          items:
+            type: string
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: State or region name.
+        region_code:
+          type: string
+          description: Two-letter state or region code.
+        country_id:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          minLength: 2
+          maxLength: 2
+        postcode:
+          type: string
+          description: Postal or ZIP code.
+        telephone:
+          type: string
+          description: Phone number for this address.
+    CustomerRequest:
+      type: object
+      description: Request body for creating or updating a customer account.
+      required:
+      - customer
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+        password:
+          type: string
+          description: Plain-text password to set on the customer account. If omitted, a password reset email is sent.
+          format: password
+    CustomAttribute:
+      type: object
+      description: A key-value pair representing a custom EAV attribute on a catalog entity.
+      required:
+      - attribute_code
+      - value
+      properties:
+        attribute_code:
+          type: string
+          description: The unique attribute code identifier.
+        value:
+          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
     CustomerSearchResults:
       type: object
       description: Paginated search results containing a list of customer accounts.
@@ -211,6 +255,18 @@ components:
         total_count:
           type: integer
           description: Total number of matching customers across all pages.
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
     Customer:
       type: object
       description: A registered customer account in Adobe Commerce.
@@ -255,81 +311,25 @@ components:
           description: Custom EAV attribute values for this customer.
           items:
             $ref: '#/components/schemas/CustomAttribute'
-    CustomerRequest:
-      type: object
-      description: Request body for creating or updating a customer account.
-      required:
-      - customer
-      properties:
-        customer:
-          $ref: '#/components/schemas/Customer'
-        password:
-          type: string
-          description: Plain-text password to set on the customer account. If omitted, a password reset email is sent.
-          format: password
-    Address:
-      type: object
-      description: A postal address used for billing or shipping.
-      properties:
-        firstname:
-          type: string
-          description: First name of the address recipient.
-        lastname:
-          type: string
-          description: Last name of the address recipient.
-        email:
-          type: string
-          format: email
-          description: Email address associated with this address record.
-        street:
-          type: array
-          description: Street address lines.
-          items:
-            type: string
-        city:
-          type: string
-          description: City name.
-        region:
-          type: string
-          description: State or region name.
-        region_code:
-          type: string
-          description: Two-letter state or region code.
-        country_id:
-          type: string
-          description: ISO 3166-1 alpha-2 country code.
-          minLength: 2
-          maxLength: 2
-        postcode:
-          type: string
-          description: Postal or ZIP code.
-        telephone:
-          type: string
-          description: Phone number for this address.
-    CustomAttribute:
-      type: object
-      description: A key-value pair representing a custom EAV attribute on a catalog entity.
-      required:
-      - attribute_code
-      - value
-      properties:
-        attribute_code:
-          type: string
-          description: The unique attribute code identifier.
-        value:
-          description: The attribute value. Can be a string, integer, or array depending on the attribute type.
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
+  responses:
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

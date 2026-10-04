@@ -159,26 +159,57 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    searchCriteriaFilterGroups:
+      name: searchCriteria[filter_groups][0][filters][0][field]
+      in: query
+      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
+      required: false
+      schema:
+        type: string
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
+    searchCriteriaSortOrders:
+      name: searchCriteria[sortOrders][0][field]
+      in: query
+      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
+      required: false
+      schema:
+        type: string
+    sourceCode:
+      name: sourceCode
+      in: path
+      description: The unique string code identifier for the inventory source.
+      required: true
+      schema:
+        type: string
+    searchCriteriaCurrentPage:
+      name: searchCriteria[currentPage]
+      in: query
+      description: Page number to return. First page is 1.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
   schemas:
+    InventorySourceSearchResults:
+      type: object
+      description: Paginated search results containing a list of inventory sources.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventorySource'
+        total_count:
+          type: integer
+          description: Total number of matching inventory sources.
     SourceItem:
       type: object
       description: A source item representing the quantity of a product at a specific inventory source.
@@ -198,28 +229,29 @@ components:
           enum:
           - 0
           - 1
-    InventorySourceSearchResults:
+    Error:
       type: object
-      description: Paginated search results containing a list of inventory sources.
+      description: Standard error response returned for 4xx and 5xx responses.
       properties:
-        items:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
           type: array
+          description: Additional error context parameters.
           items:
-            $ref: '#/components/schemas/InventorySource'
-        total_count:
-          type: integer
-          description: Total number of matching inventory sources.
-    SourceItemSearchResults:
+            type: object
+    SourceItemUpdateRequest:
       type: object
-      description: Paginated search results containing a list of source items.
+      description: Request body for bulk updating source item quantities.
+      required:
+      - sourceItems
       properties:
-        items:
+        sourceItems:
           type: array
+          description: Array of source item quantity records to create or update.
           items:
             $ref: '#/components/schemas/SourceItem'
-        total_count:
-          type: integer
-          description: Total number of matching source item records.
     InventorySource:
       type: object
       description: An inventory source representing a fulfillment location in multi-source inventory.
@@ -265,68 +297,36 @@ components:
       properties:
         source:
           $ref: '#/components/schemas/InventorySource'
-    SourceItemUpdateRequest:
+    SourceItemSearchResults:
       type: object
-      description: Request body for bulk updating source item quantities.
-      required:
-      - sourceItems
+      description: Paginated search results containing a list of source items.
       properties:
-        sourceItems:
+        items:
           type: array
-          description: Array of source item quantity records to create or update.
           items:
             $ref: '#/components/schemas/SourceItem'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
-  parameters:
-    searchCriteriaFilterGroups:
-      name: searchCriteria[filter_groups][0][filters][0][field]
-      in: query
-      description: Field name to filter on. Multiple filter groups and filters can be specified using indexed array notation. Filters within a group are OR'd; filter groups themselves are AND'd.
-      required: false
-      schema:
-        type: string
-    searchCriteriaCurrentPage:
-      name: searchCriteria[currentPage]
-      in: query
-      description: Page number to return. First page is 1.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-    sourceCode:
-      name: sourceCode
-      in: path
-      description: The unique string code identifier for the inventory source.
-      required: true
-      schema:
-        type: string
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
-    searchCriteriaSortOrders:
-      name: searchCriteria[sortOrders][0][field]
-      in: query
-      description: Field name to sort results by. Direction is set in the corresponding direction parameter.
-      required: false
-      schema:
-        type: string
+        total_count:
+          type: integer
+          description: Total number of matching source item records.
+  responses:
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

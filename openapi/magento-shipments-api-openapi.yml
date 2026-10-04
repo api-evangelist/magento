@@ -68,26 +68,35 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    shipmentId:
+      name: shipmentId
+      in: path
+      description: The numeric shipment entity ID.
+      required: true
+      schema:
+        type: integer
   schemas:
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    ShipmentRequest:
+      type: object
+      description: Request body for creating a shipment record for an order.
+      required:
+      - entity
+      properties:
+        entity:
+          $ref: '#/components/schemas/Shipment'
     Shipment:
       type: object
       description: A shipment record tracking the physical dispatch of order items.
@@ -120,34 +129,25 @@ components:
               track_number:
                 type: string
                 description: Tracking number provided by the carrier.
-    ShipmentRequest:
-      type: object
-      description: Request body for creating a shipment record for an order.
-      required:
-      - entity
-      properties:
-        entity:
-          $ref: '#/components/schemas/Shipment'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
-  parameters:
-    shipmentId:
-      name: shipmentId
-      in: path
-      description: The numeric shipment entity ID.
-      required: true
-      schema:
-        type: integer
+  responses:
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
