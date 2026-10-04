@@ -318,6 +318,9 @@ apis:
   - type: Documentation
     url: https://developer.adobe.com/commerce/webapi/rest/reference/
 common:
+- type: CapabilityMap
+  url: capabilities/magento-capability-edges.yml
+  name: Magento Business Capability Map
 - type: AgenticAccess
   url: agentic-access/magento-agentic-access.yml
 - type: VulnerabilityDisclosure
