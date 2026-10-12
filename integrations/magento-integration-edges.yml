@@ -1,0 +1,61 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/magento/integrations
+- https://n8n.io/integrations/magento/
+- https://composio.dev/toolkits/magento
+- https://monid.ai/tools/magento
+checked:
+- https://composio.dev/toolkits/magento
+- https://monid.ai/tools/magento
+- https://n8n.io/integrations/magento/
+- https://zapier.com/apps/magento/integrations
+summary: null
+marketplace_apps: []
+edges:
+- partner_name: bolt-financial
+  partner: bolt-financial
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/bolt-financial/blob/main/openapi/bolt-financial-transactions-api-openapi.yml
+  contract_reference:
+    repo: bolt-financial
+    spec_file: bolt-financial-transactions-api-openapi.yml
+    value: magento
+    property: schemas.merchant_platform
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+- partner_name: channable
+  partner: channable
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/channable/blob/main/openapi/channable-orders-api-openapi.yml
+  contract_reference:
+    repo: channable
+    spec_file: channable-orders-api-openapi.yml
+    value: magento
+    property: components.schemas.PlatformName
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+- partner_name: primis
+  partner: primis
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/primis/blob/main/openapi/primis-retailer-api-openapi.yml
+  contract_reference:
+    repo: primis
+    spec_file: primis-retailer-api-openapi.yml
+    value: magento
+    property: schemas.RetailerPlatform.provider
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+templates: []
