@@ -68,14 +68,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    shipmentId:
-      name: shipmentId
-      in: path
-      description: The numeric shipment entity ID.
-      required: true
-      schema:
-        type: integer
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found — the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -89,14 +100,6 @@ components:
           description: Additional error context parameters.
           items:
             type: object
-    ShipmentRequest:
-      type: object
-      description: Request body for creating a shipment record for an order.
-      required:
-      - entity
-      properties:
-        entity:
-          $ref: '#/components/schemas/Shipment'
     Shipment:
       type: object
       description: A shipment record tracking the physical dispatch of order items.
@@ -129,25 +132,22 @@ components:
               track_number:
                 type: string
                 description: Tracking number provided by the carrier.
-  responses:
-    NotFound:
-      description: Not found — the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ShipmentRequest:
+      type: object
+      description: Request body for creating a shipment record for an order.
+      required:
+      - entity
+      properties:
+        entity:
+          $ref: '#/components/schemas/Shipment'
+  parameters:
+    shipmentId:
+      name: shipmentId
+      in: path
+      description: The numeric shipment entity ID.
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

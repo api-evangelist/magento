@@ -80,7 +80,40 @@ paths:
                 type: string
                 description: Masked cart ID (UUID format)
 components:
+  responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized — missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    CartItemRequest:
+      type: object
+      description: Request body for adding an item to a shopping cart.
+      required:
+      - cartItem
+      properties:
+        cartItem:
+          $ref: '#/components/schemas/CartItem'
     CartItem:
       type: object
       description: A product line item in a shopping cart (quote).
@@ -106,39 +139,6 @@ components:
         quote_id:
           type: string
           description: The cart (quote) ID this item belongs to.
-    CartItemRequest:
-      type: object
-      description: Request body for adding an item to a shopping cart.
-      required:
-      - cartItem
-      properties:
-        cartItem:
-          $ref: '#/components/schemas/CartItem'
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

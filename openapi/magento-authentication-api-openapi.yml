@@ -78,32 +78,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    AdminTokenRequest:
-      type: object
-      description: Request body for obtaining an admin Bearer token.
-      required:
-      - username
-      - password
-      properties:
-        username:
-          type: string
-          description: Admin user login username.
-        password:
-          type: string
-          description: Admin user password.
-          format: password
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
     CustomerTokenRequest:
       type: object
       description: Request body for obtaining a customer Bearer token.
@@ -118,6 +92,32 @@ components:
         password:
           type: string
           description: Customer account password.
+          format: password
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    AdminTokenRequest:
+      type: object
+      description: Request body for obtaining an admin Bearer token.
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Admin user login username.
+        password:
+          type: string
+          description: Admin user password.
           format: password
   responses:
     BadRequest:

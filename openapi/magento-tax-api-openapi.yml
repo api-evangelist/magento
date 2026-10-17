@@ -53,15 +53,6 @@ components:
       required: false
       schema:
         type: string
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
     searchCriteriaSortOrders:
       name: searchCriteria[sortOrders][0][field]
       in: query
@@ -77,30 +68,16 @@ components:
       schema:
         type: integer
         minimum: 1
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
   schemas:
-    TaxRateSearchResults:
-      type: object
-      description: Paginated search results containing a list of tax rates.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxRate'
-        total_count:
-          type: integer
-          description: Total number of matching tax rates.
-    Error:
-      type: object
-      description: Standard error response returned for 4xx and 5xx responses.
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
-          type: array
-          description: Additional error context parameters.
-          items:
-            type: object
     TaxRate:
       type: object
       description: A tax rate configuration defining the percentage applied to taxable items.
@@ -123,6 +100,29 @@ components:
         rate:
           type: number
           description: Tax percentage rate (e.g. 8.25 for 8.25%).
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    TaxRateSearchResults:
+      type: object
+      description: Paginated search results containing a list of tax rates.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxRate'
+        total_count:
+          type: integer
+          description: Total number of matching tax rates.
   responses:
     Unauthorized:
       description: Unauthorized — missing or invalid authentication token

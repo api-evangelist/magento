@@ -149,15 +149,6 @@ components:
       required: false
       schema:
         type: string
-    searchCriteriaPageSize:
-      name: searchCriteria[pageSize]
-      in: query
-      description: Number of records to return per page. Default varies by resource.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 300
     searchCriteriaSortOrders:
       name: searchCriteria[sortOrders][0][field]
       in: query
@@ -180,7 +171,64 @@ components:
       schema:
         type: integer
         minimum: 1
+    searchCriteriaPageSize:
+      name: searchCriteria[pageSize]
+      in: query
+      description: Number of records to return per page. Default varies by resource.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 300
   schemas:
+    OrderRequest:
+      type: object
+      description: Request body for creating a sales order directly via the API.
+      required:
+      - entity
+      properties:
+        entity:
+          $ref: '#/components/schemas/Order'
+    Error:
+      type: object
+      description: Standard error response returned for 4xx and 5xx responses.
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        parameters:
+          type: array
+          description: Additional error context parameters.
+          items:
+            type: object
+    OrderCommentRequest:
+      type: object
+      description: Request body for adding a status history comment to an order.
+      required:
+      - statusHistory
+      properties:
+        statusHistory:
+          type: object
+          description: Status history comment details.
+          properties:
+            comment:
+              type: string
+              description: The comment text to add to the order history.
+            is_customer_notified:
+              type: integer
+              description: Whether to send an email notification to the customer. 1 = yes, 0 = no.
+              enum:
+              - 0
+              - 1
+            is_visible_on_front:
+              type: integer
+              description: Whether the comment is visible to the customer in their account. 1 = yes, 0 = no.
+              enum:
+              - 0
+              - 1
+            status:
+              type: string
+              description: Optional new order status to set along with the comment.
     Address:
       type: object
       description: A postal address used for billing or shipping.
@@ -220,21 +268,6 @@ components:
         telephone:
           type: string
           description: Phone number for this address.
-    OrderSearchResults:
-      type: object
-      description: Paginated search results containing a list of orders.
-      properties:
-        items:
-          type: array
-          description: Array of order objects matching the search criteria.
-          items:
-            $ref: '#/components/schemas/Order'
-        search_criteria:
-          type: object
-          description: The search criteria applied.
-        total_count:
-          type: integer
-          description: Total number of matching orders across all pages.
     Order:
       type: object
       description: A sales order in Adobe Commerce.
@@ -331,55 +364,28 @@ components:
         product_type:
           type: string
           description: Product type of the ordered item.
-    Error:
+    OrderSearchResults:
       type: object
-      description: Standard error response returned for 4xx and 5xx responses.
+      description: Paginated search results containing a list of orders.
       properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        parameters:
+        items:
           type: array
-          description: Additional error context parameters.
+          description: Array of order objects matching the search criteria.
           items:
-            type: object
-    OrderRequest:
-      type: object
-      description: Request body for creating a sales order directly via the API.
-      required:
-      - entity
-      properties:
-        entity:
-          $ref: '#/components/schemas/Order'
-    OrderCommentRequest:
-      type: object
-      description: Request body for adding a status history comment to an order.
-      required:
-      - statusHistory
-      properties:
-        statusHistory:
+            $ref: '#/components/schemas/Order'
+        search_criteria:
           type: object
-          description: Status history comment details.
-          properties:
-            comment:
-              type: string
-              description: The comment text to add to the order history.
-            is_customer_notified:
-              type: integer
-              description: Whether to send an email notification to the customer. 1 = yes, 0 = no.
-              enum:
-              - 0
-              - 1
-            is_visible_on_front:
-              type: integer
-              description: Whether the comment is visible to the customer in their account. 1 = yes, 0 = no.
-              enum:
-              - 0
-              - 1
-            status:
-              type: string
-              description: Optional new order status to set along with the comment.
+          description: The search criteria applied.
+        total_count:
+          type: integer
+          description: Total number of matching orders across all pages.
   responses:
+    BadRequest:
+      description: Bad request — invalid input parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found — the requested resource does not exist
       content:
@@ -388,12 +394,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized — missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — invalid input parameters or request body
       content:
         application/json:
           schema:
