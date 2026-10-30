@@ -1,4 +1,4 @@
-# magento (magento)
+# Magento
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,152 +66,230 @@
 
 Overview of the Adobe Commerce and Magento Open Source REST API documentation.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/magento/refs/heads/main/apis.yml)
+**Areas:** E-Commerce · Catalog · Headless Commerce · Magento
 
-## Timestamps
+## Magento on APIs.io
 
-- **Modified:** 2026-05-19
+Everything profiled for Magento is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/magento/](https://apis.io/providers/magento/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (16)
 
-### Magento REST API
+- [Magento GraphQL API](https://apis.io/apis/magento/graphql-api/) — The Adobe Commerce GraphQL API offers a flexible, query-driven interface designed primarily for building headless storefronts and progressive web…
+- [Magento SOAP API](https://apis.io/apis/magento/soap-api/) — The Adobe Commerce SOAP API exposes the same service contracts as the REST API through a WSDL 1.2 interface compliant with WS-I 2.0 Basic Profile. It allows…
+- [Adobe Commerce Webhooks](https://apis.io/apis/magento/webhooks/) — Adobe Commerce Webhooks enable developers to configure synchronous HTTP callbacks that fire when specific events occur within a Commerce instance, allowing…
+- [Adobe Commerce Admin UI SDK](https://apis.io/apis/magento/admin-ui-sdk/) — The Adobe Commerce Admin UI SDK enables App Builder developers to extend the Commerce Admin panel with custom menus, pages, and UI components built as…
+- [Adobe Commerce Eventing](https://apis.io/apis/magento/events/) — Adobe Commerce Eventing provides an asynchronous event-driven integration framework that publishes Commerce business events to Adobe I/O Events, enabling…
+- [magento Authentication API](https://apis.io/apis/magento/magento-authentication-api/) — Endpoints for obtaining integration tokens for admin and customer users. Token-based authentication issues a Bearer token that must be included in the…
+- [magento Carts API](https://apis.io/apis/magento/magento-carts-api/) — Shopping cart and quote management for admin, customer, and guest users, including item management, coupon codes, shipping estimation, and payment…
+- [magento Categories API](https://apis.io/apis/magento/magento-categories-api/) — Category tree management including creation, retrieval, update, and deletion of catalog categories and their product assignments.
+- [magento Customers API](https://apis.io/apis/magento/magento-customers-api/) — Customer account management including registration, profile updates, address management, authentication, and customer group assignment.
+- [magento Inventory API](https://apis.io/apis/magento/magento-inventory-api/) — Multi-source inventory management including sources, stocks, stock-source links, and source item quantity management.
+- [magento Invoices API](https://apis.io/apis/magento/magento-invoices-api/) — Invoice management for orders including invoice creation, retrieval, and payment capture operations.
+- [magento Orders API](https://apis.io/apis/magento/magento-orders-api/) — Sales order management including order retrieval, status updates, comment posting, cancellation, and order item management.
+- [magento Products API](https://apis.io/apis/magento/magento-products-api/) — Catalog product management including creation, retrieval, update, and deletion of simple, configurable, virtual, bundled, and grouped products. Supports…
+- [magento Shipments API](https://apis.io/apis/magento/magento-shipments-api/) — Shipment management for orders including shipment creation, retrieval, tracking number management, and shipment comments.
+- [magento Stores API](https://apis.io/apis/magento/magento-stores-api/) — Store configuration retrieval including store groups, store views, websites, and configuration settings.
+- [magento Tax API](https://apis.io/apis/magento/magento-tax-api/) — Tax configuration management including tax rates, tax rules, and tax classes used for order tax calculation.
 
-The Adobe Commerce (Magento) REST API provides a comprehensive set of endpoints for interacting with all major aspects of an e-commerce store, including catalog management, orders, customers, inventory, shipping, and payments. It supports three authentication mechanisms: OAuth 1.0a for third-party integrations, token-based authentication for mobile apps and administrators, and guest access for select public endpoints.
+### Published properties
 
-- **Human URL:** [https://developer.adobe.com/commerce/webapi/rest/](https://developer.adobe.com/commerce/webapi/rest/)
-- **Base URL:** `https://your-store.example.com/rest`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags
+#### AsyncAPI (2)
 
-- Catalog
-- Customers
-- E-Commerce
-- Orders
-- Products
-- REST
+Event-driven and webhook contracts.
 
-#### Properties
+- [Adobe Commerce Eventing](https://apis.io/asyncapis/magento/magento-events-asyncapi/)
+- [Adobe Commerce Webhooks](https://apis.io/asyncapis/magento/magento-webhooks-asyncapi/)
 
-- [Documentation](https://developer.adobe.com/commerce/webapi/rest/)
-- [Documentation](https://developer.adobe.com/commerce/webapi/rest/reference/)
-- [OpenAPI](openapi/magento-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Event channels (16)
 
-### Magento GraphQL API
+Individual events and webhooks the provider emits.
 
-The Adobe Commerce GraphQL API offers a flexible, query-driven interface designed primarily for building headless storefronts and progressive web applications. It exposes a single endpoint and allows clients to request exactly the data they need through queries and mutations covering catalog browsing, product search, cart management, checkout, customer accounts, and order history.
+- [com.adobe.commerce.observer.catalog_product_delete_after_done](https://apis.io/channels/magento/com-adobe-commerce-observer-catalog-product-delete-after-done/)
+- [com.adobe.commerce.observer.catalog_product_save_after](https://apis.io/channels/magento/com-adobe-commerce-observer-catalog-product-save-after/)
+- [com.adobe.commerce.observer.checkout_submit_all_after](https://apis.io/channels/magento/com-adobe-commerce-observer-checkout-submit-all-after/)
+- [com.adobe.commerce.observer.customer_register_success](https://apis.io/channels/magento/com-adobe-commerce-observer-customer-register-success/)
+- [com.adobe.commerce.observer.customer_save_after_data_object](https://apis.io/channels/magento/com-adobe-commerce-observer-customer-save-after-data-object/)
+- [com.adobe.commerce.observer.sales_order_creditmemo_save_after](https://apis.io/channels/magento/com-adobe-commerce-observer-sales-order-creditmemo-save-after/)
+- [com.adobe.commerce.observer.sales_order_place_after](https://apis.io/channels/magento/com-adobe-commerce-observer-sales-order-place-after/)
+- [com.adobe.commerce.observer.sales_order_save_commit_after](https://apis.io/channels/magento/com-adobe-commerce-observer-sales-order-save-commit-after/)
+- [/webhook/observer.catalog_product_save_after](https://apis.io/channels/magento/webhook-observer-catalog-product-save-after/)
+- [/webhook/observer.checkout_cart_product_add_after](https://apis.io/channels/magento/webhook-observer-checkout-cart-product-add-after/)
+- [/webhook/observer.customer_delete_after](https://apis.io/channels/magento/webhook-observer-customer-delete-after/)
+- [/webhook/observer.customer_save_after_data_object](https://apis.io/channels/magento/webhook-observer-customer-save-after-data-object/)
+- [/webhook/observer.sales_order_invoice_pay](https://apis.io/channels/magento/webhook-observer-sales-order-invoice-pay/)
+- [/webhook/observer.sales_order_place_after](https://apis.io/channels/magento/webhook-observer-sales-order-place-after/)
+- [/webhook/observer.sales_order_save_after](https://apis.io/channels/magento/webhook-observer-sales-order-save-after/)
+- [/webhook/observer.sales_order_shipment_save_after](https://apis.io/channels/magento/webhook-observer-sales-order-shipment-save-after/)
 
-- **Human URL:** [https://developer.adobe.com/commerce/webapi/graphql/](https://developer.adobe.com/commerce/webapi/graphql/)
-- **Base URL:** `https://your-store.example.com/graphql`
+#### GraphQL (1)
 
-#### Tags
+GraphQL schemas.
 
-- Cart
-- Catalog
-- E-Commerce
-- GraphQL
-- Headless Commerce
-- Storefront
+- [magento GraphQL API](https://apis.io/graphqls/magento/magento-graphql/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://developer.adobe.com/commerce/webapi/graphql/)
-- [Documentation](https://developer.adobe.com/commerce/webapi/graphql/reference/)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Magento SOAP API
+- [Magento Agentic Access](https://apis.io/agentic-access/magento/magento-agentic-access/)
 
-The Adobe Commerce SOAP API exposes the same service contracts as the REST API through a WSDL 1.2 interface compliant with WS-I 2.0 Basic Profile. It allows enterprise systems and legacy integrations to interact with Adobe Commerce store data using standard SOAP tooling. Developers can retrieve the WSDL for any service or combination of services by appending query parameters to the SOAP endpoint URL.
+#### JSON Schema (35)
 
-- **Human URL:** [https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/](https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/)
-- **Base URL:** `https://your-store.example.com/soap`
+The data models the API reads and writes.
 
-#### Tags
+- [Address](https://apis.io/schemas/magento/magento-address/)
+- [AdminTokenRequest](https://apis.io/schemas/magento/magento-admintokenrequest/)
+- [CartItem](https://apis.io/schemas/magento/magento-cartitem/)
+- [CartItemRequest](https://apis.io/schemas/magento/magento-cartitemrequest/)
+- [Category](https://apis.io/schemas/magento/magento-category/)
+- [CategoryRequest](https://apis.io/schemas/magento/magento-categoryrequest/)
+- [CategoryTree](https://apis.io/schemas/magento/magento-categorytree/)
+- [CustomAttribute](https://apis.io/schemas/magento/magento-customattribute/)
+- [Customer](https://apis.io/schemas/magento/magento-customer/)
+- [CustomerRequest](https://apis.io/schemas/magento/magento-customerrequest/)
+- [CustomerSearchResults](https://apis.io/schemas/magento/magento-customersearchresults/)
+- [CustomerTokenRequest](https://apis.io/schemas/magento/magento-customertokenrequest/)
+- [Error](https://apis.io/schemas/magento/magento-error/)
+- [InventorySource](https://apis.io/schemas/magento/magento-inventorysource/)
+- [InventorySourceRequest](https://apis.io/schemas/magento/magento-inventorysourcerequest/)
+- [InventorySourceSearchResults](https://apis.io/schemas/magento/magento-inventorysourcesearchresults/)
+- [Invoice](https://apis.io/schemas/magento/magento-invoice/)
+- [InvoiceRequest](https://apis.io/schemas/magento/magento-invoicerequest/)
+- [InvoiceSearchResults](https://apis.io/schemas/magento/magento-invoicesearchresults/)
+- [Magento Order](https://apis.io/schemas/magento/magento-order/)
+- [OrderCommentRequest](https://apis.io/schemas/magento/magento-ordercommentrequest/)
+- [OrderItem](https://apis.io/schemas/magento/magento-orderitem/)
+- [OrderRequest](https://apis.io/schemas/magento/magento-orderrequest/)
+- [OrderSearchResults](https://apis.io/schemas/magento/magento-ordersearchresults/)
+- [Magento Product](https://apis.io/schemas/magento/magento-product/)
+- …and 10 more published on APIs.io
 
-- E-Commerce
-- Integration
-- SOAP
-- Web Services
+#### JSON Structure (1)
 
-#### Properties
+Data models expressed in JSON Structure.
 
-- [Documentation](https://developer.adobe.com/commerce/webapi/get-started/soap-web-api-calls/)
-- [W S D L](wsdl/magento-soap.wsdl)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Magento Structure](https://apis.io/json-structure/magento/magento-structure/)
 
-### Adobe Commerce Webhooks
+#### JSON-LD (1)
 
-Adobe Commerce Webhooks enable developers to configure synchronous HTTP callbacks that fire when specific events occur within a Commerce instance, allowing external systems to react in real time to store activity. Webhooks can intercept and modify request data before Commerce processes it, or trigger outbound notifications after an event completes.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://developer.adobe.com/commerce/extensibility/webhooks/](https://developer.adobe.com/commerce/extensibility/webhooks/)
-- **Base URL:** `https://api.example.com`
+- [Magento Context](https://apis.io/jsonld/magento/magento-context/)
 
-#### Tags
+#### Vocabulary (1)
 
-- E-Commerce
-- Events
-- Extensibility
-- Real-Time
-- Webhooks
+The provider's domain terms, defined.
 
-#### Properties
+- [Magento Domain Vocabulary](https://apis.io/vocabularies/magento/magento-vocabulary/)
 
-- [Documentation](https://developer.adobe.com/commerce/extensibility/webhooks/)
-- [AsyncAPI](asyncapi/magento-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (12)
 
-### Adobe Commerce Admin UI SDK
+Postman and Open Collection request collections.
 
-The Adobe Commerce Admin UI SDK enables App Builder developers to extend the Commerce Admin panel with custom menus, pages, and UI components built as out-of-process applications. Rather than modifying the Commerce codebase directly, developers build React-based UIs hosted on Adobe App Builder infrastructure and surface them inside the Admin through the SDK's extension point mechanism.
+- [Magento REST Authentication API](https://apis.io/collections/magento/open-magento-authentication-api/)
+- [Magento REST Authentication Carts API](https://apis.io/collections/magento/open-magento-carts-api/)
+- [Magento REST Authentication Categories API](https://apis.io/collections/magento/open-magento-categories-api/)
+- [Magento REST Authentication Customers API](https://apis.io/collections/magento/open-magento-customers-api/)
+- [Magento REST Authentication Inventory API](https://apis.io/collections/magento/open-magento-inventory-api/)
+- [Magento REST Authentication Invoices API](https://apis.io/collections/magento/open-magento-invoices-api/)
+- [Magento REST Authentication Orders API](https://apis.io/collections/magento/open-magento-orders-api/)
+- [Magento REST Authentication Products API](https://apis.io/collections/magento/open-magento-products-api/)
+- [Magento REST API](https://apis.io/collections/magento/open-magento-rest-api/)
+- [Magento REST Authentication Shipments API](https://apis.io/collections/magento/open-magento-shipments-api/)
+- [Magento REST Authentication Stores API](https://apis.io/collections/magento/open-magento-stores-api/)
+- [Magento REST Authentication Tax API](https://apis.io/collections/magento/open-magento-tax-api/)
 
-- **Human URL:** [https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/](https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/)
-- **Base URL:** `https://api.example.com`
+#### Governance rules (2)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Admin Panel
-- App Builder
-- E-Commerce
-- Extensibility
-- UI Extensions
+- [Magento — asyncapi rules](https://apis.io/rules/magento/magento-asyncapi-spectral-rules/)
+- [Magento — jsonschema rules](https://apis.io/rules/magento/magento-jsonschema-spectral-rules/)
 
-#### Properties
+#### Security (3)
 
-- [Documentation](https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Adobe Commerce Eventing
+- [Magento Authentication](https://apis.io/security/magento/magento-authentication/)
+- [Magento Domain Security](https://apis.io/security/magento/magento-domain-security/)
+- [Magento Vulnerability Disclosure](https://apis.io/security/magento/magento-vulnerability-disclosure/)
 
-Adobe Commerce Eventing provides an asynchronous event-driven integration framework that publishes Commerce business events to Adobe I/O Events, enabling App Builder applications and other Adobe Experience Cloud services to subscribe and react to store activity. Supported event types cover the full commerce lifecycle including order placement, customer registration, product updates, inventory changes, and payment processing.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://developer.adobe.com/commerce/extensibility/events/](https://developer.adobe.com/commerce/extensibility/events/)
-- **Base URL:** `https://api.example.com`
+Published plans, tiers and prices.
 
-#### Tags
+- [Magento Plans Pricing](https://apis.io/plans/magento/magento-plans-pricing/)
 
-- Adobe I/O
-- App Builder
-- E-Commerce
-- Events
-- Extensibility
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://developer.adobe.com/commerce/extensibility/events/)
-- [AsyncAPI](asyncapi/magento-events-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/magento-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/magento-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Magento Rate Limits](https://apis.io/rate-limits/magento/magento-rate-limits/)
 
-## Common Properties
+#### FinOps (1)
 
-- [GitHub Organization](https://github.com/magento)
-- [LinkedIn](https://www.linkedin.com/company/adobe-commerce)
-- [JSON-LD](json-ld/magento-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/magento-order-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/magento-product-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Features](undefined)
+What the API costs to run, by operation.
+
+- [Magento Finops](https://apis.io/finops/magento/magento-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://business.adobe.com/products/magento/magento-commerce.html)
+- [GitHub](https://github.com/magento)
+
+## API Evangelist rating
+
+**Kin Score 29.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 42.9 |
+| Contract quality | 62.7 |
+| Contract governance | 13.6 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 7.9 |
+
+**Agent readiness 23.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/magento/](https://apis.io/providers/magento/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Magento: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/magento/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
